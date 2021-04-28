@@ -8,3 +8,5 @@
 *.iml
 .idea
 build
+
+ShopmeWebParent/ShopmeBackend/src/main/resources/application.properties
