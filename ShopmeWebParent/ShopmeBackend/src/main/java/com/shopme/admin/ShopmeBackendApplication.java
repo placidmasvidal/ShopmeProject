@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @ComponentScan("com.shopme")
 @EnableJpaRepositories("com.shopme")
-@EntityScan({"com.shopme.common.entity", "com.shopme.admin.user"})
+@EntityScan({"com.shopme.common"})
 public class ShopmeBackendApplication {
 
     public static void main(String[] args) {
