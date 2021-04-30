@@ -12,4 +12,6 @@ public interface UserService {
 
     List<User> listAll();
 
+    boolean isEmailUnique(String email);
+
 }
