@@ -12,6 +12,9 @@ public interface UserService {
 
     List<User> listAll();
 
-    boolean isEmailUnique(String email);
+    boolean isEmailUnique(Integer id, String email);
 
+    User get(Integer id) throws UserNotFoundException;
+
+    void delete(Integer id) throws UserNotFoundException;
 }
