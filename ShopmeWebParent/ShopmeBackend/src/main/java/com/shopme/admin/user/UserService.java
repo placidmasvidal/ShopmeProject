@@ -1,6 +1,7 @@
 package com.shopme.admin.user;
 
 import com.shopme.common.entity.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ public interface UserService {
     User get(Integer id) throws UserNotFoundException;
 
     void delete(Integer id) throws UserNotFoundException;
+
+    @Transactional
+    void updateUserEnabledStatus(Integer id, boolean enabled);
 }
