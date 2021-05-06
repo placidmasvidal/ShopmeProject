@@ -57,7 +57,7 @@ public class UserController {
       user.setPhotos(fileName);
       User savedUser = userService.saveUser(user);
 
-      String uploadDir = "/ShopmeProject/ShopmeWebParent/ShopmeBackend/user-photos/" + savedUser.getId();
+      String uploadDir = "ShopmeWebParent/ShopmeBackend/user-photos/" + savedUser.getId();
 
       FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
     }
