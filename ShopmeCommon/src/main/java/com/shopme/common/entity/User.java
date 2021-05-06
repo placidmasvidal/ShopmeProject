@@ -127,7 +127,7 @@ public class User {
 
     @Transient
     public String getPhotosImagePath(){
-        if(id == null || photos == null) return "/images/default-image.png";
-        return "ShopmeWebParent/ShopmeBackend/user-photos/" + this.id + "/" + this.photos;
+        if(id == null || photos == null) return "/images/default-user.png";
+        return "/user-photos/" + this.id + "/" + this.photos;
     }
 }

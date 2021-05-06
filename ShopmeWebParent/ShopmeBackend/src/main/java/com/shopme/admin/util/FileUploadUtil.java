@@ -1,5 +1,7 @@
 package com.shopme.admin.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -10,6 +12,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class FileUploadUtil {
+
+    private static Logger LOG = LoggerFactory.getLogger(FileUploadUtil.class);
 
     public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
@@ -23,6 +27,25 @@ public class FileUploadUtil {
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex){
             throw new IOException("Could nor save file: " + fileName, ex);
+        }
+    }
+
+    public static void cleanDir(String dir){
+        Path dirPath = Paths.get(dir);
+
+        try{
+            Files.list(dirPath).forEach(file -> {
+                if(!Files.isDirectory(file)){
+                    try{
+                    Files.delete(file);
+                    } catch(IOException ex){
+                        LOG.error("Could not detele file: {}", file);
+                    }
+                }
+            });
+        } catch(IOException ex){
+            LOG.error("Could not list directory: " + dirPath);
+
         }
     }
 }

@@ -10,3 +10,5 @@
 build
 
 ShopmeWebParent/ShopmeBackend/src/main/resources/application.properties
+
+user-photos/
