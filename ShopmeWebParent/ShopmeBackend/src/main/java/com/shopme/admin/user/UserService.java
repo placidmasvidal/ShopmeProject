@@ -8,20 +8,20 @@ import java.util.List;
 
 public interface UserService {
 
-    User createUser();
+  User createUser();
 
-    User saveUser(User user);
+  User saveUser(User user);
 
-    List<User> listAll();
+  List<User> listAll();
 
-    Page<User> listByPage(int pageNum);
+  Page<User> listByPage(int pageNum, String sortField, String sortDir);
 
-    boolean isEmailUnique(Integer id, String email);
+  boolean isEmailUnique(Integer id, String email);
 
-    User get(Integer id) throws UserNotFoundException;
+  User get(Integer id) throws UserNotFoundException;
 
-    void delete(Integer id) throws UserNotFoundException;
+  void delete(Integer id) throws UserNotFoundException;
 
-    @Transactional
-    void updateUserEnabledStatus(Integer id, boolean enabled);
+  @Transactional
+  void updateUserEnabledStatus(Integer id, boolean enabled);
 }
