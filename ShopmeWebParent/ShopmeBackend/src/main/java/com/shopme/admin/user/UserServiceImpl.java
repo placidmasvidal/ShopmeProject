@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<User> listAll() {
-    return (List<User>) userRepository.findAll();
+    return (List<User>) userRepository.findAll(Sort.by("firstName").ascending());
   }
 
   @Override

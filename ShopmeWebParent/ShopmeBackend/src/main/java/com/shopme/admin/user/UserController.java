@@ -1,6 +1,7 @@
 package com.shopme.admin.user;
 
 import com.shopme.admin.util.FileUploadUtil;
+import com.shopme.admin.util.CsvExporter;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,10 +29,13 @@ public class UserController {
 
   private RoleService roleService;
 
+  private CsvExporter csvExporter;
+
   @Autowired
-  public UserController(UserService userService, RoleService roleService) {
+  public UserController(UserService userService, RoleService roleService, CsvExporter csvExporter) {
     this.userService = userService;
     this.roleService = roleService;
+    this.csvExporter = csvExporter;
   }
 
   @GetMapping("/users")
@@ -151,8 +156,18 @@ public class UserController {
     return "redirect:/users";
   }
 
+  @GetMapping("/users/export/csv")
+  public void exportToCSV(HttpServletResponse response) throws IOException {
+    String fileName = "users_";
+    String[] csvHeader = {"User ID", "E-mail", "First Name", "Last Name", "Roles", "Enabled"};
+    String[] fieldMapping = {"id", "email", "firstName", "lastName", "roles", "enabled"};
+    List<User> listUsers = userService.listAll();
+    csvExporter.export(fileName, csvHeader, fieldMapping, listUsers, response);
+  }
+
   private String getRedirectURLtoAffectedUser(User user) {
     String firstPartOfEmail = user.getEmail().split("@")[0];
     return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
   }
+
 }
