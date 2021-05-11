@@ -14,7 +14,7 @@ public interface UserService {
 
   List<User> listAll();
 
-  Page<User> listByPage(int pageNum, String sortField, String sortDir);
+  Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword);
 
   boolean isEmailUnique(Integer id, String email);
 
