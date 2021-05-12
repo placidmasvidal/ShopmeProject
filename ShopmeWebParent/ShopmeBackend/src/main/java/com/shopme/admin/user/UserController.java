@@ -1,7 +1,6 @@
 package com.shopme.admin.user;
 
 import com.shopme.admin.util.FileUploadUtil;
-import com.shopme.admin.util.CsvExporter;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 import org.slf4j.Logger;
@@ -29,13 +28,10 @@ public class UserController {
 
   private RoleService roleService;
 
-  private CsvExporter csvExporter;
-
   @Autowired
-  public UserController(UserService userService, RoleService roleService, CsvExporter csvExporter) {
+  public UserController(UserService userService, RoleService roleService) {
     this.userService = userService;
     this.roleService = roleService;
-    this.csvExporter = csvExporter;
   }
 
   @GetMapping("/users")
@@ -158,11 +154,24 @@ public class UserController {
 
   @GetMapping("/users/export/csv")
   public void exportToCSV(HttpServletResponse response) throws IOException {
-    String fileName = "users_";
+    List<User> listUsers = userService.listAll();
+
+/*    String fileName = "users_";
     String[] csvHeader = {"User ID", "E-mail", "First Name", "Last Name", "Roles", "Enabled"};
     String[] fieldMapping = {"id", "email", "firstName", "lastName", "roles", "enabled"};
-    List<User> listUsers = userService.listAll();
     csvExporter.export(fileName, csvHeader, fieldMapping, listUsers, response);
+
+ */
+    UserCsvExporter userCsvExporter = new UserCsvExporter();
+    userCsvExporter.export(listUsers, response);
+  }
+
+  @GetMapping("/users/export/excel")
+  public void exportToExcel(HttpServletResponse response) throws IOException {
+    List<User> listUsers = userService.listAll();
+
+    UserExcelExporter userExcelExporter = new UserExcelExporter();
+    userExcelExporter.export(listUsers, response);
   }
 
   private String getRedirectURLtoAffectedUser(User user) {
