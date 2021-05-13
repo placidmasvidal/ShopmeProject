@@ -42,8 +42,6 @@ public class UserPdfExporter extends UserAbstractExporter{
 
         document.add(table);
 
-
-
         document.close();
     }
 
