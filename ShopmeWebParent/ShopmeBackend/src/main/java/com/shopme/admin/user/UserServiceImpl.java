@@ -40,10 +40,10 @@ public class UserServiceImpl implements UserService {
   public User saveUser(User user) {
     boolean isUpdatingUser = (user.getId() != null);
 
-    if(isUpdatingUser){
+    if (isUpdatingUser) {
       User existingUser = userRepository.findById(user.getId()).get();
 
-      if(user.getPassword().isEmpty()) {
+      if (user.getPassword().isEmpty()) {
         user.setPassword(existingUser.getPassword());
       } else {
         encodePassword(user);
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
     Pageable pageable = PageRequest.of(pageNum - 1, USERS_PER_PAGE, sort);
 
-    if(keyword != null){
+    if (keyword != null) {
       return userRepository.findAll(keyword, pageable);
     }
 
@@ -78,14 +78,14 @@ public class UserServiceImpl implements UserService {
   public boolean isEmailUnique(Integer id, String email) {
     User userByEmail = userRepository.getUserByEmail(email);
 
-    if(userByEmail == null) return true;
+    if (userByEmail == null) return true;
 
     boolean isCreatingNew = (id == null);
 
-    if(isCreatingNew){
-      if(userByEmail != null) return false;
+    if (isCreatingNew) {
+      if (userByEmail != null) return false;
     } else {
-      if(userByEmail.getId() != id){
+      if (userByEmail.getId() != id) {
         return false;
       }
     }
@@ -95,9 +95,9 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User get(Integer id) throws UserNotFoundException {
-    try{
-    return userRepository.findById(id).get();
-    } catch(NoSuchElementException ex){
+    try {
+      return userRepository.findById(id).get();
+    } catch (NoSuchElementException ex) {
       throw new UserNotFoundException("Couldn't find any user with ID: " + id);
     }
   }
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public void delete(Integer id) throws UserNotFoundException {
     Long countById = userRepository.countById(id);
-    if(countById == null || countById == 0){
+    if (countById == null || countById == 0) {
       throw new UserNotFoundException("Couldn't find any user with ID: " + id);
     }
 

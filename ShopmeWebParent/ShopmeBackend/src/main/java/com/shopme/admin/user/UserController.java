@@ -28,10 +28,24 @@ public class UserController {
 
   private RoleService roleService;
 
+  private UserCsvExporter userCsvExporter;
+
+  private UserExcelExporter userExcelExporter;
+
+  private UserPdfExporter userPdfExporter;
+
   @Autowired
-  public UserController(UserService userService, RoleService roleService) {
+  public UserController(
+      UserService userService,
+      RoleService roleService,
+      UserCsvExporter userCsvExporter,
+      UserExcelExporter userExcelExporter,
+      UserPdfExporter userPdfExporter) {
     this.userService = userService;
     this.roleService = roleService;
+    this.userCsvExporter = userCsvExporter;
+    this.userExcelExporter = userExcelExporter;
+    this.userPdfExporter = userPdfExporter;
   }
 
   @GetMapping("/users")
@@ -156,13 +170,6 @@ public class UserController {
   public void exportToCSV(HttpServletResponse response) throws IOException {
     List<User> listUsers = userService.listAll();
 
-/*    String fileName = "users_";
-    String[] csvHeader = {"User ID", "E-mail", "First Name", "Last Name", "Roles", "Enabled"};
-    String[] fieldMapping = {"id", "email", "firstName", "lastName", "roles", "enabled"};
-    csvExporter.export(fileName, csvHeader, fieldMapping, listUsers, response);
-
- */
-    UserCsvExporter userCsvExporter = new UserCsvExporter();
     userCsvExporter.export(listUsers, response);
   }
 
@@ -170,13 +177,18 @@ public class UserController {
   public void exportToExcel(HttpServletResponse response) throws IOException {
     List<User> listUsers = userService.listAll();
 
-    UserExcelExporter userExcelExporter = new UserExcelExporter();
     userExcelExporter.export(listUsers, response);
+  }
+
+  @GetMapping("/users/export/pdf")
+  public void exportToPDF(HttpServletResponse response) throws IOException {
+    List<User> listUsers = userService.listAll();
+
+    userPdfExporter.export(listUsers, response);
   }
 
   private String getRedirectURLtoAffectedUser(User user) {
     String firstPartOfEmail = user.getEmail().split("@")[0];
     return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
   }
-
 }
