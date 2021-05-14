@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
-  public UserDetailsService userDetailsService(){
+  public UserDetailsService userDetailsService() {
     return new ShopmeUserDetailsService();
   }
 
@@ -26,13 +26,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder();
   }
 
-  public DaoAuthenticationProvider authenticationProvider(){
+  public DaoAuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
     authProvider.setUserDetailsService(userDetailsService());
     authProvider.setPasswordEncoder(passwordEncoder());
 
     return authProvider;
   }
+
+
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,18 +44,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .formLogin()
-        .loginPage("/login")
-        .usernameParameter("email")
-        .permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/login")
+            .usernameParameter("email")
+            .permitAll()
             .and().logout().permitAll();
   }
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/images/**", "/js/", "/webjars/**");
+    web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
   }
+
+
 }
