@@ -111,8 +111,7 @@
             <tr th:each="user : ${listUsers}">
                 <td class="hideable-column">[[${user.id}]]</td>
                 <td>
-                    <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
-                    <img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" style="width: 100px"/>
+                    <div th:replace="fragments :: user_photos" />
                 </td>
                 <td class="hideable-column">[[${user.email}]]</td>
                 <td>[[${user.firstName}]]</td>
@@ -120,18 +119,10 @@
                 <td>[[${user.roles}]]</td>
 
                 <td>
-                    <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this user"></a>
-                    <a th:if="${user.enabled == false}" class="fas fa-circle fa-2x icon-dark"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this user"></a>
+                    <div th:replace="fragments :: user_status" />
                 </td>
                 <td>
-                    <a class="fas fa-edit fa-2x icon-green"
-                       th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
-                    <a class="fas fa-trash-alt fa-2x icon-darkred link-delete"
-                       th:href="@{'/users/delete/' + ${user.id}}"
-                       th:userId="${user.id}"
-                       title="Delete this user"></a>
+                    <div th:replace="fragments :: user_actions" />
                 </td>
             </tr>
             </tbody>
@@ -141,25 +132,15 @@
     <div class="less-details">
         <div th:each="user : ${listUsers}" class="row m-1">
             <div class="col-4">
-                <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
-                <img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}" style="width: 100px"/>
+                <div th:replace="fragments :: user_photos" />
             </div>
             <div class="col-8">
                 <div>[[${user.fullName}]]</div>
                 <div>[[${user.roles}]]</div>
                 <div class="mt-2">
-                    <a th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/false'}" title="Disable this user"></a>
-                    <a th:if="${user.enabled == false}" class="fas fa-circle fa-2x icon-dark"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/true'}" title="Enable this user"></a>
+                    <div th:replace="fragments :: user_status" />
                     &nbsp;
-                    <a class="fas fa-edit fa-2x icon-green"
-                       th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
-                    &nbsp;
-                    <a class="fas fa-trash-alt fa-2x icon-darkred link-delete"
-                       th:href="@{'/users/delete/' + ${user.id}}"
-                       th:userId="${user.id}"
-                       title="Delete this user"></a>
+                    <div th:replace="fragments :: user_actions" />
                 </div>
             </div>
             <div>&nbsp;</div>
