@@ -1,5 +1,6 @@
-package com.shopme.admin.user;
+package com.shopme.admin.user.export;
 
+import com.shopme.admin.user.UserAbstractExporter;
 import com.shopme.common.entity.User;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.*;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class UserExcelExporter extends UserAbstractExporter{
+public class UserExcelExporter extends UserAbstractExporter {
 
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;

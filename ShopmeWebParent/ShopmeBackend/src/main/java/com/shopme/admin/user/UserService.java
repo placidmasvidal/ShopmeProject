@@ -22,6 +22,11 @@ public interface UserService {
 
   void delete(Integer id) throws UserNotFoundException;
 
+  User getByEmail(String email);
+
   @Transactional
   void updateUserEnabledStatus(Integer id, boolean enabled);
+
+  @Transactional
+  User updateAccount(User user);
 }
