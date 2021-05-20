@@ -1,4 +1,4 @@
-package com.shopme.admin.user;
+package com.shopme.admin.user.export;
 
 import com.shopme.common.entity.User;
 
