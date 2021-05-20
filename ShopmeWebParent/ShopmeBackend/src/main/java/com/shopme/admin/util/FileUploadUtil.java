@@ -13,7 +13,7 @@ import java.nio.file.StandardCopyOption;
 
 public class FileUploadUtil {
 
-    private static Logger LOG = LoggerFactory.getLogger(FileUploadUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FileUploadUtil.class);
 
     public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
@@ -39,13 +39,12 @@ public class FileUploadUtil {
                     try{
                     Files.delete(file);
                     } catch(IOException ex){
-                        LOG.error("Could not detele file: {}", file);
+                        LOG.error("Could not delete file: {}", file);
                     }
                 }
             });
         } catch(IOException ex){
             LOG.error("Could not list directory: " + dirPath);
-
         }
     }
 }
