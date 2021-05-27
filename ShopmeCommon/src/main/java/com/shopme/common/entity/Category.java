@@ -135,4 +135,9 @@ public class Category {
     copiedCategory.setName(name);
     return copiedCategory;
   }
+
+  @Transient
+  public String getImagePath(){
+    return "/category-images/" + this.id + "/" + this.image;
+  }
 }
