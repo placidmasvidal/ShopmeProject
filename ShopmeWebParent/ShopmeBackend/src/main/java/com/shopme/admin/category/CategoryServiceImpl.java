@@ -2,7 +2,6 @@ package com.shopme.admin.category;
 
 import com.shopme.common.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,7 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public List<Category> listAll() {
-    return (List<Category>) categoryRepository.findAll();
+    List<Category> rootCategories = categoryRepository.findRootCategories();
+    return listHierarchicalCategories(rootCategories);
   }
 
   @Override
@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
           String name = "--" + subCategory.getName();
           categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
 
-          listChildren(subCategory, 1, categoriesUsedInForm);
+          listSubCategoriesUsedInForm(subCategory, 1, categoriesUsedInForm);
         }
       }
     }
@@ -59,37 +59,42 @@ public class CategoryServiceImpl implements CategoryService {
     return categoriesUsedInForm;
   }
 
-  /*    @Override
-      public Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
-          return null;
+  private List<Category> listHierarchicalCategories(List<Category> rootCategories){
+    List<Category> hierarchicalCategories = new ArrayList<>();
+
+    for (Category rootCategory : rootCategories) {
+      hierarchicalCategories.add(Category.copyFull(rootCategory));
+
+      Set<Category> children = rootCategory.getChildren();
+      for (Category subCategory : children) {
+        String name = "--" + subCategory.getName();
+        hierarchicalCategories.add(Category.copyFull(subCategory, name));
+
+        listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1);
       }
+    }
 
-      @Override
-      public boolean isAliasUnique(Integer id, String alias) {
-          return false;
+    return hierarchicalCategories;
+  }
+
+  private void listSubHierarchicalCategories(List<Category> hierarchicalCategories, Category parent, int subLevel){
+    Set<Category> children = parent.getChildren();
+    int newSubLevel = subLevel + 1;
+
+    for (Category subCategory : children) {
+      String name = "";
+      for (int i = 0; i < newSubLevel; i++) {
+        name += "--";
       }
+      name += subCategory.getName();
 
-      @Override
-      public Category get(Integer id) throws CategoryNotFoundException {
-          return null;
-      }
+      hierarchicalCategories.add(Category.copyFull(subCategory, name));
 
-      @Override
-      public void delete(Integer id) throws CategoryNotFoundException {
+      listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel);
+    }
+  }
 
-      }
-
-      @Override
-      public Category getByAlias(String alias) {
-          return null;
-      }
-
-      @Override
-      public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
-
-      }
-  */
-  private void listChildren(Category parent, int subLevel, List<Category> categoriesUsedInForm) {
+  private void listSubCategoriesUsedInForm(Category parent, int subLevel, List<Category> categoriesUsedInForm) {
     int newSubLevel = subLevel + 1;
 
     Set<Category> children = parent.getChildren();
@@ -102,7 +107,7 @@ public class CategoryServiceImpl implements CategoryService {
       name += subCategory.getName();
       categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
 
-      listChildren(subCategory, newSubLevel, categoriesUsedInForm);
+      listSubCategoriesUsedInForm(subCategory, newSubLevel, categoriesUsedInForm);
     }
   }
 }

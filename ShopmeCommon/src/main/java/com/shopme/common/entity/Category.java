@@ -118,4 +118,21 @@ public class Category {
 
     return copiedCategory;
   }
+
+  public static Category copyFull(Category category){
+    Category copiedCategory = new Category();
+    copiedCategory.setId(category.getId());
+    copiedCategory.setName((category.getName()));
+    copiedCategory.setImage(category.getImage());
+    copiedCategory.setAlias(category.getAlias());
+    copiedCategory.setEnabled(category.isEnabled());
+
+    return copiedCategory;
+  }
+
+  public static Category copyFull(Category category, String name){
+    Category copiedCategory = Category.copyFull(category);
+    copiedCategory.setName(name);
+    return copiedCategory;
+  }
 }
