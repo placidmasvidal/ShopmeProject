@@ -68,6 +68,23 @@ public class CategoryController {
 
     return "categories/category_form";
   }
+
+  @PostMapping("/categories/save")
+  public String saveCategory(
+          Category category,
+          RedirectAttributes redirectAttributes,
+          @RequestParam("fileImage") MultipartFile multipartFile)
+          throws IOException {
+    String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+    category.setImage(fileName);
+    Category savedCategory = categoryService.saveCategory(category);
+
+    String uploadDir = "../category-images/" + savedCategory.getId();
+    FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+    redirectAttributes.addFlashAttribute("message", "The category has been saved succesfully.");
+    return "redirect:/categories";
+  }
 /*
   @GetMapping("/categories/page/{pageNum}")
   public String listByPage(
@@ -101,31 +118,6 @@ public class CategoryController {
     model.addAttribute("keyword", keyword);
 
     return "categories/categories";
-  }
-
-  @PostMapping("/users/save")
-  public String saveUser(
-      User user,
-      RedirectAttributes redirectAttributes,
-      @RequestParam("image") MultipartFile multipartFile)
-      throws IOException {
-
-    if (!multipartFile.isEmpty()) {
-      String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-      user.setPhotos(fileName);
-      User savedUser = userService.saveUser(user);
-
-      String uploadDir = "user-photos/" + savedUser.getId();
-
-      FileUploadUtil.cleanDir(uploadDir);
-      FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-    } else {
-      if (user.getPhotos().isEmpty()) user.setPhotos(null);
-      userService.saveUser(user);
-    }
-
-    redirectAttributes.addFlashAttribute("message", "The user has been saved successfully");
-    return getRedirectURLtoAffectedUser(user);
   }
 
   @GetMapping("/users/edit/{id}")

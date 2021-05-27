@@ -16,7 +16,7 @@ public interface CategoryService {
 
     List<Category> listCategoriesUsedInForm();
 
-    Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword);
+/*    Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword);
 
     boolean isAliasUnique(Integer id, String alias);
 
@@ -28,5 +28,5 @@ public interface CategoryService {
 
     @Transactional
     void updateCategoryEnabledStatus(Integer id, boolean enabled);
-
+*/
 }
