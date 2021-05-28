@@ -55,13 +55,11 @@
                 <td>[[${category.name}]]</td>
                 <td class="hideable-column">[[${category.alias}]]</td>
                 <td>
-                    <span class="fas fa-circle fa-2x icon-dark" /> </span>
+                    <div th:replace="fragments :: category_status" />
                 </td>
                 <td>
-                    <span class="fas fa-edit fa-2x icon-green"></span>
-                    <span class="fas fa-trash fa-2x icon-dark link-delete"></span>
+                    <div th:replace="fragments :: category_actions" />
                 </td>
-
             </tr>
             </tbody>
         </table>
@@ -77,10 +75,10 @@
     </div>
 
     <div class="text-center m-1" th:if="${totalItems > 0}">
-        <span>Showing users # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
+        <span>Showing categories # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
     </div>
     <div class="text-center m-1" th:unless="${totalItems > 0}">
-        <span>No users found</span>
+        <span>No categories found</span>
     </div>
 
     <div th:replace="fragments :: footer"></div>

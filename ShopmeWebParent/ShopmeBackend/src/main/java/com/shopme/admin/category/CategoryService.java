@@ -16,11 +16,11 @@ public interface CategoryService {
 
     List<Category> listCategoriesUsedInForm();
 
-/*    Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword);
+    Category get(Integer id) throws CategoryNotFoundException;
 
     boolean isAliasUnique(Integer id, String alias);
 
-    Category get(Integer id) throws CategoryNotFoundException;
+/*    Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword);
 
     void delete(Integer id) throws CategoryNotFoundException;
 

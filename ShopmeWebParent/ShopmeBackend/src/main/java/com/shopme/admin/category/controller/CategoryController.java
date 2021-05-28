@@ -1,5 +1,6 @@
 package com.shopme.admin.category.controller;
 
+import com.shopme.admin.category.CategoryNotFoundException;
 import com.shopme.admin.category.CategoryService;
 import com.shopme.admin.category.CategoryServiceImpl;
 import com.shopme.admin.category.export.CategoryCsvExporter;
@@ -75,16 +76,39 @@ public class CategoryController {
           RedirectAttributes redirectAttributes,
           @RequestParam("fileImage") MultipartFile multipartFile)
           throws IOException {
-    String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-    category.setImage(fileName);
-    Category savedCategory = categoryService.saveCategory(category);
 
-    String uploadDir = "../category-images/" + savedCategory.getId();
-    FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+    if (!multipartFile.isEmpty()) {
+      String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+      category.setImage(fileName);
+      Category savedCategory = categoryService.saveCategory(category);
+
+      String uploadDir = "../category-images/" + savedCategory.getId();
+
+      FileUploadUtil.cleanDir(uploadDir);
+      FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+    } else {
+      categoryService.saveCategory(category);
+    }
 
     redirectAttributes.addFlashAttribute("message", "The category has been saved succesfully.");
     return "redirect:/categories";
   }
+
+  @GetMapping("/categories/edit/{id}")
+  public String editCategory(
+          @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+    try {
+      Category category = categoryService.get(id);
+      model.addAttribute("category", category);
+      model.addAttribute("pageTitle", "Edit Category (ID: " + id + ")");
+      model.addAttribute("listCategories", categoryService.listCategoriesUsedInForm());
+      return "categories/category_form";
+    } catch (CategoryNotFoundException ex) {
+      redirectAttributes.addFlashAttribute("message", ex.getMessage());
+      return "redirect:/categories";
+    }
+  }
+
 /*
   @GetMapping("/categories/page/{pageNum}")
   public String listByPage(
@@ -118,22 +142,6 @@ public class CategoryController {
     model.addAttribute("keyword", keyword);
 
     return "categories/categories";
-  }
-
-  @GetMapping("/users/edit/{id}")
-  public String editUser(
-      @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-    try {
-      User user = userService.get(id);
-      List<Role> listRoles = roleService.listRoles();
-      model.addAttribute("user", user);
-      model.addAttribute("listRoles", listRoles);
-      model.addAttribute("pageTitle", "Edit User (ID: " + id + ")");
-      return "users/user_form";
-    } catch (UserNotFoundException ex) {
-      redirectAttributes.addFlashAttribute("message", ex.getMessage());
-      return "redirect:/users";
-    }
   }
 
   @GetMapping("/users/delete/{id}")

@@ -1,11 +1,14 @@
 package com.shopme.admin.category;
 
+import com.shopme.admin.user.UserNotFoundException;
 import com.shopme.common.entity.Category;
+import com.shopme.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -57,6 +60,34 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     return categoriesUsedInForm;
+  }
+
+  @Override
+  public Category get(Integer id) throws CategoryNotFoundException {
+    try {
+      return categoryRepository.findById(id).get();
+    } catch (NoSuchElementException ex) {
+      throw new CategoryNotFoundException("Couldn't find any category with ID: " + id);
+    }
+  }
+
+  @Override
+  public boolean isAliasUnique(Integer id, String alias) {
+    Category categoryByAlias = categoryRepository.getCategoryByAlias(alias);
+
+    if (categoryByAlias == null) return true;
+
+    boolean isCreatingNew = (id == null);
+
+    if (isCreatingNew) {
+      if (categoryByAlias != null) return false;
+    } else {
+      if (categoryByAlias.getId() != id) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   private List<Category> listHierarchicalCategories(List<Category> rootCategories){
