@@ -4,12 +4,10 @@ import com.shopme.admin.user.UserNotFoundException;
 import com.shopme.common.entity.Category;
 import com.shopme.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -35,20 +33,20 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public List<Category> listAll() {
-    List<Category> rootCategories = categoryRepository.findRootCategories();
+    List<Category> rootCategories = categoryRepository.findRootCategories(Sort.by("name").ascending());
     return listHierarchicalCategories(rootCategories);
   }
 
   @Override
   public List<Category> listCategoriesUsedInForm() {
     List<Category> categoriesUsedInForm = new ArrayList<>();
-    Iterable<Category> categoriesInDB = categoryRepository.findAll();
+    Iterable<Category> categoriesInDB = categoryRepository.findRootCategories(Sort.by("name").ascending());
 
     for (Category category : categoriesInDB) {
       if (category.getParent() == null) {
         categoriesUsedInForm.add(Category.copyIdAndName(category));
 
-        Set<Category> children = category.getChildren();
+        Set<Category> children = sortSubCategories(category.getChildren());
 
         for (Category subCategory : children) {
           String name = "--" + subCategory.getName();
@@ -107,7 +105,7 @@ public class CategoryServiceImpl implements CategoryService {
     for (Category rootCategory : rootCategories) {
       hierarchicalCategories.add(Category.copyFull(rootCategory));
 
-      Set<Category> children = rootCategory.getChildren();
+      Set<Category> children = sortSubCategories(rootCategory.getChildren());
       for (Category subCategory : children) {
         String name = "--" + subCategory.getName();
         hierarchicalCategories.add(Category.copyFull(subCategory, name));
@@ -120,7 +118,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   private void listSubHierarchicalCategories(List<Category> hierarchicalCategories, Category parent, int subLevel){
-    Set<Category> children = parent.getChildren();
+    Set<Category> children = sortSubCategories(parent.getChildren());
     int newSubLevel = subLevel + 1;
 
     for (Category subCategory : children) {
@@ -139,7 +137,7 @@ public class CategoryServiceImpl implements CategoryService {
   private void listSubCategoriesUsedInForm(Category parent, int subLevel, List<Category> categoriesUsedInForm) {
     int newSubLevel = subLevel + 1;
 
-    Set<Category> children = parent.getChildren();
+    Set<Category> children = sortSubCategories(parent.getChildren());
 
     for (Category subCategory : children) {
       String name = "";
@@ -151,6 +149,18 @@ public class CategoryServiceImpl implements CategoryService {
 
       listSubCategoriesUsedInForm(subCategory, newSubLevel, categoriesUsedInForm);
     }
+  }
+
+  private SortedSet<Category> sortSubCategories(Set<Category> children){
+    SortedSet<Category> sortedChildren = new TreeSet<>(new Comparator<Category>() {
+      @Override
+      public int compare(Category category1, Category category2) {
+        return category1.getName().compareTo(category2.getName());
+      }
+    });
+
+    sortedChildren.addAll(children);
+    return sortedChildren;
   }
 
 }

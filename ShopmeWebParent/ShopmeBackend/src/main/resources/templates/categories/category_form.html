@@ -29,8 +29,8 @@
                 <label class="col-sm-4 col-form-label">Parent Category:</label>
                 <div class="col-sm-8">
                     <select class="form-control" th:field="*{parent}">
+                        <option value="0">[No Parent]</option>
                         <th:block th:each="cat : ${listCategories}">
-                            <option value="0">[No Parent]</option>
                             <option th:value="${cat.id}">[[${cat.name}]]</option>
                         </th:block>
                     </select>
