@@ -12,7 +12,7 @@ public interface CategoryService {
 
     Category saveCategory(Category category);
 
-    List<Category> listAll();
+    List<Category> listAll(String sortDir);
 
     List<Category> listCategoriesUsedInForm();
 

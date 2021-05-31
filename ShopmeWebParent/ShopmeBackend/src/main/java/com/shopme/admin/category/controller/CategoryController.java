@@ -52,12 +52,16 @@ public class CategoryController {
   }
 
   @GetMapping("/categories")
-  public String listFirstPage(Model model) {
-    List<Category> listCategories = categoryService.listAll();
+  public String listAll(@Param("sortDir") String sortDir, Model model) {
+    if (sortDir == null || sortDir.isEmpty()){
+      sortDir = "asc";
+    }
+    List<Category> listCategories = categoryService.listAll(sortDir);
+    String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
     model.addAttribute("listCategories", listCategories);
+    model.addAttribute("reverseSortDir", reverseSortDir);
 
     return "categories/categories";
-//    return listByPage(1, model, "name", "asc", null);
   }
 
   @GetMapping("/categories/new")
