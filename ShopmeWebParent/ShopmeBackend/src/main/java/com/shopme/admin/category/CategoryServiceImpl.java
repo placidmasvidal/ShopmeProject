@@ -72,22 +72,33 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public boolean isAliasUnique(Integer id, String alias) {
-    Category categoryByAlias = categoryRepository.getCategoryByAlias(alias);
+  public String checkUnique(Integer id, String name, String alias) {
 
-    if (categoryByAlias == null) return true;
+    boolean isCreatingNew = (id == null || id == 0);
 
-    boolean isCreatingNew = (id == null);
+    Category categoryByName = categoryRepository.findByName(name);
 
-    if (isCreatingNew) {
-      if (categoryByAlias != null) return false;
-    } else {
-      if (categoryByAlias.getId() != id) {
-        return false;
+    if(isCreatingNew){
+      if(categoryByName != null){
+        return "DuplicateName";
+      } else{
+        Category categoryByAlias = categoryRepository.findByAlias(alias);
+        if(categoryByAlias != null){
+          return "DuplicateAlias";
+        }
+      }
+    } else{
+      if(categoryByName != null && categoryByName.getId() != id){
+        return "DuplicateName";
+      }
+
+      Category categoryByAlias = categoryRepository.findByAlias(alias);
+      if(categoryByAlias != null && categoryByAlias.getId() != id){
+        return "DuplicateAlias";
       }
     }
 
-    return true;
+    return "OK";
   }
 
   private List<Category> listHierarchicalCategories(List<Category> rootCategories){
@@ -141,4 +152,5 @@ public class CategoryServiceImpl implements CategoryService {
       listSubCategoriesUsedInForm(subCategory, newSubLevel, categoriesUsedInForm);
     }
   }
+
 }

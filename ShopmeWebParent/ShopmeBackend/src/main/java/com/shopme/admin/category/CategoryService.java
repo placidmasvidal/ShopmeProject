@@ -18,7 +18,7 @@ public interface CategoryService {
 
     Category get(Integer id) throws CategoryNotFoundException;
 
-    boolean isAliasUnique(Integer id, String alias);
+    String checkUnique(Integer id, String name, String alias);
 
 /*    Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword);
 
