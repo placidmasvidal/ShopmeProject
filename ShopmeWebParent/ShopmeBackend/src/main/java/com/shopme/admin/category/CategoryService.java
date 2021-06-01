@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface CategoryService {
 
-    Category createCategory();
-
     Category saveCategory(Category category);
 
     List<Category> listAll(String sortDir);
@@ -20,13 +18,13 @@ public interface CategoryService {
 
     String checkUnique(Integer id, String name, String alias);
 
+    @Transactional
+    void updateCategoryEnabledStatus(Integer id, boolean enabled);
+
 /*    Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword);
 
     void delete(Integer id) throws CategoryNotFoundException;
 
     Category getByAlias(String alias);
-
-    @Transactional
-    void updateCategoryEnabledStatus(Integer id, boolean enabled);
 */
 }

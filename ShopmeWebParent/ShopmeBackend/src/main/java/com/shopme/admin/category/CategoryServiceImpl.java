@@ -22,11 +22,6 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public Category createCategory() {
-    return null;
-  }
-
-  @Override
   public Category saveCategory(Category category) {
     return categoryRepository.save(category);
   }
@@ -35,9 +30,9 @@ public class CategoryServiceImpl implements CategoryService {
   public List<Category> listAll(String sortDir) {
     Sort sort = Sort.by("name");
 
-    if (sortDir.equals("asc")){
+    if (sortDir.equals("asc")) {
       sort = sort.ascending();
-    } else if(sortDir.equals("desc")){
+    } else if (sortDir.equals("desc")) {
       sort = sort.descending();
     }
 
@@ -48,7 +43,8 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public List<Category> listCategoriesUsedInForm() {
     List<Category> categoriesUsedInForm = new ArrayList<>();
-    Iterable<Category> categoriesInDB = categoryRepository.findRootCategories(Sort.by("name").ascending());
+    Iterable<Category> categoriesInDB =
+        categoryRepository.findRootCategories(Sort.by("name").ascending());
 
     for (Category category : categoriesInDB) {
       if (category.getParent() == null) {
@@ -84,22 +80,22 @@ public class CategoryServiceImpl implements CategoryService {
 
     Category categoryByName = categoryRepository.findByName(name);
 
-    if(isCreatingNew){
-      if(categoryByName != null){
+    if (isCreatingNew) {
+      if (categoryByName != null) {
         return "DuplicateName";
-      } else{
+      } else {
         Category categoryByAlias = categoryRepository.findByAlias(alias);
-        if(categoryByAlias != null){
+        if (categoryByAlias != null) {
           return "DuplicateAlias";
         }
       }
-    } else{
-      if(categoryByName != null && categoryByName.getId() != id){
+    } else {
+      if (categoryByName != null && categoryByName.getId() != id) {
         return "DuplicateName";
       }
 
       Category categoryByAlias = categoryRepository.findByAlias(alias);
-      if(categoryByAlias != null && categoryByAlias.getId() != id){
+      if (categoryByAlias != null && categoryByAlias.getId() != id) {
         return "DuplicateAlias";
       }
     }
@@ -107,7 +103,12 @@ public class CategoryServiceImpl implements CategoryService {
     return "OK";
   }
 
-  private List<Category> listHierarchicalCategories(List<Category> rootCategories, String sortDir){
+  @Override
+  public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
+    categoryRepository.updateEnabledStatus(id, enabled);
+  }
+
+  private List<Category> listHierarchicalCategories(List<Category> rootCategories, String sortDir) {
     List<Category> hierarchicalCategories = new ArrayList<>();
 
     for (Category rootCategory : rootCategories) {
@@ -125,7 +126,8 @@ public class CategoryServiceImpl implements CategoryService {
     return hierarchicalCategories;
   }
 
-  private void listSubHierarchicalCategories(List<Category> hierarchicalCategories, Category parent, int subLevel, String sortDir){
+  private void listSubHierarchicalCategories(
+      List<Category> hierarchicalCategories, Category parent, int subLevel, String sortDir) {
     Set<Category> children = sortSubCategories(parent.getChildren(), sortDir);
     int newSubLevel = subLevel + 1;
 
@@ -142,7 +144,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
   }
 
-  private void listSubCategoriesUsedInForm(Category parent, int subLevel, List<Category> categoriesUsedInForm) {
+  private void listSubCategoriesUsedInForm(
+      Category parent, int subLevel, List<Category> categoriesUsedInForm) {
     int newSubLevel = subLevel + 1;
 
     Set<Category> children = sortSubCategories(parent.getChildren());
@@ -159,25 +162,25 @@ public class CategoryServiceImpl implements CategoryService {
     }
   }
 
-  private SortedSet<Category> sortSubCategories(Set<Category> children){
+  private SortedSet<Category> sortSubCategories(Set<Category> children) {
     return sortSubCategories(children, "asc");
   }
 
-  private SortedSet<Category> sortSubCategories(Set<Category> children, String sortDir){
-    SortedSet<Category> sortedChildren = new TreeSet<>(new Comparator<Category>() {
-      @Override
-      public int compare(Category category1, Category category2) {
-        if(sortDir == null || sortDir.isEmpty() || "asc".equals(sortDir)){
-          return category1.getName().compareTo(category2.getName());
-        } else {
-          return category2.getName().compareTo(category1.getName());
-        }
-
-      }
-    });
+  private SortedSet<Category> sortSubCategories(Set<Category> children, String sortDir) {
+    SortedSet<Category> sortedChildren =
+        new TreeSet<>(
+            new Comparator<Category>() {
+              @Override
+              public int compare(Category category1, Category category2) {
+                if (sortDir == null || sortDir.isEmpty() || "asc".equals(sortDir)) {
+                  return category1.getName().compareTo(category2.getName());
+                } else {
+                  return category2.getName().compareTo(category1.getName());
+                }
+              }
+            });
 
     sortedChildren.addAll(children);
     return sortedChildren;
   }
-
 }

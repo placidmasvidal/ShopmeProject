@@ -113,79 +113,18 @@ public class CategoryController {
     }
   }
 
-/*
-  @GetMapping("/categories/page/{pageNum}")
-  public String listByPage(
-      @PathVariable(name = "pageNum") int pageNum,
-      Model model,
-      @Param("sortField") String sortField,
-      @Param("sortDir") String sortDir,
-      @Param("keyword") String keyword) {
-    LOG.info("Sort field: {}", sortField);
-    LOG.info("Sort order: {}", sortDir);
-    Page<Category> page = categoryService.listByPage(pageNum, sortField, sortDir, keyword);
-    List<Category> listCategories = page.getContent();
-
-    long startCount = (pageNum - 1) * UserServiceImpl.USERS_PER_PAGE + 1;
-    long endCount = startCount + CategoryServiceImpl.CATEGORIES_PER_PAGE - 1;
-    if (endCount > page.getTotalElements()) {
-      endCount = page.getTotalElements();
-    }
-
-    String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
-
-    model.addAttribute("totalPages", page.getTotalPages());
-    model.addAttribute("currentPage", pageNum);
-    model.addAttribute("startCount", startCount);
-    model.addAttribute("endCount", endCount);
-    model.addAttribute("totalItems", page.getTotalElements());
-    model.addAttribute("listCategories", listCategories);
-    model.addAttribute("sortField", sortField);
-    model.addAttribute("sortDir", sortDir);
-    model.addAttribute("reverseSortDir", reverseSortDir);
-    model.addAttribute("keyword", keyword);
-
-    return "categories/categories";
-  }
-
-  @GetMapping("/users/delete/{id}")
-  public String deleteUser(
-      @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-    try {
-      userService.delete(id);
-      redirectAttributes.addFlashAttribute(
-          "message", "The user ID: " + id + " has been deleted successfully");
-    } catch (UserNotFoundException ex) {
-      redirectAttributes.addFlashAttribute("message", ex.getMessage());
-    }
-    return "redirect:/users";
-  }
-
-  @GetMapping("/users/{id}/enabled/{status}")
+  @GetMapping("/categories/{id}/enabled/{status}")
   public String updateUserEnabledStatus(
-      @PathVariable("id") Integer id,
-      @PathVariable("status") boolean enabled,
-      RedirectAttributes redirectAttributes) {
-    userService.updateUserEnabledStatus(id, enabled);
+          @PathVariable("id") Integer id,
+          @PathVariable("status") boolean enabled,
+          RedirectAttributes redirectAttributes) {
+    categoryService.updateCategoryEnabledStatus(id, enabled);
     String status = enabled ? "enabled" : "disabled";
-    String message = "The user ID " + id + " has been " + status;
+    String message = "The category ID " + id + " has been " + status;
 
     redirectAttributes.addFlashAttribute("message", message);
 
-    return "redirect:/users";
+    return "redirect:/categories";
   }
 
-  @GetMapping("/users/export/csv")
-  public void exportToCSV(HttpServletResponse response) throws IOException {
-    List<User> listUsers = userService.listAll();
-
-    userCsvExporter.export(listUsers, response);
-  }
-
-  private String getRedirectURLtoAffectedUser(User user) {
-    String firstPartOfEmail = user.getEmail().split("@")[0];
-    return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
-  }
-
- */
 }
