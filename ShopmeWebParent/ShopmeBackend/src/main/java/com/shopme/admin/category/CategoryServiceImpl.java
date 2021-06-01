@@ -6,10 +6,12 @@ import com.shopme.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
+@Transactional
 public class CategoryServiceImpl implements CategoryService {
 
   public static final int CATEGORIES_PER_PAGE = 8;
@@ -106,6 +108,15 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
     categoryRepository.updateEnabledStatus(id, enabled);
+  }
+
+  @Override
+  public void delete(Integer id) throws CategoryNotFoundException {
+    Long countById = categoryRepository.countById(id);
+    if (countById == null || countById == 0) {
+      throw new CategoryNotFoundException("Couldn't find any category with ID: " + id);
+    }
+    categoryRepository.deleteById(id);
   }
 
   private List<Category> listHierarchicalCategories(List<Category> rootCategories, String sortDir) {

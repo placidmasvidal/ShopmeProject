@@ -21,9 +21,9 @@ public interface CategoryService {
     @Transactional
     void updateCategoryEnabledStatus(Integer id, boolean enabled);
 
-/*    Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword);
-
     void delete(Integer id) throws CategoryNotFoundException;
+
+/*    Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword);
 
     Category getByAlias(String alias);
 */

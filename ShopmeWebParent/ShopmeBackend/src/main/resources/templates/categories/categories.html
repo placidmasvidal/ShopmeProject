@@ -84,8 +84,21 @@
         <span>No categories found</span>
     </div>
 
+    <div th:replace="modal_fragments :: confirm_modal"></div>
+
     <div th:replace="fragments :: footer"></div>
 
 </div>
+<script th:src="@{/js/common_list.js}"></script>
+<script type="text/javascript">
+    moduleURL = "[[@{/categories}]]";
+
+    $(document).ready(function (){
+        $(".link-delete").on("click", function(e) {
+            e.preventDefault();
+            showDeleteConfirmModal($(this), 'category');
+        })
+    })
+</script>
 </body>
 </html>

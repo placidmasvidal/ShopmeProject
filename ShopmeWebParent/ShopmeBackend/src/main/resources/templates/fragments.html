@@ -56,18 +56,20 @@
     &nbsp;
     <a class="fas fa-trash fa-2x icon-dark link-delete"
        th:href="@{'/users/delete/' + ${user.id}}"
-       th:userId="${user.id}"
+       th:entityId="${user.id}"
        title="Delete this user"></a>
 </div>
 
 <div th:fragment="category_actions" th:remove="tag">
     <a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/' + ${category.id}}"
        title="Edit this category"></a>
-    &nbsp;
+    &nbsp;&nbsp;
+    <th:block th:if="${category.hasChildren == false}">
     <a class="fas fa-trash fa-2x icon-dark link-delete"
        th:href="@{'/categories/delete/' + ${category.id}}"
-       th:categoryId="${category.id}"
+       th:entityId="${category.id}"
        title="Delete this category"></a>
+    </th:block>
 </div>
 
 <div th:fragment="category_status" th:remove="tag">
