@@ -1,24 +1,16 @@
 package com.shopme.admin.category.controller;
 
 import com.shopme.admin.category.CategoryNotFoundException;
+import com.shopme.admin.category.CategoryPageInfo;
 import com.shopme.admin.category.CategoryService;
 import com.shopme.admin.category.CategoryServiceImpl;
 import com.shopme.admin.category.export.CategoryCsvExporter;
-import com.shopme.admin.user.RoleService;
-import com.shopme.admin.user.UserNotFoundException;
-import com.shopme.admin.user.UserService;
 import com.shopme.admin.user.UserServiceImpl;
-import com.shopme.admin.user.export.UserCsvExporter;
-import com.shopme.admin.user.export.UserExcelExporter;
-import com.shopme.admin.user.export.UserPdfExporter;
 import com.shopme.admin.util.FileUploadUtil;
 import com.shopme.common.entity.Category;
-import com.shopme.common.entity.Role;
-import com.shopme.common.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -52,14 +43,36 @@ public class CategoryController {
   }
 
   @GetMapping("/categories")
-  public String listAll(@Param("sortDir") String sortDir, Model model) {
+  public String listFirstPage(@Param("sortDir") String sortDir, Model model) {
+    return listByPage(1, sortDir, model);
+  }
+
+  @GetMapping("/categories/page/{pageNum}")
+  public String listByPage(@PathVariable(name = "pageNum") int pageNum, @Param("sortDir") String sortDir, Model model){
     if (sortDir == null || sortDir.isEmpty()){
       sortDir = "asc";
     }
-    List<Category> listCategories = categoryService.listAll(sortDir);
+
+    CategoryPageInfo pageInfo = new CategoryPageInfo();
+
+    List<Category> listCategories = categoryService.listByPage(pageInfo, pageNum, sortDir);
     String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+
+    long startCount = (pageNum - 1) * CategoryServiceImpl.ROOT_CATEGORIES_PER_PAGE + 1;
+    long endCount = startCount + CategoryServiceImpl.ROOT_CATEGORIES_PER_PAGE - 1;
+    if (endCount > pageInfo.getTotalElements()) {
+      endCount = pageInfo.getTotalElements();
+    }
+
+    model.addAttribute("totalPages", pageInfo.getTotalPages());
+    model.addAttribute("totalItems", pageInfo.getTotalElements());
+    model.addAttribute("currentPage", pageNum);
     model.addAttribute("listCategories", listCategories);
     model.addAttribute("reverseSortDir", reverseSortDir);
+    model.addAttribute("sortField", "name");
+    model.addAttribute("sortDir", sortDir);
+    model.addAttribute("startCount", startCount);
+    model.addAttribute("endCount", endCount);
 
     return "categories/categories";
   }

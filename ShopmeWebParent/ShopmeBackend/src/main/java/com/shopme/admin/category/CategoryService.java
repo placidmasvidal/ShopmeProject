@@ -10,7 +10,7 @@ public interface CategoryService {
 
     Category saveCategory(Category category);
 
-    List<Category> listAll(String sortDir);
+    List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortDir);
 
     List<Category> listCategoriesUsedInForm();
 
@@ -23,8 +23,4 @@ public interface CategoryService {
 
     void delete(Integer id) throws CategoryNotFoundException;
 
-/*    Page<Category> listByPage(int pageNum, String sortField, String sortDir, String keyword);
-
-    Category getByAlias(String alias);
-*/
 }
