@@ -10,7 +10,7 @@ public interface CategoryService {
 
     Category saveCategory(Category category);
 
-    List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortDir);
+    List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortDir, String keyword);
 
     List<Category> listCategoriesUsedInForm();
 
