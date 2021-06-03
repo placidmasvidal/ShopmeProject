@@ -4,6 +4,9 @@ import com.shopme.admin.category.export.CategoryCsvExporter;
 import com.shopme.admin.user.export.UserCsvExporter;
 import com.shopme.admin.user.export.UserExcelExporter;
 import com.shopme.admin.user.export.UserPdfExporter;
+import com.shopme.admin.util.export.AbstractExporter;
+import com.shopme.admin.util.export.ExporterFactory;
+import com.shopme.admin.util.export.ExporterTypeEnum;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,21 +15,21 @@ public class UtilsConfig {
 
   @Bean
   public UserCsvExporter getUserCsvExporter() {
-    return new UserCsvExporter();
+    return (UserCsvExporter) ExporterFactory.createExporter(ExporterTypeEnum.USER_CSV);
   }
 
   @Bean
   public UserExcelExporter getUserExcelExporter() {
-    return new UserExcelExporter();
+    return (UserExcelExporter) ExporterFactory.createExporter(ExporterTypeEnum.USER_EXCEL);
   }
 
   @Bean
   public UserPdfExporter getUserPdfExporter() {
-    return new UserPdfExporter();
+    return (UserPdfExporter) ExporterFactory.createExporter(ExporterTypeEnum.USER_PDF);
   }
 
   @Bean
   public CategoryCsvExporter getCategoryCsvExporter() {
-    return new CategoryCsvExporter();
+    return (CategoryCsvExporter) ExporterFactory.createExporter(ExporterTypeEnum.CAT_CSV);
   }
 }
