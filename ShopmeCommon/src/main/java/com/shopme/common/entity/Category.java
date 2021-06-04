@@ -120,6 +120,11 @@ public class Category {
     this.hasChildren = hasChildren;
   }
 
+  @Override
+  public String toString() {
+    return this.name;
+  }
+
   public static Category copyIdAndName(Category category) {
     Category copiedCategory = new Category();
     copiedCategory.setId(category.getId());
