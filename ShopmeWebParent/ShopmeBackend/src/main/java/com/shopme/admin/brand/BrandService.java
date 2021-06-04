@@ -13,4 +13,6 @@ public interface BrandService {
     public Brand get(Integer id) throws BrandNotFoundException;
 
     public void delete(Integer id) throws BrandNotFoundException;
+
+    public String checkUnique(Integer id, String name);
 }
