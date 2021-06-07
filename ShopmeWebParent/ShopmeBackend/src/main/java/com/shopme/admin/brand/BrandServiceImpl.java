@@ -56,11 +56,11 @@ public class BrandServiceImpl implements BrandService {
 
     if (isCreatingNew) {
       if (brandByName != null) {
-        return "DuplicateName";
+        return "Duplicate";
       }
     } else {
       if (brandByName != null && brandByName.getId() != id) {
-        return "DuplicateName";
+        return "Duplicate";
       }
     }
     return "OK";
