@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class BrandServiceImpl implements BrandService {
@@ -18,8 +19,8 @@ public class BrandServiceImpl implements BrandService {
   }
 
   @Override
-  public Brand saveBrand(Brand brand) {
-    return null;
+  public Brand save(Brand brand) {
+    return brandRepository.save(brand);
   }
 
   @Override
@@ -29,11 +30,23 @@ public class BrandServiceImpl implements BrandService {
 
   @Override
   public Brand get(Integer id) throws BrandNotFoundException {
-    return brandRepository.findById(id).get();
+    try{
+      return brandRepository.findById(id).get();
+    } catch(NoSuchElementException ex){
+      throw new BrandNotFoundException("Could not find any brand with ID " + id);
+    }
   }
 
   @Override
-  public void delete(Integer id) throws BrandNotFoundException {}
+  public void delete(Integer id) throws BrandNotFoundException {
+    Long countById = brandRepository.countById(id);
+
+    if(countById == null || countById == 0){
+      throw new BrandNotFoundException("Could not find any brand with ID " + id);
+    }
+
+    brandRepository.deleteById(id);
+  }
 
   @Override
   public String checkUnique(Integer id, String name) {
