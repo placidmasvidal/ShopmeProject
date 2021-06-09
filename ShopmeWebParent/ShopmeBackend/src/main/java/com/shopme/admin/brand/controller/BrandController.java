@@ -2,6 +2,7 @@ package com.shopme.admin.brand.controller;
 
 import com.shopme.admin.brand.BrandNotFoundException;
 import com.shopme.admin.brand.BrandService;
+import com.shopme.admin.brand.BrandServiceImpl;
 import com.shopme.admin.category.CategoryService;
 import com.shopme.admin.util.FileUploadUtil;
 import com.shopme.common.entity.Brand;
@@ -9,6 +10,7 @@ import com.shopme.common.entity.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -38,10 +40,29 @@ public class BrandController {
   }
 
   @GetMapping("/brands")
-  public String listAll(Model model) {
-    List<Brand> listBrands = brandService.listAll();
+  public String listFirstPage(@Param("sortDir") String sortDir, Model model){
+    return listByPage(1, sortDir, null, model);
+  }
+
+  @GetMapping("/brands/page/{pageNum}")
+  public String listByPage(@PathVariable(name = "pageNum") int pageNum,
+                              @Param("sortDir") String sortDir,
+                              @Param("keyword") String keyword,
+                              Model model) {
+
+    sortDir = (sortDir == null || sortDir.isEmpty()) ? "asc" : sortDir;
+
+    List<Brand> listBrands = brandService.listByPage(pageNum, sortDir, keyword).getContent();
+
+    String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
     model.addAttribute("listBrands", listBrands);
+    model.addAttribute("currentPage", pageNum);
+    model.addAttribute("sortField", "name");
+    model.addAttribute("sortDir", sortDir);
+    model.addAttribute("keyword", keyword);
+    model.addAttribute("reverseSortDir", reverseSortDir);
+
     return "/brands/brands";
   }
 

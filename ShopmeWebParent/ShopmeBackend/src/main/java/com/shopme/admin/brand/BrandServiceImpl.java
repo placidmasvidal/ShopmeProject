@@ -1,8 +1,11 @@
 package com.shopme.admin.brand;
 
 import com.shopme.common.entity.Brand;
-import com.shopme.common.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +13,8 @@ import java.util.NoSuchElementException;
 
 @Service
 public class BrandServiceImpl implements BrandService {
+
+  public static final int BRANDS_PER_PAGE = 10;
 
   private BrandRepository brandRepository;
 
@@ -24,8 +29,22 @@ public class BrandServiceImpl implements BrandService {
   }
 
   @Override
-  public List<Brand> listAll() {
-    return (List<Brand>) brandRepository.findAll();
+  public Page<Brand> listByPage(int pageNum, String sortDir, String keyword) {
+    Sort sort = Sort.by("name");
+
+    if (sortDir.equals("asc")) {
+      sort = sort.ascending();
+    } else if (sortDir.equals("desc")) {
+      sort = sort.descending();
+    }
+
+    Pageable pageable = PageRequest.of(pageNum -1, BRANDS_PER_PAGE, sort);
+
+    if(keyword != null){
+      return brandRepository.findAll(keyword, pageable);
+    }
+
+    return brandRepository.findAll(pageable);
   }
 
   @Override

@@ -1,14 +1,13 @@
 package com.shopme.admin.brand;
 
 import com.shopme.common.entity.Brand;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface BrandService {
 
     public Brand save(Brand brand);
 
-    public List<Brand> listAll();
+    public Page<Brand> listByPage(int pageNum, String sortDir, String keyword);
 
     public Brand get(Integer id) throws BrandNotFoundException;
 
