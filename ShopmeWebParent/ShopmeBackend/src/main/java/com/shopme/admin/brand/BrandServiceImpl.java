@@ -84,4 +84,9 @@ public class BrandServiceImpl implements BrandService {
     }
     return "OK";
   }
+
+  @Override
+  public List<Brand> listAll() {
+    return (List<Brand>) brandRepository.findAll();
+  }
 }
