@@ -1,7 +1,9 @@
 package com.shopme.admin.product.controller;
 
 import com.shopme.admin.brand.BrandService;
+import com.shopme.admin.category.CategoryNotFoundException;
 import com.shopme.admin.product.ProductService;
+import com.shopme.admin.util.FileUploadUtil;
 import com.shopme.common.entity.Brand;
 import com.shopme.common.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,4 +75,18 @@ public class ProductController {
 
     return "redirect:/products";
   }
+
+  @GetMapping("/products/delete/{id}")
+  public String deleteProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+      try {
+        productService.delete(id);
+        redirectAttributes.addFlashAttribute(
+                "message", "The product ID: " + id + " has been deleted successfully");
+      } catch (ProductNotFoundException ex) {
+        redirectAttributes.addFlashAttribute("message", ex.getMessage());
+      }
+
+    return "redirect:/products";
+  }
+
 }
