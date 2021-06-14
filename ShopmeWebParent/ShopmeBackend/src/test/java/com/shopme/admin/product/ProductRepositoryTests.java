@@ -35,6 +35,8 @@ public class ProductRepositoryTests {
     product.setShortDescription("Short description for Acer Aspire Desktop");
     product.setFullDescription("Full description for Acer Aspire Desktop");
 
+    product.setMainImage("main_image");
+
     product.setBrand(brand);
     product.setCategory(category);
 
@@ -90,5 +92,21 @@ public class ProductRepositoryTests {
     Optional<Product> result = productRepository.findById(id);
 
     assertThat(!result.isPresent());
+  }
+
+  @Test
+  public void testSaveProductWithImages(){
+    Integer productId = 1;
+
+    Product product = productRepository.findById(productId).get();
+
+    product.setMainImage("main image.jpg");
+    product.addExtraImage("extra image 1.png");
+    product.addExtraImage("extra_image_2.png");
+    product.addExtraImage("extra-image3.png");
+
+    Product savedProduct = productRepository.save(product);
+
+    assertThat(savedProduct.getImages().size()).isEqualTo(3);
   }
 }
