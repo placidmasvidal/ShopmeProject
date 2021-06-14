@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_head('Products - Shopme Admin')"/>
+<head th:replace="fragments :: page_head('Products - Shopme Admin', 'none')" />
 <body>
 <div class="container-fluid">
     <div th:replace="navigation :: menu"></div>
     <div>
         <h2>Manage Products</h2>
-        <a th:href="@{/products/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
 
+        <a th:href="@{/products/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
         <a th:href="@{/products/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
     </div>
 
-    <div th:replace="fragments :: search_form_and_message('/products/page/1')"/>
+    <div th:replace="fragments :: search_form_and_message('/products/page/1')" />
 
     <div class="full-details">
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
@@ -19,7 +19,7 @@
             <tr>
                 <th>ID</th>
                 <th>Main Image</th>
-                <th th:replace="fragments :: column_link('/products', 'name', 'Product Name', 'none')"/>
+                <th>Product Name</th>
                 <th>Brand</th>
                 <th>Category</th>
                 <th>Enabled</th>
@@ -30,41 +30,44 @@
             <tr th:each="product : ${listProducts}">
                 <td>[[${product.id}]]</td>
                 <td>
+
                 </td>
                 <td>[[${product.name}]]</td>
                 <td>[[${product.brand.name}]]</td>
                 <td>[[${product.category.name}]]</td>
                 <td>
-                    <div th:replace="fragments :: status(${product.enabled}, 'product', '/products/' + ${product.id})"/>
+                    <div th:replace="fragments :: status(${product.enabled}, 'product', '/products/' + ${product.id})" />
                 </td>
                 <td>
-                    <a class="fas fa-file-alt fa-2x icon-green" th:href="@{'/products/detail/' + ${product.id}}"
-                       title="View details of this Product"></a>
+                    <a class="fas fa-file-alt fa-2x icon-green"
+                       th:href="@{'/products/detail/' + ${product.id}}"
+                       title="View details of this product"
+                    ></a>
                     &nbsp;
-                    <div th:replace="fragments :: edit('product', '/products/edit/' + ${product.id})"/>
+                    <div th:replace="fragments :: edit('product', '/products/edit/' + ${product.id})" />
                     &nbsp;
-                    <div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id}, true)"/>
+                    <div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id}, true)" />
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+
+    <div th:replace="modal_fragments :: confirm_modal" />
+
+    <div th:replace="fragments :: footer"></div>
+
 </div>
-
-<div th:replace="modal_fragments :: confirm_modal"></div>
-
-<div th:replace="fragments :: footer"></div>
-
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
-    moduleURL = "[[@{/products}]]";
+    moduleURL = "[[@{/brands}]]";
 
-    $(document).ready(function () {
-        $(".link-delete").on("click", function (e) {
+    $(document).ready(function() {
+        $(".link-delete").on("click", function(e) {
             e.preventDefault();
-            showDeleteConfirmModal($(this), 'product');
-        })
-    })
+            showDeleteConfirmModal($(this), 'brand');
+        });
+    });
 </script>
 </body>
 </html>

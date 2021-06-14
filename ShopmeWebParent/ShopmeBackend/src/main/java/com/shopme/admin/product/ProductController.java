@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class ProductController {
   }
 
   @PostMapping("/products/save")
-  public String saveProduct(Product product) {
+  public String saveProduct(Product product, RedirectAttributes redirectAttributes) {
     System.out.println("Product name: " + product.getName());
     System.out.println("Brand ID: " + product.getBrand().getId());
     System.out.println("Category ID: " + product.getCategory().getId());
