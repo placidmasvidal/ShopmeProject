@@ -8,14 +8,16 @@ import java.util.List;
 
 public interface ProductService {
 
-    public List<Product> listAll();
+    List<Product> listAll();
 
-    public Product save(Product product);
+    Product save(Product product);
 
-    public String checkUnique(Integer id, String name);
+    String checkUnique(Integer id, String name);
 
     @Transactional
     void updateProductEnabledStatus(Integer id, boolean enabled);
 
     void delete(Integer id) throws ProductNotFoundException;
+
+    public Product get(Integer id) throws ProductNotFoundException;
 }

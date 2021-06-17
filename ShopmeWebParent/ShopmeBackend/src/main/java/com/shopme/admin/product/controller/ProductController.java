@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 public class ProductController {
@@ -156,15 +157,34 @@ public class ProductController {
   }
 
   private void setProductDetails(String[] detailNames, String[] detailValues, Product product) {
-    if(detailNames == null || detailNames.length == 0) return;
+    if (detailNames == null || detailNames.length == 0) return;
 
-    for (int count = 0; count < detailNames.length; count++){
+    for (int count = 0; count < detailNames.length; count++) {
       String name = detailNames[count];
       String value = detailValues[count];
 
-      if(!name.isEmpty() && !value.isEmpty()) {
+      if (!name.isEmpty() && !value.isEmpty()) {
         product.addDetail(name, value);
       }
+    }
+  }
+
+  @GetMapping("/products/edit/{id}")
+  public String editProduct(
+      @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+    try {
+      Product product = productService.get(id);
+
+      List<Brand> listBrands = brandService.listAll();
+
+      model.addAttribute("product", product);
+      model.addAttribute("pageTitle", "Edit product (ID: " + id + ")");
+      model.addAttribute("listBrands", listBrands);
+
+      return "products/product_form";
+    } catch (ProductNotFoundException ex) {
+      redirectAttributes.addFlashAttribute("message", ex.getMessage());
+      return "redirect:/products";
     }
   }
 }
