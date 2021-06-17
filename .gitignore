@@ -11,15 +11,11 @@ build
 
 ShopmeWebParent/ShopmeBackend/src/main/resources/application.properties
 
-user-photos/
-
 Sample\+Users\+Photos/Sample Users Photos/
 
 Shopme\+Sample\+Users\+Data/Shopme Sample Users Data/
 
 Shopme\+Sample\+Categories\+Data/Test\+Category\+Images/More Category Images/
-
-ShopmeWebParent/category-images/
 
 Shopme\+Sample\+Categories\+Data/Test\+Category\+Images/New Category Images/
 
@@ -29,6 +25,8 @@ Shopme\+Sample\+Categories\+Data/Test\+Category\+Images/Test Category Images/
 
 
 *.png
+*.jpeg
+*.jpg
 
 DataFiles/Sample\+Users\+Photos/Sample Users Photos/
 
