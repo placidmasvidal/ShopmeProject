@@ -177,9 +177,12 @@ public class ProductController {
 
       List<Brand> listBrands = brandService.listAll();
 
+      Integer numberOfExistingExtraImages = product.getImages().size();
+
       model.addAttribute("product", product);
       model.addAttribute("pageTitle", "Edit product (ID: " + id + ")");
       model.addAttribute("listBrands", listBrands);
+      model.addAttribute("numberOfExistingExtraImages", numberOfExistingExtraImages);
 
       return "products/product_form";
     } catch (ProductNotFoundException ex) {
