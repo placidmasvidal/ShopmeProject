@@ -239,6 +239,10 @@ public class Product {
     this.details.add(new ProductDetail(name, value, this));
   }
 
+  public void addDetail(Integer id, String name, String value){
+    this.details.add(new ProductDetail(id, name, value, this));
+  }
+
   @Transient
   public String getMainImagePath() {
     if (id == null || mainImage == null) return "/images/image-thumbnail.png";
