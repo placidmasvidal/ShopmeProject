@@ -151,6 +151,21 @@ public class ProductController {
     }
   }
 
+  @GetMapping("/products/detail/{id}")
+  public String viewProductDetails(
+          @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+    try {
+      Product product = productService.get(id);
+
+      model.addAttribute("product", product);
+
+      return "products/product_detail_modal";
+    } catch (ProductNotFoundException ex) {
+      redirectAttributes.addFlashAttribute("message", ex.getMessage());
+      return "redirect:/products";
+    }
+  }
+
   private void setMainImageName(MultipartFile mainImageMultipart, Product product) {
     if (!mainImageMultipart.isEmpty()) {
       String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
