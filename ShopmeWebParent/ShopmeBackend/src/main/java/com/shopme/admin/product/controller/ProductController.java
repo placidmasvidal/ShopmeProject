@@ -1,6 +1,7 @@
 package com.shopme.admin.product.controller;
 
 import com.shopme.admin.brand.BrandService;
+import com.shopme.admin.product.ProductConstants;
 import com.shopme.admin.product.ProductService;
 import com.shopme.admin.util.FileUploadUtil;
 import com.shopme.common.entity.Brand;
@@ -9,6 +10,8 @@ import com.shopme.common.entity.ProductImage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -43,11 +46,39 @@ public class ProductController {
   }
 
   @GetMapping("/products")
-  public String listAll(Model model) {
+  public String listFirstPage(Model model) {
+    return listByPage(1, model, "name", "asc", null);
+  }
 
-    List<Product> listProducts = productService.listAll();
+  @GetMapping("/products/page/{pageNum}")
+  public String listByPage(
+      @PathVariable(name = "pageNum") int pageNum,
+      Model model,
+      @Param("sortField") String sortField,
+      @Param("sortDir") String sortDir,
+      @Param("keyword") String keyword) {
+    Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword);
+    List<Product> listProducts = page.getContent();
 
+    long startCount = (pageNum - 1) * ProductConstants.PRODUCTS_PER_PAGE + 1;
+    long endCount = startCount + ProductConstants.PRODUCTS_PER_PAGE - 1;
+    if (endCount > page.getTotalElements()) {
+      endCount = page.getTotalElements();
+    }
+
+    String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+
+    model.addAttribute("currentPage", pageNum);
+    model.addAttribute("totalPages", page.getTotalPages());
+    model.addAttribute("startCount", startCount);
+    model.addAttribute("endCount", endCount);
+    model.addAttribute("totalItems", page.getTotalElements());
+    model.addAttribute("sortField", sortField);
+    model.addAttribute("sortDir", sortDir);
+    model.addAttribute("reverseSortDir", reverseSortDir);
+    model.addAttribute("keyword", keyword);
     model.addAttribute("listProducts", listProducts);
+
     return "products/products";
   }
 
@@ -75,8 +106,8 @@ public class ProductController {
       @RequestParam(name = "detailIDs", required = false) String[] detailIDs,
       @RequestParam(name = "detailNames", required = false) String[] detailNames,
       @RequestParam(name = "detailValues", required = false) String[] detailValues,
-  @RequestParam(name = "imageIDs", required = false) String[] imageIDs,
-  @RequestParam(name = "imageNames", required = false) String[] imageNames)
+      @RequestParam(name = "imageIDs", required = false) String[] imageIDs,
+      @RequestParam(name = "imageNames", required = false) String[] imageNames)
       throws IOException {
 
     setMainImageName(mainImageMultipart, product);
@@ -131,7 +162,7 @@ public class ProductController {
 
   @GetMapping("/products/edit/{id}")
   public String editProduct(
-          @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+      @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
     try {
       Product product = productService.get(id);
 
@@ -153,7 +184,7 @@ public class ProductController {
 
   @GetMapping("/products/detail/{id}")
   public String viewProductDetails(
-          @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+      @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
     try {
       Product product = productService.get(id);
 
@@ -209,7 +240,8 @@ public class ProductController {
     }
   }
 
-  private void setProductDetails(String[] detailIDs, String[] detailNames, String[] detailValues, Product product) {
+  private void setProductDetails(
+      String[] detailIDs, String[] detailNames, String[] detailValues, Product product) {
     if (detailNames == null || detailNames.length == 0) return;
 
     for (int count = 0; count < detailNames.length; count++) {
@@ -217,7 +249,7 @@ public class ProductController {
       String value = detailValues[count];
       Integer id = Integer.valueOf(detailIDs[count]);
 
-      if(id != 0){
+      if (id != 0) {
         product.addDetail(id, name, value);
       } else if (!name.isEmpty() && !value.isEmpty()) {
         product.addDetail(name, value);
@@ -225,12 +257,13 @@ public class ProductController {
     }
   }
 
-  private void setExistingExtraImagesNames(String[] imageIDs, String[] imageNames, Product product) {
-    if(imageIDs == null || imageIDs.length == 0) return;
+  private void setExistingExtraImagesNames(
+      String[] imageIDs, String[] imageNames, Product product) {
+    if (imageIDs == null || imageIDs.length == 0) return;
 
     Set<ProductImage> images = new HashSet<>();
 
-    for(int count = 0; count < imageIDs.length; count++){
+    for (int count = 0; count < imageIDs.length; count++) {
       Integer id = Integer.parseInt(imageIDs[count]);
       String name = imageNames[count];
       images.add(new ProductImage(id, name, product));
@@ -243,21 +276,22 @@ public class ProductController {
     String extraImageDir = "../product-images/" + product.getId() + "/extras";
     Path dirPath = Paths.get(extraImageDir);
 
-    try{
-      Files.list(dirPath).forEach(file -> {
-        String fileName = file.toFile().getName();
-        if(!product.containsImageName(fileName)){
-          try{
-            Files.delete(file);
-            LOGGER.info("Deleted extra image: {}", fileName);
-          } catch (IOException ex){
-            LOGGER.error("could not delete extra image: {}", fileName);
-          }
-        }
-      });
-    } catch(IOException ex){
+    try {
+      Files.list(dirPath)
+          .forEach(
+              file -> {
+                String fileName = file.toFile().getName();
+                if (!product.containsImageName(fileName)) {
+                  try {
+                    Files.delete(file);
+                    LOGGER.info("Deleted extra image: {}", fileName);
+                  } catch (IOException ex) {
+                    LOGGER.error("could not delete extra image: {}", fileName);
+                  }
+                }
+              });
+    } catch (IOException ex) {
       LOGGER.error("could not list directory: {}", dirPath);
     }
   }
-
 }

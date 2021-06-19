@@ -1,9 +1,6 @@
 package com.shopme.admin.user.controller;
 
-import com.shopme.admin.user.RoleService;
-import com.shopme.admin.user.UserNotFoundException;
-import com.shopme.admin.user.UserService;
-import com.shopme.admin.user.UserServiceImpl;
+import com.shopme.admin.user.*;
 import com.shopme.admin.user.export.UserCsvExporter;
 import com.shopme.admin.user.export.UserExcelExporter;
 import com.shopme.admin.user.export.UserPdfExporter;
@@ -72,8 +69,8 @@ public class UserController {
     Page<User> page = userService.listByPage(pageNum, sortField, sortDir, keyword);
     List<User> listUsers = page.getContent();
 
-    long startCount = (pageNum - 1) * UserServiceImpl.USERS_PER_PAGE + 1;
-    long endCount = startCount + UserServiceImpl.USERS_PER_PAGE - 1;
+    long startCount = (pageNum - 1) * UserConstants.USERS_PER_PAGE + 1;
+    long endCount = startCount + UserConstants.USERS_PER_PAGE - 1;
     if (endCount > page.getTotalElements()) {
       endCount = page.getTotalElements();
     }

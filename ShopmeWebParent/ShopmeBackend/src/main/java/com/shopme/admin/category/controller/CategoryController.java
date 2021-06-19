@@ -1,9 +1,6 @@
 package com.shopme.admin.category.controller;
 
-import com.shopme.admin.category.CategoryNotFoundException;
-import com.shopme.admin.category.CategoryPageInfo;
-import com.shopme.admin.category.CategoryService;
-import com.shopme.admin.category.CategoryServiceImpl;
+import com.shopme.admin.category.*;
 import com.shopme.admin.category.export.CategoryCsvExporter;
 import com.shopme.admin.user.UserServiceImpl;
 import com.shopme.admin.util.FileUploadUtil;
@@ -60,8 +57,8 @@ public class CategoryController {
     CategoryPageInfo pageInfo = new CategoryPageInfo();
     List<Category> listCategories = categoryService.listByPage(pageInfo, pageNum, sortDir, keyword);
 
-    long startCount = (pageNum - 1) * CategoryServiceImpl.ROOT_CATEGORIES_PER_PAGE + 1;
-    long endCount = startCount + CategoryServiceImpl.ROOT_CATEGORIES_PER_PAGE - 1;
+    long startCount = (pageNum - 1) * CategoryConstants.ROOT_CATEGORIES_PER_PAGE + 1;
+    long endCount = startCount + CategoryConstants.ROOT_CATEGORIES_PER_PAGE - 1;
     if (endCount > pageInfo.getTotalElements()) {
       endCount = pageInfo.getTotalElements();
     }

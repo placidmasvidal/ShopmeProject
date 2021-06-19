@@ -1,7 +1,9 @@
 package com.shopme.admin.product;
 
 import com.shopme.admin.product.controller.ProductNotFoundException;
+import com.shopme.common.entity.Brand;
 import com.shopme.common.entity.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -20,4 +22,6 @@ public interface ProductService {
     void delete(Integer id) throws ProductNotFoundException;
 
     public Product get(Integer id) throws ProductNotFoundException;
+
+    Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword);
 }

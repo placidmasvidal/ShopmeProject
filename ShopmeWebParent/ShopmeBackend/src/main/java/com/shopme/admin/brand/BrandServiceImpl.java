@@ -14,8 +14,6 @@ import java.util.NoSuchElementException;
 @Service
 public class BrandServiceImpl implements BrandService {
 
-  public static final int BRANDS_PER_PAGE = 10;
-
   private BrandRepository brandRepository;
 
   @Autowired
@@ -28,17 +26,12 @@ public class BrandServiceImpl implements BrandService {
     return brandRepository.save(brand);
   }
 
-  @Override
-  public Page<Brand> listByPage(int pageNum, String sortDir, String keyword) {
-    Sort sort = Sort.by("name");
+  public Page<Brand> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
+    Sort sort = Sort.by(sortField);
 
-    if (sortDir.equals("asc")) {
-      sort = sort.ascending();
-    } else if (sortDir.equals("desc")) {
-      sort = sort.descending();
-    }
+    sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 
-    Pageable pageable = PageRequest.of(pageNum -1, BRANDS_PER_PAGE, sort);
+    Pageable pageable = PageRequest.of(pageNum - 1, BrandConstants.BRANDS_PER_PAGE, sort);
 
     if(keyword != null){
       return brandRepository.findAll(keyword, pageable);

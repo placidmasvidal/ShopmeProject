@@ -9,7 +9,7 @@ public interface BrandService {
 
     public Brand save(Brand brand);
 
-    public Page<Brand> listByPage(int pageNum, String sortDir, String keyword);
+    public Page<Brand> listByPage(int pageNum, String sortField, String sortDir, String keyword);
 
     public Brand get(Integer id) throws BrandNotFoundException;
 

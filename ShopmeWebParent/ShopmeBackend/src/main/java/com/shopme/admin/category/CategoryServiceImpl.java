@@ -17,8 +17,6 @@ import java.util.*;
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
 
-  public static final int ROOT_CATEGORIES_PER_PAGE = 4;
-
   private CategoryRepository categoryRepository;
 
   @Autowired
@@ -41,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
       sort = sort.descending();
     }
 
-    Pageable pageable = PageRequest.of(pageNum -1, ROOT_CATEGORIES_PER_PAGE, sort);
+    Pageable pageable = PageRequest.of(pageNum -1, CategoryConstants.ROOT_CATEGORIES_PER_PAGE, sort);
 
     Page<Category> pageCategories = null;
     if(keyword != null && !keyword.isEmpty()){

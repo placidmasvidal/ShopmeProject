@@ -1,9 +1,12 @@
 package com.shopme.admin.product;
 
 import com.shopme.admin.product.controller.ProductNotFoundException;
-import com.shopme.common.entity.Category;
 import com.shopme.common.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +25,22 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
-    @Override
     public List<Product> listAll() {
         return (List<Product>) productRepository.findAll();
+    }
+
+    public Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
+        Sort sort = Sort.by(sortField);
+
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNum - 1, ProductConstants.PRODUCTS_PER_PAGE, sort);
+
+        if (keyword != null) {
+            return productRepository.findAll(keyword, pageable);
+        }
+
+        return productRepository.findAll(pageable);
     }
 
     @Override
@@ -88,4 +104,5 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductNotFoundException("Could not find any product with ID " + id);
         }
     }
+
 }

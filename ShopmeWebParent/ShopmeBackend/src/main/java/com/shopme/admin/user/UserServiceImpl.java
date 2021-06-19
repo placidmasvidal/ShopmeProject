@@ -17,8 +17,6 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-  public static final int USERS_PER_PAGE = 4;
-
   private UserRepository userRepository;
 
   private PasswordEncoder passwordEncoder;
@@ -66,7 +64,7 @@ public class UserServiceImpl implements UserService {
     Sort sort = Sort.by(sortField);
 
     sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-    Pageable pageable = PageRequest.of(pageNum - 1, USERS_PER_PAGE, sort);
+    Pageable pageable = PageRequest.of(pageNum - 1, UserConstants.USERS_PER_PAGE, sort);
 
     if (keyword != null) {
       return userRepository.findAll(keyword, pageable);
