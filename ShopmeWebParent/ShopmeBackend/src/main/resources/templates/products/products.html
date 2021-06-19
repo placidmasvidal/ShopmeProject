@@ -34,8 +34,7 @@
                 </td>
                 <td>
                     <a class="link-detail" th:href="@{'/products/detail/' + ${product.id}}"
-                       title="View details of this product"
-                    >[[${product.name}]]</a>
+                       th:title="${product.name}">[[${product.shortName}]]</a>
                 </td>
                 <td>[[${product.brand.name}]]</td>
                 <td>[[${product.category.name}]]</td>
@@ -87,7 +86,6 @@
             linkDetailURL = $(this).attr("href");
             $("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
         });
-
     });
 </script>
 </body>
