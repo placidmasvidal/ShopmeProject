@@ -23,6 +23,9 @@ public class Category {
 
   private boolean enabled;
 
+  @Column(name = "all_parent_ids", length = 256, nullable = true)
+  private String allParentIDs;
+
   @OneToOne
   @JoinColumn(name = "parent_id")
   private Category parent;
@@ -30,8 +33,7 @@ public class Category {
   @OneToMany(mappedBy = "parent")
   private Set<Category> children = new HashSet<>();
 
-  @Transient
-  private boolean hasChildren;
+  @Transient private boolean hasChildren;
 
   public Category() {}
 
@@ -112,12 +114,20 @@ public class Category {
     this.children = children;
   }
 
-  public boolean isHasChildren(){
+  public boolean isHasChildren() {
     return hasChildren;
   }
 
-  public void setHasChildren(boolean hasChildren){
+  public void setHasChildren(boolean hasChildren) {
     this.hasChildren = hasChildren;
+  }
+
+  public String getAllParentIDs() {
+    return allParentIDs;
+  }
+
+  public void setAllParentIDs(String allParentIDs) {
+    this.allParentIDs = allParentIDs;
   }
 
   @Override
@@ -141,7 +151,7 @@ public class Category {
     return copiedCategory;
   }
 
-  public static Category copyFull(Category category){
+  public static Category copyFull(Category category) {
     Category copiedCategory = new Category();
     copiedCategory.setId(category.getId());
     copiedCategory.setName((category.getName()));
@@ -153,17 +163,16 @@ public class Category {
     return copiedCategory;
   }
 
-  public static Category copyFull(Category category, String name){
+  public static Category copyFull(Category category, String name) {
     Category copiedCategory = Category.copyFull(category);
     copiedCategory.setName(name);
     return copiedCategory;
   }
 
   @Transient
-  public String getImagePath(){
-    if(this.id == null) return "/images/image-thumbnail.png";
+  public String getImagePath() {
+    if (this.id == null) return "/images/image-thumbnail.png";
 
     return "/category-images/" + this.id + "/" + this.image;
   }
-
 }
