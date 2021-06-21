@@ -37,6 +37,10 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = PageRequest.of(pageNum - 1, ProductConstants.PRODUCTS_PER_PAGE, sort);
 
         if (keyword != null && !keyword.isEmpty()) {
+            if (categoryId != null && categoryId > 0) {
+                String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+                return productRepository.searchInCategory(categoryId, categoryIdMatch, keyword, pageable);
+            }
             return productRepository.findAll(keyword, pageable);
         }
 
