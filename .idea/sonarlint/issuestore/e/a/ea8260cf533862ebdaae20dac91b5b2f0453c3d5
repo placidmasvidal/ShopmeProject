@@ -1,0 +1,10 @@
+
+U
+java:S1128":Remove this unused import 'com.shopme.common.entity.User'.(¨ïüãüÿÿÿÿ
+
+java:S1130"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(¹ÊÏ
+F
+java:S1128
+"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
+f
+java:S1610"DConvert the abstract class "UserAbstractExporter" into an interface.(ëŒ¸áşÿÿÿÿ8äã½†/

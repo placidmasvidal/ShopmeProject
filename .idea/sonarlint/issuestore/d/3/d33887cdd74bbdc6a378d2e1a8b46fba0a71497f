@@ -1,0 +1,25 @@
+
+k
+java:S1192¡"HDefine a constant instead of duplicating this literal "/extras" 3 times.(‡ëÆ·øÿÿÿÿ8”×Úª¢/
+b
+java:S4684s"@Replace this persistent entity with a simple POJO or DTO object.(øÕÎ÷ÿÿÿÿÿ8”×Úª¢/
+k
+java:S1192‰"HDefine a constant instead of duplicating this literal "message" 6 times.(°Å€¡üÿÿÿÿ8”×Úª¢/
+®
+java:S4449í"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(öÓ™Ô8”×Úª¢/
+b
+java:S2095¥"DUse try-with-resources or close this "Stream" in a "finally" clause.(•»Ñ¡8”×Úª¢/
+³
+java:S4449ú"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(ëßøÿÿÿÿ8”×Úª¢/
+®
+java:S4449×"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(öÓ™Ô8”×Úª¢/
+e
+java:S1192j"HDefine a constant instead of duplicating this literal "product" 3 times.(³Ù×Ã8”×Úª¢/
+³
+java:S4449à"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(ëßøÿÿÿÿ8”×Úª¢/
+v
+java:S1192¡"SDefine a constant instead of duplicating this literal "../product-images/" 5 times.(‡ëÆ·øÿÿÿÿ8”×Úª¢/
+v
+java:S1192‹"SDefine a constant instead of duplicating this literal "redirect:/products" 5 times.(ªß¾Šşÿÿÿÿ8”×Úª¢/
+]
+java:S2184I"@Cast one of the operands of this addition operation to a "long".(»¥àŞ8”×Úª¢/

@@ -1,0 +1,13 @@
+
+T
+java:S4973W"9Use the "equals" method if value comparison was intended.(Ýÿ‡Ýúÿÿÿÿ
+R
+java:S3655+"7Call "Optional#isPresent()" before accessing the value.(çÆ‡³ýÿÿÿÿ
+L
+java:S2589U"7Remove this expression which always evaluates to "true"(±ÙÇ
+J
+java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëÝüÿÿÿÿ
+R
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(ã·ÀÙýÿÿÿÿ
+R
+java:S3655b"7Call "Optional#isPresent()" before accessing the value.(˜Ãùõúÿÿÿÿ

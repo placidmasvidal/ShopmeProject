@@ -1,0 +1,7 @@
+
+T
+java:S3655."7Call "Optional#isPresent()" before accessing the value.(†ŠÛÍ8Àê‰ƒŸ/
+V
+java:S4973J"9Use the "equals" method if value comparison was intended.(™Ì“8Ÿ÷æ·/
+I
+java:S1905S"'Remove this unnecessary cast to "List".(¥Ô¦…ÿÿÿÿÿ8†øüÔŸ/

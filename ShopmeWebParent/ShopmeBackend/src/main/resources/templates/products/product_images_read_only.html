@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org">
 <body>
+<div th:fragment="content" th:remove="tag">
 <div class="row">
     <div class="col border m-3 p-2">
         <div><label>Main Image: [[${product.mainImage}]]</label></div>
@@ -22,6 +23,7 @@
 
         </div>
     </th:block>
+</div>
 </div>
 </body>
 </html>
