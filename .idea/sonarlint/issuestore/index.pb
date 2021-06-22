@@ -127,3 +127,7 @@ VShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/brand/BrandConstan
 \ShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/category/CategoryConstants.java,9/4/94264c3f8a5cb27acea29c6737c120b42b1c022e
 „
 TShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/user/UserConstants.java,8/3/830014f26eb2f81f98111b1eac31868e9ffc5d4f
+Œ
+\ShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/security/ShopmeUserDetails.java,5/c/5cc5b326124449115cc9d0d419954bdba70147ed
+–
+fShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/product/controller/ProductSaveHelper.java,1/6/1664c6fc733dce440ecc01d709315c37a64c9cba
