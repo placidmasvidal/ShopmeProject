@@ -11,16 +11,12 @@
         <module name="ShopmeFrontend" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="shopmefrontend" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ShopmeFrontend" options="-parameters" />
       <module name="shopmebackend" options="-parameters" />
       <module name="shopmecommon" options="-parameters" />
-      <module name="shopmefrontend" options="-parameters" />
       <module name="shopmewebparent" options="-parameters" />
     </option>
   </component>

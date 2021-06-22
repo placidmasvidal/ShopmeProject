@@ -24,4 +24,6 @@ public interface ProductService {
     public Product get(Integer id) throws ProductNotFoundException;
 
     Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword, Integer categoryId);
+
+    void saveProductPrice(Product productInForm);
 }
