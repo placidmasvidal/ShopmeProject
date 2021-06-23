@@ -1,0 +1,13 @@
+
+
+java:S1128"€Remove this unused import 'org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder'.(£ØÓ‰8“ï½£/
+z
+java:S1128"]Remove this unused import 'org.springframework.security.core.userdetails.UserDetailsService'.(¶…¥à8“ï½£/
+e
+java:S1128"HRemove this unused import 'org.springframework.context.annotation.Bean'.(‚î‰Ş8“ï½£/
+{
+java:S1128"YRemove this unused import 'org.springframework.security.crypto.password.PasswordEncoder'.(‰¡ßáÿÿÿÿÿ8“ï½£/
+
+java:S1128"]Remove this unused import 'org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder'.(åÅÚ…ûÿÿÿÿ8“ï½£/
+ˆ
+java:S1128"fRemove this unused import 'org.springframework.security.authentication.dao.DaoAuthenticationProvider'.(Ã‚öşÿÿÿÿ8“ï½£/
