@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 
-<html>
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Welcome to Shopme</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('Shopme', 'none')" />
 <body>
-<h1>Welcome to Shopme eCommerce</h1>
+<div class="container-fluid">
+    <div th:replace="navigation :: header_menu"></div>
+    <div>
+    <h1>Welcome to Shopme eCommerce</h1>
+    </div>
+    <div th:replace="navigation :: footer_menu"></div>
+</div>
 </body>
 
 </html>
