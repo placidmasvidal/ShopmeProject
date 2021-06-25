@@ -7,4 +7,6 @@ import java.util.List;
 public interface CategoryService {
 
     List<Category> listNoChildrenCategories();
+
+    Category getCategory(String alias);
 }

@@ -23,8 +23,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
     }
 
-//  Backend ABSOLUTE PATH: /home/placidmasvidal/git/repositories/ShopmeProject/ShopmeWebParent/ShopmeBackend/../category-images
-
     private void exposeDirectory(String pathPattern, ResourceHandlerRegistry registry){
         Path path = Paths.get(pathPattern);
         String absolutePath = path.toFile().getAbsolutePath();

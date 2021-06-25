@@ -21,18 +21,14 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public List<Category> listNoChildrenCategories() {
-    List<Category> listNoChildrenCategories = new ArrayList<>();
 
-    List<Category> listEnabledCategories = categoryRepository.findAllEnabled();
+    return categoryRepository.findAllEnabled().stream()
+            .filter(category -> category.getChildren() == null || category.getChildren().size() == 0)
+            .collect(Collectors.toList());
+  }
 
-    listEnabledCategories.forEach(
-        category -> {
-          Set<Category> children = category.getChildren();
-          if (children == null || children.size() == 0) {
-            listNoChildrenCategories.add(category);
-          }
-        });
-
-    return listNoChildrenCategories;
+  @Override
+  public Category getCategory(String alias) {
+    return categoryRepository.findByAliasEnabled(alias);
   }
 }
