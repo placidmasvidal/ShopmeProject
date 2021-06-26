@@ -1,8 +1,7 @@
 package com.shopme.admin.category;
 
-import com.shopme.admin.user.UserNotFoundException;
 import com.shopme.common.entity.Category;
-import com.shopme.common.entity.User;
+import com.shopme.common.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

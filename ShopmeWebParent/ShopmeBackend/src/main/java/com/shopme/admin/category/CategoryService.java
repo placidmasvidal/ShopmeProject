@@ -1,7 +1,7 @@
 package com.shopme.admin.category;
 
 import com.shopme.common.entity.Category;
-import org.springframework.data.domain.Page;
+import com.shopme.common.exception.CategoryNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

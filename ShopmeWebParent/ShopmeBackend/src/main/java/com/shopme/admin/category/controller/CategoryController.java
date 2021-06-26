@@ -2,9 +2,9 @@ package com.shopme.admin.category.controller;
 
 import com.shopme.admin.category.*;
 import com.shopme.admin.category.export.CategoryCsvExporter;
-import com.shopme.admin.user.UserServiceImpl;
 import com.shopme.admin.util.FileUploadUtil;
 import com.shopme.common.entity.Category;
+import com.shopme.common.exception.CategoryNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

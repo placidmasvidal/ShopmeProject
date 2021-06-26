@@ -1,7 +1,6 @@
 package com.shopme.admin.product;
 
-import com.shopme.admin.product.controller.ProductNotFoundException;
-import com.shopme.common.entity.Brand;
+import com.shopme.common.exception.ProductNotFoundException;
 import com.shopme.common.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;

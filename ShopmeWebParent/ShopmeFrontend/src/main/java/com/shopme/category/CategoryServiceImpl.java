@@ -1,6 +1,7 @@
 package com.shopme.category;
 
 import com.shopme.common.entity.Category;
+import com.shopme.common.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,12 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public Category getCategory(String alias) {
-    return categoryRepository.findByAliasEnabled(alias);
+  public Category getCategory(String alias) throws CategoryNotFoundException {
+    Category category = categoryRepository.findByAliasEnabled(alias);
+    if(category == null){
+      throw new CategoryNotFoundException("Could not find any category with alias: " + alias);
+    }
+    return category;
   }
 
   @Override
