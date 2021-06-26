@@ -9,4 +9,6 @@ public interface CategoryService {
     List<Category> listNoChildrenCategories();
 
     Category getCategory(String alias);
+
+    List<Category> getCategoryParents(Category child);
 }
