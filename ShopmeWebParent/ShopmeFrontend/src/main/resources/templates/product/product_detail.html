@@ -13,6 +13,30 @@
                 <img th:src="@{${product.mainImagePath}}" class="img-fluid"/>
             </div>
         </div>
+        <div class="col-sm">
+
+            <div>
+                <h2>[[${product.name}]]</h2>
+            </div>
+
+            <div>
+                <span>Brand: [[${product.brand.name}]]</span>
+            </div>
+
+            <div>
+                List price:
+                <span th:if="${product.discountPercent <= 0}">$ [[${product.price}]]</span>
+                <del th:if="${product.discountPercent > 0}">$ [[${product.price}]]</del>
+            </div>
+            <div th:if="${product.discountPercent > 0}">
+                Price:
+                <span class="font-weight-bold" style="font-size: larger; color: #ff0000;">$ [[${product.getDiscountPrice}]]</span>
+                ([[${product.discountPercent}]] % off)
+            </div>
+            <div>&nbsp;</div>
+            <div th:utext="${product.shortDescription}"></div>
+
+        </div>
     </div>
 
     <div th:replace="navigation :: footer_menu"></div>
