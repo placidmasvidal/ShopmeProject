@@ -47,6 +47,13 @@
                 <br/>
                 <b>[[${product.name}]]</b>
             </div>
+            <div th:if="${product.discountPercent <= 0}">
+                <span>$ [[${product.price}]]</span>
+            </div>
+            <div th:if="${product.discountPercent > 0}">
+                <span class="font-weight-bold" style="font-size: larger; color: #ff0000;">$ [[${product.getDiscountPrice}]]</span>
+                <del>$ [[${product.price}]]</del>
+            </div>
         </div>
         </th:block>
     </div>
