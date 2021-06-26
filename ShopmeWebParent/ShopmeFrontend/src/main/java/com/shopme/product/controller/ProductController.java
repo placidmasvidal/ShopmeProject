@@ -26,7 +26,7 @@ public class ProductController {
             return "error/404";
         }
 
-        model.addAttribute("", );
+        model.addAttribute("pageTitle", category.getName());
         return "products_by_category";
     }
 }
