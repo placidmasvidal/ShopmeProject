@@ -18,7 +18,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
   @Query(
       value =
-          "SELECT * FROM shopmedb.products WHERE p.enabled = true AND " +
+          "SELECT * FROM shopmedb.products p WHERE p.enabled = true AND " +
                   "MATCH(name, short_description, full_description) AGAINST(?1)",
       nativeQuery = true)
   Page<Product> search(String keyword, Pageable pageable);
