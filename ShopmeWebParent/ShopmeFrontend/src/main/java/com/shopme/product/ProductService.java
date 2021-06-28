@@ -9,4 +9,6 @@ public interface ProductService {
     Page<Product> listByCategory(int pageNum, Integer categoryId);
 
     Product getProduct(String alias) throws ProductNotFoundException;
+
+    Page<Product> search(String keyword, int pageNum);
 }
