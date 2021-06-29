@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="content" th:remove="tag">
-    <form th:action="@{/settings/save_general}" method="post">
+    <form th:action="@{/settings/save_general}" method="post" enctype="multipart/form-data">
 
         <div class="form-group row">
             <label class="col-sm-4 col-form-label">Site Name:</label>
@@ -44,9 +44,9 @@
             <label class="col-sm-4 col-form-label">Currency Symbol Position:</label>
             <div class="col-sm-8">
                 <select name="CURRENCY_SYMBOL_POSITION" class="form-control">
-                    <option value="Before price" th:selected="(${CURRENCY_SYMBOL_POSITION} == 'before')">Before price
+                    <option value="Before price" th:selected="(${CURRENCY_SYMBOL_POSITION} == 'Before price')">Before price
                     </option>
-                    <option value="After price" th:selected="(${CURRENCY_SYMBOL_POSITION} == 'after')">After price
+                    <option value="After price" th:selected="(${CURRENCY_SYMBOL_POSITION} == 'After price')">After price
                     </option>
                 </select>
             </div>

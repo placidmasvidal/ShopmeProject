@@ -7,4 +7,8 @@ import java.util.List;
 public interface SettingService {
 
     List<Setting> listAllSettings();
+
+    GeneralSettingBag getGeneralSettings();
+
+    void saveAll(Iterable<Setting> settings);
 }
