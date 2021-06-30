@@ -13,12 +13,11 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.Optional;
 
@@ -82,6 +81,35 @@ public class CountryRestControllerTest {
 
     Country savedCountry = countryFoundById.get();
     assertThat(savedCountry.getName()).isEqualTo(countryName);
+  }
 
+  @Test
+  @WithMockUser(
+      username = "placidmasvidal@gmail.com",
+      password = "someRandomPassword",
+      roles = {"ADMIN"})
+  public void testUpdateCountry() throws Exception {
+    String url = "/countries/save";
+    Integer countryId = 7;
+    String countryName = "China";
+    String countryCode = "CN";
+
+    Country country = new Country(countryId, countryName, countryCode);
+
+    mockMvc
+        .perform(
+            post(url)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(country))
+                .with(csrf()))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(content().string(String.valueOf(countryId)));
+
+    Optional<Country> countryFoundById = countryRepository.findById(countryId);
+    assertThat(countryFoundById.isPresent());
+
+    Country savedCountry = countryFoundById.get();
+    assertThat(savedCountry.getName()).isEqualTo(countryName);
   }
 }
