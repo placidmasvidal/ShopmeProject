@@ -112,4 +112,22 @@ public class CountryRestControllerTest {
     Country savedCountry = countryFoundById.get();
     assertThat(savedCountry.getName()).isEqualTo(countryName);
   }
+
+  @Test
+  @WithMockUser(
+          username = "placidmasvidal@gmail.com",
+          password = "someRandomPassword",
+          roles = {"ADMIN"})
+  public void testDeleteCountry() throws Exception {
+    Integer countryId = 7;
+    String url = "/countries/delete/" + countryId;
+
+    mockMvc.perform(get(url)).andExpect(status().isOk());
+
+    Optional<Country> countryFoundById = countryRepository.findById(countryId);
+
+    assertThat(countryFoundById).isNotPresent();
+
+  }
+
 }
