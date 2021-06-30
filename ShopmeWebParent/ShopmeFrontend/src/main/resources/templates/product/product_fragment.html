@@ -19,6 +19,14 @@
     </div>
 </div>
 
+<!--
+ https://www.thymeleaf.org/apidocs/thymeleaf/3.0.6.RELEASE/index.html?org/thymeleaf/expression/Numbers.html
+ public String formatDecimal(Number target,
+                            Integer minIntegerDigits,
+                            String thousandsPointType,
+                            Integer decimalDigits,
+                            String decimalPointType)
+ -->
 <div th:fragment="price_fragment(productPrice)" th:remove="tag">
     <span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
     [[${#numbers.formatDecimal(productPrice,
