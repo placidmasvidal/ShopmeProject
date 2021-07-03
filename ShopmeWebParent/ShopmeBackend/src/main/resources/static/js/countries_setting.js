@@ -24,7 +24,53 @@ $(document).ready(function () {
     dropDownCountry.on("change", function () {
         changeFormStateToSelectedCountry();
     });
+
+    buttonAddCountry.click(function (){
+        if(buttonAddCountry.val() == "Add"){
+            addCountry();
+        } else {
+            changeFormStateToNew();
+        }
+    });
 });
+
+function addCountry(){
+    url = contextPath + "countries/save";
+    countryName = fieldCountryName.val();
+    countryCode = fieldCountryCode.val();
+    jsonData = {name: countryName, code: countryCode};
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfValue);
+        },
+        data: JSON.stringify(jsonData),
+        contentType: 'application/json'
+    }).done(function (countryId){
+        selectNewlyAddedCountry(countryId, countryCode, countryName);
+        showToastMessage("The new country has been added");
+    });
+}
+
+function selectNewlyAddedCountry(countryId, countryCode, countryName){
+    optionValue = countryId + "-" + countryCode;
+    $("<option>").val(optionValue).text(countryName).appendTo(dropDownCountry);
+    $("#dropDownCountries option[value='" + optionValue + "']").prop("selected", true);
+    fieldCountryCode.val("");
+    fieldCountryName.val("").focus();
+}
+
+function changeFormStateToNew(){
+    buttonAddCountry.val("Add");
+    labelCountryName.text("Country Name:");
+    buttonUpdateCountry.prop("disabled", true);
+    buttonDeleteCountry.prop("disabled", true);
+
+    fieldCountryName.val("").focus();
+    fieldCountryCode.val("");
+}
 
 function changeFormStateToSelectedCountry(){
     buttonAddCountry.prop("value", "New");
