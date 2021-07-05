@@ -18,7 +18,7 @@ public class Country {
     @Column(nullable = false, length = 5)
     private String code;
 
-    @OneToMany(mappedBy = "country")
+    @OneToMany(mappedBy = "country", cascade = CascadeType.REMOVE)
     private Set<State> states;
 
     public Country() {}
