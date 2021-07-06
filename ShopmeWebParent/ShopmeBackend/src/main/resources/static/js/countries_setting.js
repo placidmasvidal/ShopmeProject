@@ -26,7 +26,7 @@ $(document).ready(function () {
     });
 
     buttonAddCountry.click(function (){
-        if(buttonAddCountry.val() == "Add"){
+        if(buttonAddCountry.val() == "New"){
             addCountry();
         } else {
             changeFormStateToNew();
@@ -115,17 +115,17 @@ function selectNewlyAddedCountry(countryId, countryCode, countryName){
 }
 
 function changeFormStateToNew(){
-    buttonAddCountry.val("Add");
+    buttonAddCountry.val("New");
     labelCountryName.text("Country Name:");
     buttonUpdateCountry.prop("disabled", true);
     buttonDeleteCountry.prop("disabled", true);
 
-    fieldCountryName.val("").focus();
     fieldCountryCode.val("");
+    fieldCountryName.val("").focus();
 }
 
 function changeFormStateToSelectedCountry(){
-    buttonAddCountry.prop("value", "New");
+    buttonAddCountry.val("New");
     buttonUpdateCountry.prop("disabled", false);
     buttonDeleteCountry.prop("disabled", false);
 
