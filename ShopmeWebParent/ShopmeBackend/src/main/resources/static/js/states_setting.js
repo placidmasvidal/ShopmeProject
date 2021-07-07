@@ -33,7 +33,7 @@ $(document).ready(function() {
         if (buttonAddState.val() == "Add") {
             addState();
         } else {
-            changeFormStateToNew();
+            changeFormStateToNewState();
         }
     });
 
@@ -51,10 +51,15 @@ function deleteState() {
 
     url = contextPath + "states/delete/" + stateId;
 
-    $.get(url, function() {
-        $("#dropDownStates option[value='" + stateId + "']").remove();
-        changeFormStateToNew();
+    $.ajax({
+        type: 'DELETE',
+        url: url,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfValue);
+        }
     }).done(function() {
+        $("#dropDownStates option[value='" + stateId + "']").remove();
+        changeFormStateToNewState();
         showToastMessage("The state has been deleted");
     }).fail(function() {
         showToastMessage("ERROR: Could not connect to server or server encountered an error");
@@ -83,7 +88,7 @@ function updateState() {
     }).done(function(stateId) {
         $("#dropDownStates option:selected").text(stateName);
         showToastMessage("The state has been updated");
-        changeFormStateToNew();
+        changeFormStateToNewState();
     }).fail(function() {
         showToastMessage("ERROR: Could not connect to server or server encountered an error");
     });
@@ -124,7 +129,7 @@ function selectNewlyAddedState(stateId, stateName) {
     fieldStateName.val("").focus();
 }
 
-function changeFormStateToNew() {
+function changeFormStateToNewState() {
     buttonAddState.val("Add");
     labelStateName.text("State/Province Name:");
 
@@ -159,7 +164,7 @@ function loadStates4Country() {
         });
 
     }).done(function() {
-        changeFormStateToNew();
+        changeFormStateToNewState();
         showToastMessage("All states have been loaded for country " + selectedCountry.text());
     }).fail(function() {
         showToastMessage("ERROR: Could not connect to server or server encountered an error");
