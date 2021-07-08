@@ -1,4 +1,4 @@
-package com.shopme.setting;
+package com.shopme.setting.country;
 
 import com.shopme.common.entity.Country;
 import org.springframework.data.repository.CrudRepository;

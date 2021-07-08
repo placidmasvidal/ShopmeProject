@@ -1,7 +1,7 @@
 package com.shopme.customer;
 
 import com.shopme.common.entity.Country;
-import com.shopme.setting.CountryRepository;
+import com.shopme.setting.country.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

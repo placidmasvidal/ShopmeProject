@@ -101,7 +101,8 @@
                 <label class="col-sm-4 col-form-label">State/Province:</label>
                 <div class="col-sm-8">
                     <input type="text" th:field="*{state}" class="form-control"
-                           maxlength="45" minlength="3"/>
+                           maxlength="45" minlength="3" list="listStates"/>
+                    <datalist id="listStates"></datalist>
                 </div>
             </div>
 
@@ -123,7 +124,36 @@
     <div th:replace="navigation :: footer_menu"></div>
 </div>
 <script type="text/javascript">
-    moduleURL = "[[@{/}]]";
+    var contextPath = "[[@{/}]]";
+    var dropDownCountry;
+    var dataListState;
+    var fieldState;
+
+    $(document).ready(function (){
+        dropDownCountry = $("#country");
+        dataListState = $("#listStates");
+        fieldState = $("#state");
+
+        dropDownCountry.on("change", function (){
+            loadStatesForCountry();
+            fieldState.val("").focus();
+        });
+    });
+
+    function loadStatesForCountry(){
+        selectedCountry = $("#country option:selected");
+        countryId = selectedCountry.val();
+        url = contextPath + "settings/list_states_by_country/" + countryId;
+
+        $.get(url, function (responseJSON){
+            dataListState.empty();
+
+            $.each(responseJSON, function (index, state){
+               $("<option>").val(state.name).text(state.name).appendTo(dataListState);
+            });
+        });
+        fieldState.focus();
+    }
 
     function checkPasswordMatch(confirmPassword) {
         if (confirmPassword.value != $("#password").val()) {

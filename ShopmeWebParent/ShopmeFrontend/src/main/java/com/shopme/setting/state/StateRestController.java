@@ -1,7 +1,6 @@
-package com.shopme.admin.setting.state.controller;
+package com.shopme.setting.state;
 
 import com.shopme.common.dto.StateDTO;
-import com.shopme.admin.setting.state.StateRepository;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class StateRestController {
         this.stateRepository = stateRepository;
     }
 
-    @GetMapping("/states/list_by_country/{id}")
+    @GetMapping("/settings/list_states_by_country/{id}")
     public List<StateDTO> listByCountry(@PathVariable("id") Integer countryId) {
         List<State> listStates = stateRepository.findByCountryOrderByNameAsc(new Country(countryId));
 
@@ -30,18 +29,5 @@ public class StateRestController {
 
         return result;
     }
-
-    @PostMapping("/states/save")
-    public String save(@RequestBody State state){
-        State savedState = stateRepository.save(state);
-        return String.valueOf(savedState.getId());
-    }
-
-    @DeleteMapping("/states/delete/{id}")
-    public void delete(@PathVariable(name = "id") Integer id){
-        stateRepository.deleteById(id);
-    }
-
-
 
 }
