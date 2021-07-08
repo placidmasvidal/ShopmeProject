@@ -10,7 +10,7 @@
     </div>
     <div>&nbsp;</div>
     <form th:action="@{/create_customer}" method="post" th:object="${customer}"
-          style="max-width: 600px; margin: 0 auto">
+          style="max-width: 600px; margin: 0 auto" onsubmit="return checkEmailUnique(this);">
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">First Name</label>
@@ -121,6 +121,8 @@
     </form>
 
     <div>&nbsp;</div>
+
+    <div th:replace="fragments :: modal_dialog"></div>
     <div th:replace="navigation :: footer_menu"></div>
 </div>
 <script type="text/javascript">
@@ -129,27 +131,27 @@
     var dataListState;
     var fieldState;
 
-    $(document).ready(function (){
+    $(document).ready(function () {
         dropDownCountry = $("#country");
         dataListState = $("#listStates");
         fieldState = $("#state");
 
-        dropDownCountry.on("change", function (){
+        dropDownCountry.on("change", function () {
             loadStatesForCountry();
             fieldState.val("").focus();
         });
     });
 
-    function loadStatesForCountry(){
+    function loadStatesForCountry() {
         selectedCountry = $("#country option:selected");
         countryId = selectedCountry.val();
         url = contextPath + "settings/list_states_by_country/" + countryId;
 
-        $.get(url, function (responseJSON){
+        $.get(url, function (responseJSON) {
             dataListState.empty();
 
-            $.each(responseJSON, function (index, state){
-               $("<option>").val(state.name).text(state.name).appendTo(dataListState);
+            $.each(responseJSON, function (index, state) {
+                $("<option>").val(state.name).text(state.name).appendTo(dataListState);
             });
         });
         fieldState.focus();
@@ -161,6 +163,42 @@
         } else {
             confirmPassword.setCustomValidity("");
         }
+    }
+
+    function checkEmailUnique(form) {
+        url = contextPath + "customers/check_unique_email";
+        customerEmail = $("#email").val();
+        csrfValue = $("input[name='_csrf']").val();
+        params = {email: customerEmail, _csrf: csrfValue};
+
+        $.post(url, params, function (response) {
+            if (response == "OK") {
+                form.submit();
+            } else if (response == "Duplicated") {
+                showWarningModal("There is another customer having the email " + customerEmail);
+            } else {
+                showErrorModal("Unknown response from server");
+            }
+        }).fail(function () {
+            showErrorModal("Could not connect to the server");
+        });
+
+        return false;
+    }
+
+    function showModalDialog(title, message) {
+        $("#modalTitle").text(title);
+        $("#modalBody").text(message);
+
+        $("#modalDialog").modal();
+    }
+
+    function showErrorModal(message){
+        showModalDialog("Error", message);
+    }
+
+    function showWarningModal(message){
+        showModalDialog("Warning", message);
     }
 
 </script>
