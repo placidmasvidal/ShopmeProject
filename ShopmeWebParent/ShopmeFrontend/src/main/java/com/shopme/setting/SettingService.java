@@ -8,4 +8,6 @@ public interface SettingService {
 
     List<Setting> getGeneralSettings();
 
+    EmailSettingBag getEmailSettings();
+
 }

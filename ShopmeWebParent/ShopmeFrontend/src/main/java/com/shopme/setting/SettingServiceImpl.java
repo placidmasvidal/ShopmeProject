@@ -12,7 +12,7 @@ import java.util.List;
 public class SettingServiceImpl implements SettingService {
 
   private SettingRepository settingRepository;
-
+;
   @Autowired
   public SettingServiceImpl(SettingRepository settingRepository) {
     this.settingRepository = settingRepository;
@@ -21,5 +21,13 @@ public class SettingServiceImpl implements SettingService {
   @Override
   public List<Setting> getGeneralSettings() {
     return settingRepository.findByTwoCategories(SettingCategory.GENERAL, SettingCategory.CURRENCY);
+  }
+
+  @Override
+  public EmailSettingBag getEmailSettings() {
+    List<Setting> settings = settingRepository.findByCategory(SettingCategory.MAIL_SERVER);
+    settings.addAll(settingRepository.findByCategory(SettingCategory.MAIL_TEMPLATES));
+
+    return new EmailSettingBag(settings);
   }
 }
