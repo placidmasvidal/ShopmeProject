@@ -11,4 +11,6 @@ public interface SettingService {
     GeneralSettingBag getGeneralSettings();
 
     void saveAll(Iterable<Setting> settings);
+
+    List<Setting> getMailServerSettings();
 }

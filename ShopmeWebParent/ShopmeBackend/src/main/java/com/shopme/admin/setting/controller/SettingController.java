@@ -46,9 +46,10 @@ public class SettingController {
 
   @PostMapping("/settings/save_general")
   public String saveGeneralSettings(
-          @RequestParam("fileImage") MultipartFile multipartFile,
-          HttpServletRequest request,
-          RedirectAttributes redirectAttributes) throws IOException {
+      @RequestParam("fileImage") MultipartFile multipartFile,
+      HttpServletRequest request,
+      RedirectAttributes redirectAttributes)
+      throws IOException {
 
     GeneralSettingBag settingBag = settingService.getGeneralSettings();
 
@@ -62,8 +63,9 @@ public class SettingController {
     return "redirect:/settings";
   }
 
-  private void saveSiteLogo(MultipartFile multipartFile, GeneralSettingBag settingBag) throws IOException {
-    if(!multipartFile.isEmpty()){
+  private void saveSiteLogo(MultipartFile multipartFile, GeneralSettingBag settingBag)
+      throws IOException {
+    if (!multipartFile.isEmpty()) {
       String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
       String value = "/site-logo/" + fileName;
       settingBag.updateSiteLogo(value);
@@ -73,22 +75,35 @@ public class SettingController {
     }
   }
 
-  private void saveCurrencySymbol(HttpServletRequest request, GeneralSettingBag settingBag){
+  private void saveCurrencySymbol(HttpServletRequest request, GeneralSettingBag settingBag) {
     Integer currencyId = Integer.parseInt(request.getParameter("CURRENCY_ID"));
     Optional<Currency> findByIdResult = currencyRepository.findById(currencyId);
 
-    if(findByIdResult.isPresent()){
+    if (findByIdResult.isPresent()) {
       Currency currency = findByIdResult.get();
       settingBag.updateCurrencySymbol(currency.getSymbol());
     }
   }
 
-  private void updateSettingValuesFromForm(HttpServletRequest request, List<Setting> listSettings){
-    listSettings.forEach(setting -> {
-      String value = request.getParameter(setting.getKey());
-      if(value != null) setting.setValue(value);
-    });
+  private void updateSettingValuesFromForm(HttpServletRequest request, List<Setting> listSettings) {
+    listSettings.forEach(
+        setting -> {
+          String value = request.getParameter(setting.getKey());
+          if (value != null) setting.setValue(value);
+        });
 
     settingService.saveAll(listSettings);
+  }
+
+  @PostMapping("/settings/save_mail_server")
+  public String saveMailServerSettings(
+      HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+    List<Setting> mailServerSettings = settingService.getMailServerSettings();
+    updateSettingValuesFromForm(request, mailServerSettings);
+
+    redirectAttributes.addFlashAttribute("message", "Mail server settings have been saved");
+
+    return "redirect:/settings";
   }
 }

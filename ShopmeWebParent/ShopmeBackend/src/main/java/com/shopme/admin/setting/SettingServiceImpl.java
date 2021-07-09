@@ -36,4 +36,9 @@ public class SettingServiceImpl implements SettingService{
     public void saveAll(Iterable<Setting> settings) {
         settingRepository.saveAll(settings);
     }
+
+    @Override
+    public List<Setting> getMailServerSettings() {
+        return settingRepository.findByCategory(SettingCategory.MAIL_SERVER);
+    }
 }
