@@ -13,4 +13,6 @@ public interface SettingService {
     void saveAll(Iterable<Setting> settings);
 
     List<Setting> getMailServerSettings();
+
+    List<Setting> getMailTemplateSettings();
 }
