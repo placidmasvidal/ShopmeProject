@@ -2,13 +2,11 @@ package com.shopme.admin.setting;
 
 import com.shopme.common.entity.Setting;
 import com.shopme.common.entity.SettingCategory;
-import com.shopme.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -49,13 +47,6 @@ public class SettingServiceImpl implements SettingService {
     settingRepository.saveAll(settings);
   }
 
-  private void encodePassword(Setting setting) {
-    if (setting.getKey().equals("MAIL_PASSWORD")) {
-      String encodedPassword = passwordEncoder.encode(setting.getValue());
-      setting.setValue(encodedPassword);
-    }
-  }
-
   @Override
   public List<Setting> getMailServerSettings() {
     return settingRepository.findByCategory(SettingCategory.MAIL_SERVER);
@@ -64,5 +55,12 @@ public class SettingServiceImpl implements SettingService {
   @Override
   public List<Setting> getMailTemplateSettings() {
     return settingRepository.findByCategory(SettingCategory.MAIL_TEMPLATES);
+  }
+
+  private void encodePassword(Setting setting) {
+    if (setting.getKey().equals("MAIL_PASSWORD")) {
+      String encodedPassword = passwordEncoder.encode(setting.getValue());
+      setting.setValue(encodedPassword);
+    }
   }
 }
