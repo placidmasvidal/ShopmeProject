@@ -79,7 +79,5 @@ public class CustomerController {
 
     mailSender.send(message);
 
-    System.out.println("to Address: " + toAddress);
-    System.out.println("Verify URL: " + verifyURL);
   }
 }
