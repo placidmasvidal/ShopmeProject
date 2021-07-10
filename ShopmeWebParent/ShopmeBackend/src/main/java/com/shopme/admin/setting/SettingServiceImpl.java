@@ -14,12 +14,9 @@ public class SettingServiceImpl implements SettingService {
 
   private SettingRepository settingRepository;
 
-  private PasswordEncoder passwordEncoder;
-
   @Autowired
   public SettingServiceImpl(SettingRepository settingRepository, PasswordEncoder passwordEncoder) {
     this.settingRepository = settingRepository;
-    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -30,20 +27,18 @@ public class SettingServiceImpl implements SettingService {
   @Override
   public GeneralSettingBag getGeneralSettings() {
     List<Setting> settings = new ArrayList<>();
-    settings.addAll(settingRepository.findByCategory(SettingCategory.GENERAL));
-    settings.addAll(settingRepository.findByCategory(SettingCategory.CURRENCY));
+
+    List<Setting> generalSettings = settingRepository.findByCategory(SettingCategory.GENERAL);
+    List<Setting> currencySettings = settingRepository.findByCategory(SettingCategory.CURRENCY);
+
+    settings.addAll(generalSettings);
+    settings.addAll(currencySettings);
 
     return new GeneralSettingBag(settings);
   }
 
   @Override
   public void saveAll(Iterable<Setting> settings) {
-    settings.forEach(
-        setting -> {
-          if (setting.getCategory().equals(SettingCategory.MAIL_SERVER)) {
-            encodePassword(setting);
-          }
-        });
     settingRepository.saveAll(settings);
   }
 
@@ -57,10 +52,4 @@ public class SettingServiceImpl implements SettingService {
     return settingRepository.findByCategory(SettingCategory.MAIL_TEMPLATES);
   }
 
-  private void encodePassword(Setting setting) {
-    if (setting.getKey().equals("MAIL_PASSWORD")) {
-      String encodedPassword = passwordEncoder.encode(setting.getValue());
-      setting.setValue(encodedPassword);
-    }
-  }
 }

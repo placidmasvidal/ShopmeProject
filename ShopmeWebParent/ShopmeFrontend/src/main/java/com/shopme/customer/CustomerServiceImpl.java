@@ -50,6 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
     String randomCode = RandomString.make(64);
     customer.setVerificationCode(randomCode);
 
+    customerRepository.save(customer);
     System.out.println("Verification code: " + customer.getVerificationCode());
   }
 
