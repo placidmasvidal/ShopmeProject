@@ -12,4 +12,6 @@ public interface CustomerService {
     boolean isEmailUnique(String email);
 
     void registerCustomer(Customer customer);
+
+    boolean verify(String verificationCode);
 }

@@ -7,6 +7,7 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -52,6 +53,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     customerRepository.save(customer);
     System.out.println("Verification code: " + customer.getVerificationCode());
+  }
+
+  @Transactional
+  @Override
+  public boolean verify(String verificationCode) {
+    Customer customer = customerRepository.findByVerificationCode(verificationCode);
+    if(customer == null || customer.isEnabled()){
+      return false;
+    } else {
+      customerRepository.enable(customer.getId());
+      return true;
+    }
   }
 
   private void encodePassword(Customer customer) {
