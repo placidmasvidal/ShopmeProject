@@ -153,8 +153,9 @@
             $.each(responseJSON, function (index, state) {
                 $("<option>").val(state.name).text(state.name).appendTo(dataListState);
             });
+        }).fail(function(){
+           alert('failed to connect to the server!');
         });
-        fieldState.focus();
     }
 
     function checkPasswordMatch(confirmPassword) {
