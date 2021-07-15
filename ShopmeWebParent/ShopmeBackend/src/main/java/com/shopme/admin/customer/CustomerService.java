@@ -1,5 +1,6 @@
 package com.shopme.admin.customer;
 
+import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.Customer;
 import org.springframework.data.domain.Page;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface CustomerService {
 
-    Page<Customer> listByPage(int pageNum, String sortField, String sortDir, String keyword);
+    void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper);
 
     void updateCustomerEnabledStatus(Integer id, boolean enabled);
 

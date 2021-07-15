@@ -1,5 +1,6 @@
 package com.shopme.admin.customer;
 
+import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.setting.country.CountryRepository;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.Customer;
@@ -35,17 +36,8 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public Page<Customer> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
-    Sort sort = Sort.by(sortField);
-    sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-
-    Pageable pageable = PageRequest.of(pageNum - 1, CustomerConstants.CUSTOMERS_PER_PAGE, sort);
-
-    if (keyword != null) {
-      return customerRepository.findAll(keyword, pageable);
-    }
-
-    return customerRepository.findAll(pageable);
+  public void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper) {
+    pagingAndSortingHelper.listEntities(pageNum, CustomerConstants.CUSTOMERS_PER_PAGE, customerRepository);
   }
 
   @Override

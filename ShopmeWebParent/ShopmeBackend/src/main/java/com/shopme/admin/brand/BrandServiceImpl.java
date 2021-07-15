@@ -28,20 +28,7 @@ public class BrandServiceImpl implements BrandService {
   }
 
   public void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper) {
-    Sort sort = Sort.by(pagingAndSortingHelper.getSortField());
-
-    sort = pagingAndSortingHelper.getSortDir().equals("asc") ? sort.ascending() : sort.descending();
-
-    Pageable pageable = PageRequest.of(pageNum - 1, BrandConstants.BRANDS_PER_PAGE, sort);
-    Page<Brand> page = null;
-
-    if(pagingAndSortingHelper.getKeyword() != null){
-      page = brandRepository.findAll(pagingAndSortingHelper.getKeyword(), pageable);
-    } else {
-      page = brandRepository.findAll(pageable);
-    }
-
-    pagingAndSortingHelper.updateModelAttributes(pageNum, page);
+    pagingAndSortingHelper.listEntities(pageNum, BrandConstants.BRANDS_PER_PAGE, brandRepository);
   }
 
   @Override

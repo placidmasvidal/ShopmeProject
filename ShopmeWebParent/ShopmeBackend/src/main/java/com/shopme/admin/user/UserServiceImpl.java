@@ -62,19 +62,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper) {
-    Sort sort = Sort.by(pagingAndSortingHelper.getSortField());
-
-    sort = pagingAndSortingHelper.getSortDir().equals("asc") ? sort.ascending() : sort.descending();
-    Pageable pageable = PageRequest.of(pageNum - 1, UserConstants.USERS_PER_PAGE, sort);
-    Page<User> page = null;
-
-    if (pagingAndSortingHelper.getKeyword() != null) {
-      page = userRepository.findAll(pagingAndSortingHelper.getKeyword(), pageable);
-    } else {
-      page = userRepository.findAll(pageable);
-    }
-
-    pagingAndSortingHelper.updateModelAttributes(pageNum, page);
+    pagingAndSortingHelper.listEntities(pageNum, UserConstants.USERS_PER_PAGE, userRepository);
   }
 
   @Override
