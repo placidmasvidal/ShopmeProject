@@ -18,6 +18,8 @@ public class PagingAndSortingArgumentResolver implements HandlerMethodArgumentRe
                                   ModelAndViewContainer model,
                                   NativeWebRequest request,
                                   WebDataBinderFactory webDataBinderFactory) throws Exception {
+        PagingAndSortingParam annotation = methodParameter.getParameterAnnotation(PagingAndSortingParam.class);
+
         String sortField = request.getParameter("sortField");
         String sortDir = request.getParameter("sortDir");
         String keyword = request.getParameter("keyword");
@@ -27,9 +29,8 @@ public class PagingAndSortingArgumentResolver implements HandlerMethodArgumentRe
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("moduleURL", annotation.moduleURL());
 
-        PagingAndSortingParam annotation = methodParameter.getParameterAnnotation(PagingAndSortingParam.class);
-
-    return new PagingAndSortingHelper(model, annotation.moduleURL(), annotation.listName(), sortField, sortDir, keyword);
+    return new PagingAndSortingHelper(model, annotation.listName(), sortField, sortDir, keyword);
     }
 }

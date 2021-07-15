@@ -99,10 +99,13 @@ public class ProductController {
           @RequestParam(name = "imageNames", required = false) String[] imageNames,
           @AuthenticationPrincipal ShopmeUserDetails loggedUser)
       throws IOException {
-    if(loggedUser.hasRole("Salesperson")){
-      productService.saveProductPrice(product);
-      redirectAttributes.addFlashAttribute("message", "The product has been saved successfully.");
-      return "redirect:/products";
+
+    if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
+      if (loggedUser.hasRole("Salesperson")) {
+        productService.saveProductPrice(product);
+        redirectAttributes.addFlashAttribute("message", "The product has been saved successfully.");
+        return "redirect:/products";
+      }
     }
 
     ProductSaveHelper.setMainImageName(mainImageMultipart, product);

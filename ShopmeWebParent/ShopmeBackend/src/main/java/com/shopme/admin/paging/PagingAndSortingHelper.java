@@ -15,15 +15,13 @@ import java.util.List;
 public class PagingAndSortingHelper {
 
     private ModelAndViewContainer model;
-    private String moduleURL;
     private String listName;
     private String sortField;
     private String sortDir;
     private String keyword;
 
-    public PagingAndSortingHelper(ModelAndViewContainer model, String moduleURL, String listName, String sortField, String sortDir, String keyword) {
+    public PagingAndSortingHelper(ModelAndViewContainer model, String listName, String sortField, String sortDir, String keyword) {
         this.model = model;
-        this.moduleURL = moduleURL;
         this.listName = listName;
         this.sortField = sortField;
         this.sortDir = sortDir;
@@ -46,7 +44,6 @@ public class PagingAndSortingHelper {
         model.addAttribute("endCount", endCount);
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute(listName, listItems);
-        model.addAttribute("moduleURL", moduleURL);
     }
 
     public void listEntities(int pageNum, int pageSize, SearchRepository<?, Integer> searchRepository){
