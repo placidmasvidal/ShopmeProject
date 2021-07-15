@@ -1,5 +1,6 @@
 package com.shopme.admin.brand;
 
+import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.common.entity.Brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,18 +27,21 @@ public class BrandServiceImpl implements BrandService {
     return brandRepository.save(brand);
   }
 
-  public Page<Brand> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
-    Sort sort = Sort.by(sortField);
+  public void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper) {
+    Sort sort = Sort.by(pagingAndSortingHelper.getSortField());
 
-    sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+    sort = pagingAndSortingHelper.getSortDir().equals("asc") ? sort.ascending() : sort.descending();
 
     Pageable pageable = PageRequest.of(pageNum - 1, BrandConstants.BRANDS_PER_PAGE, sort);
+    Page<Brand> page = null;
 
-    if(keyword != null){
-      return brandRepository.findAll(keyword, pageable);
+    if(pagingAndSortingHelper.getKeyword() != null){
+      page = brandRepository.findAll(pagingAndSortingHelper.getKeyword(), pageable);
+    } else {
+      page = brandRepository.findAll(pageable);
     }
 
-    return brandRepository.findAll(pageable);
+    pagingAndSortingHelper.updateModelAttributes(pageNum, page);
   }
 
   @Override

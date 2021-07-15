@@ -1,5 +1,6 @@
 package com.shopme.admin.user;
 
+import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.common.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ public interface UserService {
 
   List<User> listAll();
 
-  Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword);
+  void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper);
 
   boolean isEmailUnique(Integer id, String email);
 

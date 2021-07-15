@@ -1,5 +1,6 @@
 package com.shopme.admin.user;
 
+import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,17 +61,20 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
-    Sort sort = Sort.by(sortField);
+  public void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper) {
+    Sort sort = Sort.by(pagingAndSortingHelper.getSortField());
 
-    sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+    sort = pagingAndSortingHelper.getSortDir().equals("asc") ? sort.ascending() : sort.descending();
     Pageable pageable = PageRequest.of(pageNum - 1, UserConstants.USERS_PER_PAGE, sort);
+    Page<User> page = null;
 
-    if (keyword != null) {
-      return userRepository.findAll(keyword, pageable);
+    if (pagingAndSortingHelper.getKeyword() != null) {
+      page = userRepository.findAll(pagingAndSortingHelper.getKeyword(), pageable);
+    } else {
+      page = userRepository.findAll(pageable);
     }
 
-    return userRepository.findAll(pageable);
+    pagingAndSortingHelper.updateModelAttributes(pageNum, page);
   }
 
   @Override

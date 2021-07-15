@@ -1,5 +1,6 @@
 package com.shopme.admin.brand;
 
+import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.common.entity.Brand;
 import org.springframework.data.domain.Page;
 
@@ -9,7 +10,7 @@ public interface BrandService {
 
     public Brand save(Brand brand);
 
-    public Page<Brand> listByPage(int pageNum, String sortField, String sortDir, String keyword);
+    public void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper);
 
     public Brand get(Integer id) throws BrandNotFoundException;
 
