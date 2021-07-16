@@ -1,5 +1,6 @@
 package com.shopme.customer;
 
+import com.shopme.common.entity.AuthenticationType;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.Customer;
 import com.shopme.setting.country.CountryRepository;
@@ -64,6 +65,14 @@ public class CustomerServiceImpl implements CustomerService {
     } else {
       customerRepository.enable(customer.getId());
       return true;
+    }
+  }
+
+  @Override
+  @Transactional
+  public void updateAuthentication(Customer customer, AuthenticationType type) {
+    if(!customer.getAuthenticationType().equals(type)){
+      customerRepository.updateAuthenticationType(customer.getId(), type);
     }
   }
 
