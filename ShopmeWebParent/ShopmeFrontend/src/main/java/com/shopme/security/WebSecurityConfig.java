@@ -1,6 +1,9 @@
 package com.shopme.security;
 
+import com.shopme.customer.CustomerService;
+import com.shopme.customer.CustomerServiceImpl;
 import com.shopme.security.oauth.CustomerOAuth2UserService;
+import com.shopme.security.oauth.OAuth2LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,14 +22,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private CustomerOAuth2UserService oAuth2UserService;
 
-  @Autowired
-  public WebSecurityConfig(CustomerOAuth2UserService oAuth2UserService) {
-    this.oAuth2UserService = oAuth2UserService;
-  }
+  private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+  @Autowired
+  public WebSecurityConfig(CustomerOAuth2UserService oAuth2UserService, OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler) {
+    this.oAuth2UserService = oAuth2UserService;
+    this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
   }
 
   @Override
@@ -47,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .userInfoEndpoint()
         .userService(oAuth2UserService)
         .and()
+        .successHandler(oAuth2LoginSuccessHandler)
         .and()
         .logout()
         .permitAll()
@@ -61,18 +63,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
   }
 
-  @Bean
-  public UserDetailsService userDetailsService() {
-    return new CustomerUserDetailsService();
-  }
-
-  @Bean
-  public DaoAuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-
-    authenticationProvider.setUserDetailsService(userDetailsService());
-    authenticationProvider.setPasswordEncoder(passwordEncoder());
-
-    return authenticationProvider;
-  }
 }

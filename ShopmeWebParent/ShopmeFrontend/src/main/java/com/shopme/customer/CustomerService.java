@@ -16,5 +16,9 @@ public interface CustomerService {
 
     boolean verify(String verificationCode);
 
-    void updateAuthentication(Customer customer, AuthenticationType type);
+    void updateAuthenticationType(Customer customer, AuthenticationType type);
+
+    Customer getCustomerByEmail(String email);
+
+    void addNewCustomerUponOAuthLogin(String name, String email, String countryCode);
 }
