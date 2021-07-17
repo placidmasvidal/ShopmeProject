@@ -1,5 +1,7 @@
 package com.shopme.security;
 
+import com.shopme.security.oauth.CustomerOAuth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,48 +17,62 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  private CustomerOAuth2UserService oAuth2UserService;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/customer").authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("email")
-                .permitAll()
-                .and()
-                .logout().permitAll()
-                .and()
-                .rememberMe()
-                .key("1234567890_aBcDeFgHiJkLmNoPqRsTuVwXyZ")
-                .tokenValiditySeconds(14 * 24 * 60 * 60)
-        ;
-    }
+  @Autowired
+  public WebSecurityConfig(CustomerOAuth2UserService oAuth2UserService) {
+    this.oAuth2UserService = oAuth2UserService;
+  }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public UserDetailsService userDetailsService(){
-        return new CustomerUserDetailsService();
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+        .antMatchers("/customer")
+        .authenticated()
+        .anyRequest()
+        .permitAll()
+        .and()
+        .formLogin()
+        .loginPage("/login")
+        .usernameParameter("email")
+        .permitAll()
+        .and()
+        .oauth2Login()
+        .loginPage("/login")
+        .userInfoEndpoint()
+        .userService(oAuth2UserService)
+        .and()
+        .and()
+        .logout()
+        .permitAll()
+        .and()
+        .rememberMe()
+        .key("1234567890_aBcDeFgHiJkLmNoPqRsTuVwXyZ")
+        .tokenValiditySeconds(14 * 24 * 60 * 60);
+  }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
+  }
 
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
+  @Bean
+  public UserDetailsService userDetailsService() {
+    return new CustomerUserDetailsService();
+  }
 
-        return authenticationProvider;
-    }
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 
+    authenticationProvider.setUserDetailsService(userDetailsService());
+    authenticationProvider.setPasswordEncoder(passwordEncoder());
+
+    return authenticationProvider;
+  }
 }
