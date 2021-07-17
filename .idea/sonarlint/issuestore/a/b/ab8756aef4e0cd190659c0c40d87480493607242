@@ -1,0 +1,17 @@
+
+W
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(žÿâ‹øÿÿÿÿ8’Îü¶©/
+e
+java:S1128"ERemove this unused import 'org.springframework.data.domain.Pageable'.(‡ë‚Öýÿÿÿÿ8ÔÉÐÊª/
+a
+java:S1128"ARemove this unused import 'org.springframework.data.domain.Sort'.(ëÿ€ëøÿÿÿÿ8ÔÉÐÊª/
+R
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(Ýôîú8©«á‰ª/
+c
+java:S1128"HRemove this unused import 'org.springframework.data.domain.PageRequest'.(ºêâÚ8ÔÉÐÊª/
+a
+java:S1126"AReplace this if-then-else statement by a single return statement.(÷ßÓ•ÿÿÿÿÿ8ö”ÿ¶©/
+Y
+java:S4973"9Use the "equals" method if value comparison was intended.(÷ßÓ•ÿÿÿÿÿ8ö”ÿ¶©/
+a
+java:S1128"ARemove this unused import 'org.springframework.data.domain.Page'.(˜âŽŽüÿÿÿÿ8õ½ÒÊª/

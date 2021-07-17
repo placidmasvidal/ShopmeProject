@@ -1,7 +1,15 @@
 
+c
+java:S1128"HRemove this unused import 'org.springframework.data.domain.PageRequest'.(ºêâÚ8ó¡”Êª/
+G
+java:S1905"'Remove this unnecessary cast to "List".(¥Ô¦…ÿÿÿÿÿ8†øüÔŸ/
+R
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(†ŠÛÍ8Àê‰ƒŸ/
 T
-java:S3655."7Call "Optional#isPresent()" before accessing the value.(†ŠÛÍ8Àê‰ƒŸ/
-V
-java:S4973J"9Use the "equals" method if value comparison was intended.(™Ì“8Ÿ÷æ·/
-I
-java:S1905S"'Remove this unnecessary cast to "List".(¥Ô¦…ÿÿÿÿÿ8†øüÔŸ/
+java:S4973"9Use the "equals" method if value comparison was intended.(™Ì“8Ÿ÷æ·/
+e
+java:S1128"ERemove this unused import 'org.springframework.data.domain.Pageable'.(‡ë‚Öıÿÿÿÿ8ó¡”Êª/
+a
+java:S1128"ARemove this unused import 'org.springframework.data.domain.Page'.(˜âüÿÿÿÿ8ó¡”Êª/
+a
+java:S1128"ARemove this unused import 'org.springframework.data.domain.Sort'.(ëÿ€ëøÿÿÿÿ8ó¡”Êª/

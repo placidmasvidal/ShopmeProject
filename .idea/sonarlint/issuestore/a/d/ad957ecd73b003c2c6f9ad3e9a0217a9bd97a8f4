@@ -1,15 +1,19 @@
 
-j
-java:S5361A"HReplace this call to "replaceAll()" by a call to the "replace()" method.(Áş´œşÿÿÿÿ8îÅĞ /
-[
-java:S4973_"9Use the "equals" method if value comparison was intended.(¾¾Š“ıÿÿÿÿ8¯²‹¥£/
-N
-java:S1153)"1Directly append the argument of String.valueOf().(¼Ô¯ˆ8—İ¼ò¢/
-N
-java:S11530"1Directly append the argument of String.valueOf().(¼Ô¯ˆ8Ã»ğ¢/
-j
-java:S5361>"HReplace this call to "replaceAll()" by a call to the "replace()" method.(¡Ó½Ïùÿÿÿÿ8ª½šĞ /
+a
+java:S1128"ARemove this unused import 'org.springframework.data.domain.Sort'.(ëÿ€ëøÿÿÿÿ8ôıöÊª/
+L
+java:S1153"1Directly append the argument of String.valueOf().(¼Ô¯ˆ8ôıöÊª/
+h
+java:S5361"HReplace this call to "replaceAll()" by a call to the "replace()" method.(Áş´œşÿÿÿÿ8îÅĞ /
+c
+java:S1128"HRemove this unused import 'org.springframework.data.domain.PageRequest'.(ºêâÚ8ôıöÊª/
+h
+java:S5361"HReplace this call to "replaceAll()" by a call to the "replace()" method.(¡Ó½Ïùÿÿÿÿ8ª½šĞ /
+L
+java:S1153"1Directly append the argument of String.valueOf().(¼Ô¯ˆ8ôıöÊª/
 Y
-java:S3655y"7Call "Optional#isPresent()" before accessing the value.(Àèä¾úÿÿÿÿ8¯²‹¥£/
-Y
-java:S3655K"7Call "Optional#isPresent()" before accessing the value.(›ØÇüÿÿÿÿ8ÊßŒ¥£/
+java:S4973"9Use the "equals" method if value comparison was intended.(¾¾Š“ıÿÿÿÿ8¯²‹¥£/
+W
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(›ØÇüÿÿÿÿ8ˆÃ—Ëª/
+W
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(Àèä¾úÿÿÿÿ8ˆÃ—Ëª/

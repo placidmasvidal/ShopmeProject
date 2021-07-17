@@ -1,16 +1,20 @@
 
-²
-java:S4449t"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(ëßøÿÿÿÿ8ÅÔ½/
-o	java:S116 "NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øüëøúÿÿÿÿ8ÅÔ½/
-s
-java:S1192h"QDefine a constant instead of duplicating this literal "redirect:/brands" 3 times.(ß‚»Çùÿÿÿÿ8ÅÔ½/
 b
-java:S4684n"@Replace this persistent entity with a simple POJO or DTO object.(†æ©Ÿÿÿÿÿÿ8ÅÔ½/
-I
-java:S1068 "'Remove this unused "LOG" private field.(øüëøúÿÿÿÿ8ÅÔ½/
-]
-java:S2184:"@Cast one of the operands of this addition operation to a "long".(™’˜û8¾Èª¢/
-e
-java:S1192g"HDefine a constant instead of duplicating this literal "message" 4 times.(øƒÄ“8ÅÔ½/
+java:S1128"BRemove this unused import 'com.shopme.admin.brand.BrandConstants'.(¥§œ×ûÿÿÿÿ8‰óºÉª/
+G
+java:S1068"'Remove this unused "LOG" private field.(øüëøúÿÿÿÿ8ÅÔ½/
+q
+java:S1192"QDefine a constant instead of duplicating this literal "redirect:/brands" 3 times.(ß‚»Çùÿÿÿÿ8ÅÔ½/
+`
+java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(†æ©Ÿÿÿÿÿÿ8ÅÔ½/
+°
+java:S4449"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(ëßøÿÿÿÿ8ÅÔ½/
+_
+java:S1128"DRemove this unused import 'com.shopme.admin.brand.BrandServiceImpl'.(ğÖÒ±8œ‡Èª¢/
+c
+java:S1192"HDefine a constant instead of duplicating this literal "message" 4 times.(øƒÄ“8ÅÔ½/
+g
+java:S1128"LRemove this unused import 'org.springframework.data.repository.query.Param'.(©”šô8Ñ¼Éª/
+m	java:S116"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øüëøúÿÿÿÿ8ÅÔ½/
 a
-java:S1128"DRemove this unused import 'com.shopme.admin.brand.BrandServiceImpl'.(ğÖÒ±8œ‡Èª¢/
+java:S1128"ARemove this unused import 'org.springframework.data.domain.Page'.(˜âüÿÿÿÿ8äœÆÉª/
