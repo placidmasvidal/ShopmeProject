@@ -48,12 +48,12 @@ public class CustomerServiceImpl implements CustomerService {
     encodePassword(customer);
     customer.setEnabled(false);
     customer.setCreatedTime(new Date());
+    customer.setAuthenticationType(AuthenticationType.DATABASE);
 
     String randomCode = RandomString.make(64);
     customer.setVerificationCode(randomCode);
 
     customerRepository.save(customer);
-    System.out.println("Verification code: " + customer.getVerificationCode());
   }
 
   @Transactional

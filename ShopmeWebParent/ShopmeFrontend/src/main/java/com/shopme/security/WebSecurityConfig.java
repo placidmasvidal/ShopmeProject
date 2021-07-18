@@ -24,10 +24,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
+  private DatabaseLoginSuccessHandler databaseLoginSuccessHandler;
+
   @Autowired
-  public WebSecurityConfig(CustomerOAuth2UserService oAuth2UserService, OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler) {
+  public WebSecurityConfig(CustomerOAuth2UserService oAuth2UserService, OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler, DatabaseLoginSuccessHandler databaseLoginSuccessHandler) {
     this.oAuth2UserService = oAuth2UserService;
     this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
+    this.databaseLoginSuccessHandler = databaseLoginSuccessHandler;
   }
 
   @Override
@@ -41,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .formLogin()
         .loginPage("/login")
         .usernameParameter("email")
+        .successHandler(databaseLoginSuccessHandler)
         .permitAll()
         .and()
         .oauth2Login()
