@@ -1,11 +1,13 @@
 package com.shopme.customer.controller;
 
+import com.shopme.common.entity.Customer;
 import com.shopme.common.exception.CustomerNotFoundException;
 import com.shopme.customer.CustomerService;
 import com.shopme.setting.EmailSettingBag;
 import com.shopme.setting.SettingService;
 import com.shopme.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -81,6 +83,18 @@ public class ForgotPasswordController {
     helper.setText(content, true);
 
     mailSender.send(message);
+  }
 
+  @GetMapping("/reset_password")
+  public String showResetForm(@Param("token") String token, Model model){
+    Customer customer = customerService.getByResetPasswordToken(token);
+    if(customer != null){
+      model.addAttribute("token", token);
+    } else {
+      model.addAttribute("message", "Invalid Token");
+      model.addAttribute("pageTitle", "Invalid Token");
+      return "message";
+    }
+    return "customer/reset_password_form";
   }
 }

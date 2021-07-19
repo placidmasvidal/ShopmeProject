@@ -142,6 +142,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
   }
 
+  @Override
+  public Customer getByResetPasswordToken(String token) {
+    return customerRepository.findByResetPasswordToken(token);
+  }
+
   private void encodePassword(Customer customer) {
     String encodedPassword = passwordEncoder.encode(customer.getPassword());
     customer.setPassword(encodedPassword);
