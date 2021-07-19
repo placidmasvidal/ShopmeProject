@@ -46,11 +46,12 @@
                 </div>
             </div>
 
+            <th:block th:if="${customer.authenticationType.name() == 'DATABASE'}">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Password:</label>
                 <div class="col-sm-8">
                     <input type="password" th:field="*{password}" class="form-control"
-                           required="required" maxlength="15" minlength="6"
+                           maxlength="15" minlength="6"
                            oninput="checkPasswordMatch(document.getElementById('confirmPassword'))"/>
                 </div>
             </div>
@@ -59,10 +60,11 @@
                 <label class="col-sm-4 col-form-label">Re-type Password:</label>
                 <div class="col-sm-8">
                     <input type="password" id="confirmPassword" class="form-control"
-                           required="required" maxlength="15" minlength="6"
+                           maxlength="15" minlength="6"
                            oninput="checkPasswordMatch(this)"/>
                 </div>
             </div>
+            </th:block>
 
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Phone Number:</label>
