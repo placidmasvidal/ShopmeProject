@@ -1,15 +1,12 @@
 package com.shopme.admin.customer.controller;
 
-import com.shopme.admin.customer.CustomerConstants;
-import com.shopme.admin.customer.CustomerNotFoundException;
+import com.shopme.common.exception.CustomerNotFoundException;
 import com.shopme.admin.customer.CustomerService;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.paging.PagingAndSortingParam;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

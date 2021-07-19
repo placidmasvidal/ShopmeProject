@@ -3,6 +3,7 @@ package com.shopme.customer;
 import com.shopme.common.entity.AuthenticationType;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.Customer;
+import com.shopme.common.exception.CustomerNotFoundException;
 import com.shopme.setting.country.CountryRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +126,20 @@ public class CustomerServiceImpl implements CustomerService {
     customerInForm.setResetPasswordToken(customerInDB.getResetPasswordToken());
 
     customerRepository.save(customerInForm);
+  }
+
+  @Override
+  public String updateResetPasswordToken(String email) throws CustomerNotFoundException {
+    Customer customer = customerRepository.findByEmail(email);
+    if(customer != null){
+      String token = RandomString.make(30);
+      customer.setResetPasswordToken(token);
+      customerRepository.save(customer);
+
+      return token;
+    } else {
+      throw new CustomerNotFoundException("Could not find any customer with email: " + email);
+    }
   }
 
   private void encodePassword(Customer customer) {

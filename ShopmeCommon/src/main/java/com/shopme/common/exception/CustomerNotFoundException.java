@@ -1,4 +1,4 @@
-package com.shopme.admin.customer;
+package com.shopme.common.exception;
 
 public class CustomerNotFoundException extends Exception {
 

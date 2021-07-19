@@ -3,7 +3,7 @@ package com.shopme.admin.customer;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.Customer;
-import org.springframework.data.domain.Page;
+import com.shopme.common.exception.CustomerNotFoundException;
 
 import java.util.List;
 
