@@ -22,4 +22,6 @@ public interface CustomerService {
 
   void addNewCustomerUponOAuthLogin(
       String name, String email, String countryCode, AuthenticationType authenticationType);
+
+  void update(Customer customerInForm);
 }

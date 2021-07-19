@@ -11,9 +11,12 @@
 
     <div>&nbsp;</div>
 
-    <form th:action="@{/create_customer}" method="post" th:object="${customer}"
+    <form th:action="@{/update_account_details}" method="post" th:object="${customer}"
           style="max-width: 600px; margin: 0 auto">
         <input type="hidden" th:field="*{id}"/>
+        <div th:if="${message != null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
         <div class="border border-secondary rounded p-3">
 
             <div class="form-group row">
