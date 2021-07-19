@@ -96,13 +96,12 @@ public class CustomerController {
 
   @GetMapping("/account_details")
   public String viewAccountDetails(Model model, HttpServletRequest servletRequest){
-    System.out.println("Principal name = " + getEmailOfAuthenticatedCustomer(servletRequest));
-    System.out.println("principalType = " + servletRequest.getUserPrincipal().getClass().getTypeName());
-
     String email = getEmailOfAuthenticatedCustomer(servletRequest);
     Customer customer = customerService.getCustomerByEmail(email);
+    List<Country> listCountries = customerService.listAllCountries();
 
     model.addAttribute("customer", customer);
+    model.addAttribute("listCountries", listCountries);
 
     return "customer/account_form";
   }
