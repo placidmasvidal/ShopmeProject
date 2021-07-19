@@ -8,17 +8,18 @@ import java.util.List;
 
 public interface CustomerService {
 
-    List<Country> listAllCountries();
+  List<Country> listAllCountries();
 
-    boolean isEmailUnique(String email);
+  boolean isEmailUnique(String email);
 
-    void registerCustomer(Customer customer);
+  void registerCustomer(Customer customer);
 
-    boolean verify(String verificationCode);
+  boolean verify(String verificationCode);
 
-    void updateAuthenticationType(Customer customer, AuthenticationType type);
+  void updateAuthenticationType(Customer customer, AuthenticationType type);
 
-    Customer getCustomerByEmail(String email);
+  Customer getCustomerByEmail(String email);
 
-    void addNewCustomerUponOAuthLogin(String name, String email, String countryCode);
+  void addNewCustomerUponOAuthLogin(
+      String name, String email, String countryCode, AuthenticationType authenticationType);
 }

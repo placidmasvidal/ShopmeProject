@@ -26,5 +26,11 @@ spring:
                         scope:
                         - email
                         - profile
+                    facebook:
+                        client-id: 1377246809343324
+                        client-secret: 8adea8b221ba7c675703c9f02c1babc9
+                        scope:
+                            - email
+                            - public_profile
     thymeleaf:
         cache: false
