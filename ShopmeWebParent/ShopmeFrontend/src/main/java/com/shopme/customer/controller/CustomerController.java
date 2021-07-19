@@ -3,6 +3,7 @@ package com.shopme.customer.controller;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.Customer;
 import com.shopme.customer.CustomerService;
+import com.shopme.security.oauth.CustomerOAuth2User;
 import com.shopme.setting.EmailSettingBag;
 import com.shopme.setting.SettingService;
 import com.shopme.util.Utility;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +23,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -87,5 +92,34 @@ public class CustomerController {
     boolean verified = customerService.verify(code);
 
     return "register/" + (verified ? "verify_success" : "verify_fail");
+  }
+
+  @GetMapping("/account_details")
+  public String viewAccountDetails(Model model, HttpServletRequest servletRequest){
+    System.out.println("Principal name = " + getEmailOfAuthenticatedCustomer(servletRequest));
+    System.out.println("principalType = " + servletRequest.getUserPrincipal().getClass().getTypeName());
+
+    String email = getEmailOfAuthenticatedCustomer(servletRequest);
+    Customer customer = customerService.getCustomerByEmail(email);
+
+    model.addAttribute("customer", customer);
+
+    return "customer/account_form";
+  }
+
+  private String getEmailOfAuthenticatedCustomer(HttpServletRequest servletRequest){
+    Principal principal = servletRequest.getUserPrincipal();
+    String customerEmail = null;
+
+    if(principal instanceof UsernamePasswordAuthenticationToken
+    || principal instanceof RememberMeAuthenticationToken){
+      customerEmail = servletRequest.getUserPrincipal().getName();
+    } else if(principal instanceof OAuth2AuthenticationToken){
+      OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) principal;
+      CustomerOAuth2User oAuth2User = (CustomerOAuth2User) oauth2Token.getPrincipal();
+      customerEmail = oAuth2User.getEmail();
+    }
+
+    return customerEmail;
   }
 }
