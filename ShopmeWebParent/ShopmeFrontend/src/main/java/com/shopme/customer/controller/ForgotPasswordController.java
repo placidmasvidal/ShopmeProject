@@ -45,8 +45,8 @@ public class ForgotPasswordController {
       String link = Utility.getSiteURL(servletRequest) + "/reset_password?token=" + token;
       sendEmail(link, email);
 
-      model.addAttribute("message", "We have sent a reset password link to your email."
-      + "\nPlease check it.");
+      model.addAttribute(
+          "message", "We have sent a reset password link to your email." + "\nPlease check it.");
     } catch (CustomerNotFoundException ex) {
       model.addAttribute("error", ex.getMessage());
     } catch (UnsupportedEncodingException | MessagingException ex) {
@@ -56,7 +56,8 @@ public class ForgotPasswordController {
     return "customer/forgot_password_form";
   }
 
-  private void sendEmail(String link, String email) throws UnsupportedEncodingException, MessagingException {
+  private void sendEmail(String link, String email)
+      throws UnsupportedEncodingException, MessagingException {
     EmailSettingBag emailSettings = settingService.getEmailSettings();
     JavaMailSenderImpl mailSender = Utility.prepareMailSender(emailSettings);
 
@@ -86,9 +87,9 @@ public class ForgotPasswordController {
   }
 
   @GetMapping("/reset_password")
-  public String showResetForm(@Param("token") String token, Model model){
+  public String showResetForm(@Param("token") String token, Model model) {
     Customer customer = customerService.getByResetPasswordToken(token);
-    if(customer != null){
+    if (customer != null) {
       model.addAttribute("token", token);
     } else {
       model.addAttribute("message", "Invalid Token");
@@ -96,5 +97,23 @@ public class ForgotPasswordController {
       return "message";
     }
     return "customer/reset_password_form";
+  }
+
+  @PostMapping("/reset_password")
+  public String processResetForm(HttpServletRequest servletRequest, Model model) {
+    String token = servletRequest.getParameter("token");
+    String password = servletRequest.getParameter("password");
+
+    try {
+      customerService.updatePassword(token, password);
+      model.addAttribute("pageTitle", "Reset your password");
+      model.addAttribute("message", "You have successfully changed your password.");
+      model.addAttribute("title", "Reset your password");
+      return "message";
+    } catch (CustomerNotFoundException ex) {
+      model.addAttribute("message", ex.getMessage());
+      model.addAttribute("pageTitle", "Invalid Token");
+      return "message";
+    }
   }
 }

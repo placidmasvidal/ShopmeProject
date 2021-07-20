@@ -147,6 +147,19 @@ public class CustomerServiceImpl implements CustomerService {
     return customerRepository.findByResetPasswordToken(token);
   }
 
+  @Override
+  public void updatePassword(String token, String password) throws CustomerNotFoundException {
+    Customer customer = customerRepository.findByResetPasswordToken(token);
+    if(customer == null){
+      throw new CustomerNotFoundException("No customer found: invalid token.");
+    }
+
+    customer.setPassword(password);
+    encodePassword(customer);
+    customer.setResetPasswordToken(null);
+    customerRepository.save(customer);
+  }
+
   private void encodePassword(Customer customer) {
     String encodedPassword = passwordEncoder.encode(customer.getPassword());
     customer.setPassword(encodedPassword);
