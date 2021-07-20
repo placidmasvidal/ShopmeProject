@@ -81,4 +81,28 @@ public class CartItemRepositoryTests {
     assertThat(item).isNotNull();
     System.out.println("item = " + item);
   }
+
+  @Test
+  public void testUpdateQuantity(){
+    Integer customerId = 1;
+    Integer productId = 1;
+    Integer quantity = 4;
+
+    sut.updateQuantity(quantity, customerId, productId);
+    CartItem item = sut.findByCustomerAndProduct(new Customer(customerId), new Product(productId));
+
+    assertThat(item.getQuantity()).isEqualTo(4);
+  }
+
+  @Test
+  public void testDeleteByCustomerAndProduct(){
+    Integer customerId = 10;
+    Integer productId = 10;
+
+    sut.deleteByCustomerAndProduct(customerId, productId);
+
+    CartItem item = sut.findByCustomerAndProduct(new Customer(customerId), new Product(productId));
+
+    assertThat(item).isNull();
+  }
 }
