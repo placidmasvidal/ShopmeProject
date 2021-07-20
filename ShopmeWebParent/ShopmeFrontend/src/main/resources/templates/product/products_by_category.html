@@ -11,7 +11,7 @@
         <th:block th:each="cat : ${category.children}">
             <div class="col" th:if="${cat.enabled == true}">
                 <a th:href="@{'/c/' + ${cat.alias}}">
-                    <img th:src="@{${cat.imagePath}}" height="80"/>
+                    <img th:src="@{${cat.imagePath}}" height="100"/>
                     <br/>
                     <b>[[${cat.name}]]</b>
                 </a>
@@ -19,8 +19,7 @@
         </th:block>
     </div>
 
-    <div class="row p-5"></div>
-
+    <div class="row">&nbsp;</div>
     <div class="row">
         <th:block th:each="product : ${listProducts}">
             <div th:replace="product/product_fragment :: content"></div>

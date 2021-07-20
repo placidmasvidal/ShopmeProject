@@ -48,8 +48,10 @@
         <nav class="navbar navbar-expand-sm bg-light">
             <div class="collapse navbar-collapse" id="searchNavbar">
                 <form class="form-inline" th:action="@{/search}" method="get">
-                    <input type="search" name="keyword" class="form-control mr-sm-2" th:value="${keyword}" placeholder="keyword" required/>
-                    <input type="submit" class="btn btn-outline-success" value="Search"/>
+                    <input type="search" name="keyword" class="form-control mr-sm-2"
+                           th:value="${keyword}"
+                           placeholder="keyword" required />
+                    <input type="submit" value="Search" class="btn btn-outline-success" />
                 </form>
                 <ul class="navbar-nav">
                     <th:block sec:authorize="isAuthenticated()">
