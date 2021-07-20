@@ -20,47 +20,65 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Rollback(value = false)
 public class CartItemRepositoryTests {
 
-    @Autowired CartItemRepository sut;
-    @Autowired TestEntityManager entityManager;
+  @Autowired CartItemRepository sut;
+  @Autowired TestEntityManager entityManager;
 
-    @Test
-    public void testSaveItem(){
-        Integer customerId = 1;
-        Integer productId = 1;
+  @Test
+  public void testSaveItem() {
+    Integer customerId = 1;
+    Integer productId = 1;
 
-        Customer customer = entityManager.find(Customer.class, customerId);
-        Product product = entityManager.find(Product.class, productId);
+    Customer customer = entityManager.find(Customer.class, customerId);
+    Product product = entityManager.find(Product.class, productId);
 
-        CartItem newItem = new CartItem();
-        newItem.setCustomer(customer);
-        newItem.setProduct(product);
-        newItem.setQuantity(1);
+    CartItem newItem = new CartItem();
+    newItem.setCustomer(customer);
+    newItem.setProduct(product);
+    newItem.setQuantity(1);
 
-        CartItem savedItem = sut.save(newItem);
+    CartItem savedItem = sut.save(newItem);
 
-        assertThat(savedItem.getId()).isGreaterThan(0);
-    }
+    assertThat(savedItem.getId()).isGreaterThan(0);
+  }
 
-    @Test
-    public void testSave2Items(){
-        Integer customerId = 10;
-        Integer productId = 10;
+  @Test
+  public void testSave2Items() {
+    Integer customerId = 10;
+    Integer productId = 10;
 
-        Customer customer = entityManager.find(Customer.class, customerId);
-        Product product = entityManager.find(Product.class, productId);
+    Customer customer = entityManager.find(Customer.class, customerId);
+    Product product = entityManager.find(Product.class, productId);
 
-        CartItem item1 = new CartItem();
-        item1.setCustomer(customer);
-        item1.setProduct(product);
-        item1.setQuantity(2);
+    CartItem item1 = new CartItem();
+    item1.setCustomer(customer);
+    item1.setProduct(product);
+    item1.setQuantity(2);
 
-        CartItem item2 = new CartItem();
-        item2.setCustomer(new Customer(customerId));
-        item2.setProduct(new Product(8));
-        item2.setQuantity(3);
+    CartItem item2 = new CartItem();
+    item2.setCustomer(new Customer(customerId));
+    item2.setProduct(new Product(8));
+    item2.setQuantity(3);
 
-        Iterable<CartItem> iterable = sut.saveAll(List.of(item1, item2));
+    Iterable<CartItem> iterable = sut.saveAll(List.of(item1, item2));
 
-        assertThat(iterable).size().isGreaterThan(0);
-    }
+    assertThat(iterable).size().isGreaterThan(0);
+  }
+
+  @Test
+  public void testFindByCustomer() {
+    Integer customerId = 10;
+    List<CartItem> cartItems = sut.findByCustomer(new Customer(customerId));
+    cartItems.forEach(System.out::println);
+    assertThat(cartItems.size()).isEqualTo(2);
+  }
+
+  @Test
+  public void testFindByCustomerAndProduct() {
+    Integer customerId = 10;
+    Integer productId = 10;
+
+    CartItem item = sut.findByCustomerAndProduct(new Customer(customerId), new Product(productId));
+    assertThat(item).isNotNull();
+    System.out.println("item = " + item);
+  }
 }

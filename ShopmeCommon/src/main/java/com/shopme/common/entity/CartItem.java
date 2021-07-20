@@ -60,9 +60,9 @@ public class CartItem {
         + "id="
         + id
         + ", customer="
-        + customer
+        + customer.getFullName()
         + ", product="
-        + product
+        + product.getShortName()
         + ", quantity="
         + quantity
         + '}';
