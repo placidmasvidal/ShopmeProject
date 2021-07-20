@@ -48,23 +48,23 @@ public class ProductController {
 
   @GetMapping("/products")
   public String listFirstPage(Model model) {
-    //return defaultRedirectURL;
+    // return defaultRedirectURL;
     return "redirect:/products/page/1?sortField=name&sortDir=asc";
   }
 
   @GetMapping("/products/page/{pageNum}")
   public String listByPage(
-          @PagingAndSortingParam(listName = "listProducts", moduleURL = "/products")
-                  PagingAndSortingHelper pagingAndSortingHelper,
-          @PathVariable(name = "pageNum") int pageNum,
-          Model model,
-          @Param("categoryId") Integer categoryId) {
+      @PagingAndSortingParam(listName = "listProducts", moduleURL = "/products")
+          PagingAndSortingHelper pagingAndSortingHelper,
+      @PathVariable(name = "pageNum") int pageNum,
+      Model model,
+      @Param("categoryId") Integer categoryId) {
 
     productService.listByPage(pageNum, pagingAndSortingHelper, categoryId);
 
     List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 
-    if(categoryId != null) model.addAttribute("categoryId", categoryId);
+    if (categoryId != null) model.addAttribute("categoryId", categoryId);
     model.addAttribute("listCategories", listCategories);
 
     return "products/products";
@@ -88,16 +88,16 @@ public class ProductController {
 
   @PostMapping("/products/save")
   public String saveProduct(
-          Product product,
-          RedirectAttributes redirectAttributes,
-          @RequestParam(value = "fileImage", required = false) MultipartFile mainImageMultipart,
-          @RequestParam(value = "extraImage", required = false) MultipartFile[] extraImageMultiparts,
-          @RequestParam(name = "detailIDs", required = false) String[] detailIDs,
-          @RequestParam(name = "detailNames", required = false) String[] detailNames,
-          @RequestParam(name = "detailValues", required = false) String[] detailValues,
-          @RequestParam(name = "imageIDs", required = false) String[] imageIDs,
-          @RequestParam(name = "imageNames", required = false) String[] imageNames,
-          @AuthenticationPrincipal ShopmeUserDetails loggedUser)
+      Product product,
+      RedirectAttributes redirectAttributes,
+      @RequestParam(value = "fileImage", required = false) MultipartFile mainImageMultipart,
+      @RequestParam(value = "extraImage", required = false) MultipartFile[] extraImageMultiparts,
+      @RequestParam(name = "detailIDs", required = false) String[] detailIDs,
+      @RequestParam(name = "detailNames", required = false) String[] detailNames,
+      @RequestParam(name = "detailValues", required = false) String[] detailValues,
+      @RequestParam(name = "imageIDs", required = false) String[] imageIDs,
+      @RequestParam(name = "imageNames", required = false) String[] imageNames,
+      @AuthenticationPrincipal ShopmeUserDetails loggedUser)
       throws IOException {
 
     if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
@@ -160,7 +160,10 @@ public class ProductController {
 
   @GetMapping("/products/edit/{id}")
   public String editProduct(
-      @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+      @PathVariable("id") Integer id,
+      Model model,
+      RedirectAttributes redirectAttributes,
+      @AuthenticationPrincipal ShopmeUserDetails loggedUser) {
     try {
       Product product = productService.get(id);
 
@@ -168,6 +171,14 @@ public class ProductController {
 
       Integer numberOfExistingExtraImages = product.getImages().size();
 
+      boolean isReadOnlyForSalesperson = false;
+      if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
+        if (loggedUser.hasRole("Salesperson")) {
+          isReadOnlyForSalesperson = true;
+        }
+      }
+
+      model.addAttribute("isReadOnlyForSalesperson", isReadOnlyForSalesperson);
       model.addAttribute("product", product);
       model.addAttribute("pageTitle", "Edit product (ID: " + id + ")");
       model.addAttribute("listBrands", listBrands);
