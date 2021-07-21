@@ -6,6 +6,7 @@ import com.shopme.common.entity.Product;
 import com.shopme.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +64,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     return cartItemRepository.findByCustomer(customer);
   }
 
+  @Transactional
   @Override
   public float updateQuantity(Integer productId, Integer quantity, Customer customer) {
     cartItemRepository.updateQuantity(quantity, customer.getId(), productId);
