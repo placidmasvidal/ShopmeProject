@@ -22,7 +22,8 @@ public class ShoppingCartRestController {
   private CustomerService customerService;
 
   @Autowired
-  public ShoppingCartRestController(ShoppingCartService shoppingCartService, CustomerService customerService) {
+  public ShoppingCartRestController(
+      ShoppingCartService shoppingCartService, CustomerService customerService) {
     this.shoppingCartService = shoppingCartService;
     this.customerService = customerService;
   }
@@ -38,17 +39,32 @@ public class ShoppingCartRestController {
       return updatedQuantity + " item(s) of this product were added to your shopping cart.";
     } catch (CustomerNotFoundException e) {
       return "You must login to add this product to cart.";
-    } catch (ShoppingCartException e){
+    } catch (ShoppingCartException e) {
       return e.getMessage();
     }
   }
 
-  private Customer getAuthenticatedCustomer(HttpServletRequest servletRequest) throws CustomerNotFoundException {
+  @PostMapping("/cart/update/{productId}/{quantity}")
+  public String updateProductToCart(
+      @PathVariable(name = "productId") Integer productId,
+      @PathVariable(name = "quantity") Integer quantity,
+      HttpServletRequest servletRequest) {
+    try {
+      Customer customer = getAuthenticatedCustomer(servletRequest);
+      float subtotal = shoppingCartService.updateQuantity(productId, quantity, customer);
+
+      return String.valueOf(subtotal);
+    } catch (CustomerNotFoundException e) {
+      return "You must login to change quantity of product.";
+    }
+  }
+
+  private Customer getAuthenticatedCustomer(HttpServletRequest servletRequest)
+      throws CustomerNotFoundException {
     String email = Utility.getEmailOfAuthenticatedCustomer(servletRequest);
-    if(email == null){
+    if (email == null) {
       throw new CustomerNotFoundException("No authenticated customer");
     }
-
     return customerService.getCustomerByEmail(email);
   }
 }

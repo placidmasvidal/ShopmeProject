@@ -10,4 +10,6 @@ public interface ShoppingCartService {
     Integer addProduct(Integer productId, Integer quantity, Customer customer) throws ShoppingCartException;
 
     List<CartItem> listCartItems(Customer customer);
+
+    float updateQuantity(Integer productId, Integer quantity, Customer customer);
 }

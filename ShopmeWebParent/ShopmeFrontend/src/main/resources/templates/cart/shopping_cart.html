@@ -65,8 +65,10 @@
         <h3>You have not chosen any products yet.</h3>
     </div>
 
+    <div th:replace="fragments :: modal_dialog"></div>
     <div th:replace="navigation :: footer_menu"></div>
 </div>
-<script type="text/javascript" th:src="@{/js/quantity_control.js}"></script>
+<script type="text/javascript" th:src="@{/js/shopping_cart.js}"></script>
+<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
 </body>
 </html>
