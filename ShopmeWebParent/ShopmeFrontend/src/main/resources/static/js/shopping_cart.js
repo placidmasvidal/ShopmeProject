@@ -47,6 +47,7 @@ function updateQuantity(productId, quantity) {
         }
     }).done(function(updatedSubtotal) {
         updateSubtotal(updatedSubtotal, productId);
+        updateTotal();
     }).fail(function() {
         showErrorModal("Error while updating product quantity.");
     });
@@ -55,4 +56,15 @@ function updateQuantity(productId, quantity) {
 function updateSubtotal(updatedSubtotal, productId) {
     formattedSubtotal = $.number(updatedSubtotal, 2);
     $("#subtotal" + productId).text(formattedSubtotal);
+}
+
+function updateTotal() {
+    total = 0.0;
+
+    $(".subtotal").each(function(index, element) {
+        total += parseFloat(element.innerHTML.replaceAll(",", ""));
+    });
+
+    formattedTotal = $.number(total, 2);
+    $("#total").text(formattedTotal);
 }
