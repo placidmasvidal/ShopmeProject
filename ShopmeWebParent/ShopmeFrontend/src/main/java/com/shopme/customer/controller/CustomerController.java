@@ -70,7 +70,7 @@ public class CustomerController {
 
   @GetMapping("/account_details")
   public String viewAccountDetails(Model model, HttpServletRequest servletRequest) {
-    String email = getEmailOfAuthenticatedCustomer(servletRequest);
+    String email = Utility.getEmailOfAuthenticatedCustomer(servletRequest);
     Customer customer = customerService.getCustomerByEmail(email);
     List<Country> listCountries = customerService.listAllCountries();
 
@@ -149,19 +149,4 @@ public class CustomerController {
     mailSender.send(message);
   }
 
-  private String getEmailOfAuthenticatedCustomer(HttpServletRequest servletRequest) {
-    Principal principal = servletRequest.getUserPrincipal();
-    String customerEmail = null;
-
-    if (principal instanceof UsernamePasswordAuthenticationToken
-        || principal instanceof RememberMeAuthenticationToken) {
-      customerEmail = servletRequest.getUserPrincipal().getName();
-    } else if (principal instanceof OAuth2AuthenticationToken) {
-      OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) principal;
-      CustomerOAuth2User oAuth2User = (CustomerOAuth2User) oauth2Token.getPrincipal();
-      customerEmail = oAuth2User.getEmail();
-    }
-
-    return customerEmail;
-  }
 }
