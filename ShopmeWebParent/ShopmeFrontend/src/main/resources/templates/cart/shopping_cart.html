@@ -49,6 +49,15 @@
             <div>
                 <span class="h3">Estimated Total:</span>
             </div>
+            <div class="mt-2">
+                <span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+                <span class="h2">[[${#numbers.formatDecimal(estimatedTotal,
+                                        1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]</span>
+                <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+            </div>
+            <div class="mt-2">
+                <button class="btn btn-danger p-3 mt-2 font-weight-bold">Check Out</button>
+            </div>
         </div>
     </div>
 
@@ -58,5 +67,6 @@
 
     <div th:replace="navigation :: footer_menu"></div>
 </div>
+<script type="text/javascript" th:src="@{/js/quantity_control.js}"></script>
 </body>
 </html>

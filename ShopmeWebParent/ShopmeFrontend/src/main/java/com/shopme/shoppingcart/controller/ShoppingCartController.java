@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 @Controller
 public class ShoppingCartController {
@@ -33,7 +34,15 @@ public class ShoppingCartController {
     Customer customer = getAuthenticatedCustomer(servletRequest);
     List<CartItem> cartItems = shoppingCartService.listCartItems(customer);
 
+    float estimatedTotal =
+        (float)
+            cartItems.stream()
+                .map(CartItem::getSubtotal)
+                .mapToDouble(item -> item.doubleValue())
+                .sum();
+
     model.addAttribute("cartItems", cartItems);
+    model.addAttribute("estimatedTotal", estimatedTotal);
 
     return "cart/shopping_cart";
   }
