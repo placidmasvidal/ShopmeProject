@@ -61,6 +61,10 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link" href="javascript: document.logoutForm.submit()">Logout</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="">Addresses</a>
                         </li>
 
@@ -77,12 +81,9 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="">Cart</a>
+                            <a class="nav-link fas fa-shopping-cart fa-2x" th:href="@{/cart}"></a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript: document.logoutForm.submit()">Logout</a>
-                        </li>
                     </th:block>
                 </ul>
             </div>

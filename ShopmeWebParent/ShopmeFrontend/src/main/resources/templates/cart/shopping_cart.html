@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Shopping Cart', 'none')" />
+<body>
+<div class="container-fluid">
+    <div th:replace="navigation :: header_menu"></div>
+    <div th:replace="navigation :: search_nav"></div>
+    <div class="text-center">
+        <h2>Your Shopping Cart</h2>
+    </div>
+
+    <div class="row m-1">
+        <div class="col-sm-8">
+            <th:block th:each="item, status : ${cartItems}">
+                <div class="row border rounded p-1" th:with="product = ${item.product}">
+                    <div class="col-1">
+                        <div>[[${status.count}]]</div>
+                        <div>
+                            <a class="fas fa-trash" href=""></a>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <img th:src="@{${product.mainImagePath}}" class="img-fluid"/>
+                    </div>
+                    <div class="col-6">
+                        <div>
+                            <a th:href="@{'/p/' + ${product.alias}}" target="_blank"><b>[[${product.shortName}]]</b></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-1">&nbsp;</div>
+            </th:block>
+        </div>
+
+        <div class="col-sm-4">
+            <div>
+                <span class="h3">Estimated Total:</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="navigation :: footer_menu"></div>
+</div>
+</body>
+</html>
