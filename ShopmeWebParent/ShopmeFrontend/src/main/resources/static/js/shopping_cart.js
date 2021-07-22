@@ -96,6 +96,7 @@ function removeProduct(link){
 
 function removeProductHTML(rowNumber){
     $("#row" + rowNumber).remove();
+    $("#blankLine" + rowNumber).remove();
 }
 
 function updateCountNumbers(){
