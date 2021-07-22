@@ -2,7 +2,6 @@ package com.shopme.shoppingcart.controller;
 
 import com.shopme.common.entity.CartItem;
 import com.shopme.common.entity.Customer;
-import com.shopme.common.exception.CustomerNotFoundException;
 import com.shopme.customer.CustomerService;
 import com.shopme.shoppingcart.ShoppingCartService;
 import com.shopme.util.Utility;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.stream.DoubleStream;
 
 @Controller
 public class ShoppingCartController {
