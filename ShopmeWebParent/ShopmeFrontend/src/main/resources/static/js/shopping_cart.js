@@ -65,13 +65,24 @@ function updateSubtotal(updatedSubtotal, productId) {
 
 function updateTotal() {
     total = 0.0;
+    productCount = 0;
 
     $(".subtotal").each(function(index, element) {
+        productCount++;
         total += parseFloat(element.innerHTML.replaceAll(",", ""));
     });
 
-    formattedTotal = $.number(total, 2);
-    $("#total").text(formattedTotal);
+    if(productCount < 1){
+        showEmptyShoppingCart();
+    } else {
+        formattedTotal = $.number(total, 2);
+        $("#total").text(formattedTotal);
+    }
+}
+
+function showEmptyShoppingCart() {
+    $("#sectionTotal").hide();
+    $("#sectionEmptyCartMessage").removeClass("d-none");
 }
 
 function removeProduct(link){

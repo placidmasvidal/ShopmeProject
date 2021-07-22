@@ -51,7 +51,7 @@
             </th:block>
         </div>
 
-        <div class="col-sm-4" th:unless="${#lists.isEmpty(cartItems)}">
+        <div class="col-sm-4" th:unless="${#lists.isEmpty(cartItems)}" id="sectionTotal">
             <div>
                 <span class="h3">Estimated Total:</span>
             </div>
@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <div class="text-center" th:if="${#lists.isEmpty(cartItems)}">
+    <div id="sectionEmptyCartMessage" th:class="'text-center' + ${#lists.isEmpty(cartItems) ? '' : ' d-none'}" >
         <h3>You have not chosen any products yet.</h3>
     </div>
 
