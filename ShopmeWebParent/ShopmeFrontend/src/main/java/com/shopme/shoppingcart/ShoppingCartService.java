@@ -12,4 +12,6 @@ public interface ShoppingCartService {
     List<CartItem> listCartItems(Customer customer);
 
     float updateQuantity(Integer productId, Integer quantity, Customer customer);
+
+    void removeProduct(Customer customer, Integer productId);
 }

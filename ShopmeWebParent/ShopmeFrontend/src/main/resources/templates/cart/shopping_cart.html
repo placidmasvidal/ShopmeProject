@@ -12,7 +12,7 @@
     <div class="row m-1">
         <div class="col-sm-8">
             <th:block th:each="item, status : ${cartItems}">
-                <div class="row border rounded p-1" th:with="product = ${item.product}">
+                <div class="row border rounded p-1" th:with="product = ${item.product}" th:id="'row' + ${status.count}">
                     <div class="col-3">
                         <img th:src="@{${product.mainImagePath}}" class="img-fluid"/>
                     </div>
@@ -35,7 +35,7 @@
                                     <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
                                 </div>
                                 <div class="mt-3">
-                                    <a class="fas fa-trash icon-dark" href=""></a>
+                                    <a class="fas fa-trash icon-dark linkRemove" th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${product.id}}"></a>
                                 </div>
                             </th:block>
                         </div>

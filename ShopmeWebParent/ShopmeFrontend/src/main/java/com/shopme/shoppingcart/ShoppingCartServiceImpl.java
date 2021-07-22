@@ -72,4 +72,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     float subtotal = product.getDiscountPrice() * quantity;
     return subtotal;
   }
+
+  @Override
+  @Transactional
+  public void removeProduct(Customer customer, Integer productId) {
+    cartItemRepository.deleteByCustomerAndProduct(customer.getId(), productId);
+  }
 }
