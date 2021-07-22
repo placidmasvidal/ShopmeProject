@@ -7,13 +7,13 @@ import com.shopme.setting.EmailSettingBag;
 import com.shopme.setting.SettingService;
 import com.shopme.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -87,7 +87,7 @@ public class ForgotPasswordController {
   }
 
   @GetMapping("/reset_password")
-  public String showResetForm(@RequestParam("token") String token, Model model) {
+  public String showResetForm(@Param("token") String token, Model model) {
     Customer customer = customerService.getByResetPasswordToken(token);
     if (customer != null) {
       model.addAttribute("token", token);

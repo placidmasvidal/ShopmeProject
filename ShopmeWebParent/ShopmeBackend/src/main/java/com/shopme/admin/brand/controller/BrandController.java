@@ -1,7 +1,9 @@
 package com.shopme.admin.brand.controller;
 
+import com.shopme.admin.brand.BrandConstants;
 import com.shopme.admin.brand.BrandNotFoundException;
 import com.shopme.admin.brand.BrandService;
+import com.shopme.admin.brand.BrandServiceImpl;
 import com.shopme.admin.category.CategoryService;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.paging.PagingAndSortingParam;
@@ -11,6 +13,8 @@ import com.shopme.common.entity.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;

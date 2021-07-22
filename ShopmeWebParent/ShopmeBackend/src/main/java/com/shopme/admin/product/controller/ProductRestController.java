@@ -2,8 +2,8 @@ package com.shopme.admin.product.controller;
 
 import com.shopme.admin.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,7 +17,7 @@ public class ProductRestController {
     }
 
     @PostMapping("/products/check_unique")
-    public String checkUnique(@RequestParam("id") Integer id, @RequestParam("name") String name){
+    public String checkUnique(@Param("id") Integer id, @Param("name") String name){
         return productService.checkUnique(id, name);
     }
 
