@@ -10,35 +10,41 @@
     </div>
 
     <div class="row m-1">
-        <div class="col-sm-8">
+        <div class="col-sm-7">
             <th:block th:each="item, status : ${cartItems}">
                 <div class="row border rounded p-1" th:with="product = ${item.product}" th:id="'row' + ${status.count}">
+                    <div class="col-1">
+                        <div class="divCount">[[${status.count}]]</div>
+                    </div>
                     <div class="col-3">
                         <img th:src="@{${product.mainImagePath}}" class="img-fluid"/>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 col-lg-7">
                         <div>
                             <a th:href="@{'/p/' + ${product.alias}}" target="_blank" th:title="${product.name}"><b>[[${product.shortName}]]</b></a>
                         </div>
-                        <div>
+                        <div class="row">
                             <th:block th:if="${product.inStock}">
                                 <div th:replace="cart/quantity_control :: quantity_control(${item.quantity}, ${product.id})"></div>
-                                <div>
-                                    <span>X&nbsp;</span>
-                                    <div th:replace="product/product_fragment :: product_price"></div>
-                                </div>
-                                <div>
-                                    <span>=&nbsp;</span>
-                                    <span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
-                                    <span th:id="'subtotal' + ${product.id}" class="h4 subtotal">[[${#numbers.formatDecimal(item.subtotal,
-                                        1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]</span>
-                                    <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
-                                </div>
-                                <div class="mt-3">
+                                <div class="col-1 mt-2">
                                     <a class="fas fa-trash icon-dark linkRemove" th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${product.id}}"></a>
                                 </div>
                             </th:block>
                         </div>
+
+                        <th:block th:if="${product.inStock}">
+                        <div>
+                            <span>X&nbsp;</span>
+                            <div th:replace="product/product_fragment :: product_price"></div>
+                        </div>
+                        <div>
+                            <span>=&nbsp;</span>
+                            <span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+                            <span th:id="'subtotal' + ${product.id}" class="h4 subtotal">[[${#numbers.formatDecimal(item.subtotal,
+                                        1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]</span>
+                            <span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+                        </div>
+                        </th:block>
                     </div>
                 </div>
                 <div class="row m-1">&nbsp;</div>
