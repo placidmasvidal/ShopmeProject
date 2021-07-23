@@ -55,7 +55,7 @@
         <div class="form-group row">
             <label class="col-sm-4 col-form-label">Decimal Point Type:</label>
             <div class="col-sm-8">
-                <select name="DECIMAL_POINT_TYPE" class="form-control">
+                <select name="DECIMAL_POINT_TYPE" class="form-control" id="decimalPointSelector">
                     <option value="POINT" th:selected="(${DECIMAL_POINT_TYPE} == 'POINT')">Point (.)
                     </option>
                     <option value="COMMA" th:selected="(${DECIMAL_POINT_TYPE} == 'COMMA')">Comma (,)
@@ -80,7 +80,7 @@
         <div class="form-group row">
             <label class="col-sm-4 col-form-label">Thousands Point Type:</label>
             <div class="col-sm-8">
-                <select name="THOUSANDS_POINT_TYPE" class="form-control">
+                <select name="THOUSANDS_POINT_TYPE" class="form-control" id="thousandsPointSelector">
                     <option value="POINT" th:selected="(${THOUSANDS_POINT_TYPE} == 'POINT')">Point (.)
                     </option>
                     <option value="COMMA" th:selected="(${THOUSANDS_POINT_TYPE} == 'COMMA')">Comma (,)

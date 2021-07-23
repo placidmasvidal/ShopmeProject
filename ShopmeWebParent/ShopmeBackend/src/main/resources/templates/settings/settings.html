@@ -78,6 +78,14 @@
 
     $(document).ready(function (){
        $("#customerVerificationContent").richText();
+
+       $("#decimalPointSelector").on("click", function (){
+           $("#thousandsPointSelector").val(($(this).val() == 'POINT') ? 'COMMA' : 'POINT').change();
+       });
+
+        $("#thousandsPointSelector").on("click", function (){
+            $("#decimalPointSelector").val(($(this).val() == 'POINT') ? 'COMMA' : 'POINT').change();
+        });
     });
 </script>
 <script th:src="@{/js/common_form.js}"></script>
