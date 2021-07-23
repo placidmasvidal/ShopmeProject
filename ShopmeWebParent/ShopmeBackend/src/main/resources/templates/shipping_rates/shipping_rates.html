@@ -34,7 +34,7 @@
 					<td>[[${rate.rate}]]</td>
 					<td>[[${rate.days}]]</td>
 					<td>
-
+						<div th:replace="shipping_rates/shipping_rates_fragment :: cod_support" />
 					</td>
 					<td>
 						<div th:replace="fragments :: edit('shipping rate', '/shipping_rates/edit/' + ${rate.id})" />
@@ -55,7 +55,8 @@
 			</div>
 			<div class="col-8">
 				<div>
-					&nbsp; 
+					<div th:replace="shipping_rates/shipping_rates_fragment :: cod_support" />
+					&nbsp;
 					<div th:replace="fragments :: edit('shipping rate', '/shipping_rates/edit/' + ${rate.id})" />
 					&nbsp; 
 					<div th:replace="fragments :: delete('shipping rate', ${rate.id}, '/shipping_rates/delete/' + ${rate.id}, true)" />
