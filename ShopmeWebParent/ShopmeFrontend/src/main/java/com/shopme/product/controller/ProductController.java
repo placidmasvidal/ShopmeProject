@@ -89,12 +89,12 @@ public class ProductController {
   }
 
   @GetMapping("/search")
-  public String searchFirstPage(@Param("keyword") String keyword, Model model){
+  public String searchFirstPage(String keyword, Model model){
     return searchByPage(keyword, 1, model);
   }
 
   @GetMapping("/search/page/{pageNum}")
-  public String searchByPage(@Param("keyword") String keyword, @PathVariable("pageNum") int pageNum, Model model){
+  public String searchByPage(String keyword, @PathVariable("pageNum") int pageNum, Model model){
     Page<Product> pageProducts = productService.search(keyword, pageNum);
     List<Product> listResults = pageProducts.getContent();
 

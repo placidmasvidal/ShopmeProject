@@ -4,7 +4,6 @@ import com.shopme.admin.brand.BrandService;
 import com.shopme.admin.category.CategoryService;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.paging.PagingAndSortingParam;
-import com.shopme.admin.product.ProductConstants;
 import com.shopme.admin.product.ProductService;
 import com.shopme.admin.security.ShopmeUserDetails;
 import com.shopme.admin.util.FileUploadUtil;
@@ -13,8 +12,6 @@ import com.shopme.common.entity.Category;
 import com.shopme.common.entity.Product;
 import com.shopme.common.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +55,7 @@ public class ProductController {
           PagingAndSortingHelper pagingAndSortingHelper,
       @PathVariable(name = "pageNum") int pageNum,
       Model model,
-      @Param("categoryId") Integer categoryId) {
+      Integer categoryId) {
 
     productService.listByPage(pageNum, pagingAndSortingHelper, categoryId);
 
