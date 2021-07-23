@@ -6,6 +6,7 @@ import com.shopme.common.entity.Country;
 import com.shopme.common.entity.ShippingRate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -64,5 +65,25 @@ public class ShippingRateServiceImpl implements ShippingRateService {
     }
   }
 
-  
+  @Override
+  @Transactional
+  public void updateCODSupport(Integer id, boolean codSupported) throws ShippingRateNotFoundException {
+    Long count = shippingRateRepository.countById(id);
+    if (count == null || count == 0) {
+      throw new ShippingRateNotFoundException("Could not find shipping rate with ID " + id);
+    }
+
+    shippingRateRepository.updateCODSupport(id, codSupported);
+  }
+
+  @Override
+  @Transactional
+  public void delete(Integer id) throws ShippingRateNotFoundException {
+    Long count = shippingRateRepository.countById(id);
+    if (count == null || count == 0) {
+      throw new ShippingRateNotFoundException("Could not find shipping rate with ID " + id);
+
+    }
+    shippingRateRepository.deleteById(id);
+  }
 }

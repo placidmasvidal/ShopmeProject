@@ -15,4 +15,8 @@ public interface ShippingRateService {
     void save(ShippingRate rateInForm) throws ShippingRateAlreadyExistsException;
 
     ShippingRate get(Integer id) throws ShippingRateNotFoundException;
+
+    void updateCODSupport(Integer id, boolean codSupported) throws ShippingRateNotFoundException;
+
+    void delete(Integer id) throws ShippingRateNotFoundException;
 }

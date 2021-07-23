@@ -69,7 +69,7 @@ public class ShippingRateController {
 
   @GetMapping("/shipping_rates/edit/{id}")
   public String editRate(
-      @PathVariable(name = "id") Integer id, Model model, RedirectAttributes ra) {
+      @PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
     try {
       ShippingRate rate = shippingRateService.get(id);
       List<Country> listCountries = shippingRateService.listAllCountries();
@@ -80,10 +80,37 @@ public class ShippingRateController {
 
       return "shipping_rates/shipping_rate_form";
     } catch (ShippingRateNotFoundException ex) {
-      ra.addFlashAttribute("message", ex.getMessage());
+      redirectAttributes.addFlashAttribute("message", ex.getMessage());
       return defaultRedirectURL;
     }
   }
 
+  @GetMapping("/shipping_rates/cod/{id}/enabled/{supported}")
+  public String updateCODSupport(
+      @PathVariable(name = "id") Integer id,
+      @PathVariable(name = "supported") Boolean supported,
+      Model model,
+      RedirectAttributes redirectAttributes) {
+    try {
+      shippingRateService.updateCODSupport(id, supported);
+      redirectAttributes.addFlashAttribute(
+          "message", "COD support for shipping rate ID " + id + " has been updated.");
+    } catch (ShippingRateNotFoundException ex) {
+      redirectAttributes.addFlashAttribute("message", ex.getMessage());
+    }
+    return defaultRedirectURL;
+  }
 
+  @GetMapping("/shipping_rates/delete/{id}")
+  public String deleteRate(
+      @PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+    try {
+      shippingRateService.delete(id);
+      redirectAttributes.addFlashAttribute(
+          "message", "The shipping rate ID " + id + " has been deleted.");
+    } catch (ShippingRateNotFoundException ex) {
+      redirectAttributes.addFlashAttribute("message", ex.getMessage());
+    }
+    return defaultRedirectURL;
+  }
 }
