@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ShippingRateServiceImpl implements ShippingRateService {
@@ -53,4 +54,15 @@ public class ShippingRateServiceImpl implements ShippingRateService {
     }
     shippingRateRepository.save(rateInForm);
   }
+
+  @Override
+  public ShippingRate get(Integer id) throws ShippingRateNotFoundException {
+    try {
+      return shippingRateRepository.findById(id).get();
+    } catch (NoSuchElementException ex) {
+      throw new ShippingRateNotFoundException("Could not find shipping rate with ID " + id);
+    }
+  }
+
+  
 }

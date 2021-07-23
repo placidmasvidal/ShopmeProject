@@ -13,4 +13,6 @@ public interface ShippingRateService {
     List<Country> listAllCountries();
 
     void save(ShippingRate rateInForm) throws ShippingRateAlreadyExistsException;
+
+    ShippingRate get(Integer id) throws ShippingRateNotFoundException;
 }

@@ -4,6 +4,7 @@ import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.paging.PagingAndSortingParam;
 import com.shopme.admin.shippingrate.ShippingRateAlreadyExistsException;
 import com.shopme.admin.shippingrate.ShippingRateConstants;
+import com.shopme.admin.shippingrate.ShippingRateNotFoundException;
 import com.shopme.admin.shippingrate.ShippingRateService;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.ShippingRate;
@@ -65,4 +66,24 @@ public class ShippingRateController {
     }
     return defaultRedirectURL;
   }
+
+  @GetMapping("/shipping_rates/edit/{id}")
+  public String editRate(
+      @PathVariable(name = "id") Integer id, Model model, RedirectAttributes ra) {
+    try {
+      ShippingRate rate = shippingRateService.get(id);
+      List<Country> listCountries = shippingRateService.listAllCountries();
+
+      model.addAttribute("listCountries", listCountries);
+      model.addAttribute("rate", rate);
+      model.addAttribute("pageTitle", "Edit Rate (ID: " + id + ")");
+
+      return "shipping_rates/shipping_rate_form";
+    } catch (ShippingRateNotFoundException ex) {
+      ra.addFlashAttribute("message", ex.getMessage());
+      return defaultRedirectURL;
+    }
+  }
+
+
 }
