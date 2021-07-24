@@ -68,14 +68,15 @@ public class AddressRepositoryTests {
 
     @Test
     public void testUpdate() {
-        Integer addressId = 1;
-        String phoneNumber = "646-232-3932";
+        Integer addressId = 3;
+//        String phoneNumber = "646-232-3932";
 
         Address address = sut.findById(addressId).get();
-        address.setPhoneNumber(phoneNumber);
+//        address.setPhoneNumber(phoneNumber);
+        address.setDefaultForShipping(true);
 
         Address updatedAddress = sut.save(address);
-        assertThat(updatedAddress.getPhoneNumber()).isEqualTo(phoneNumber);
+//        assertThat(updatedAddress.getPhoneNumber()).isEqualTo(phoneNumber);
     }
 
     @Test

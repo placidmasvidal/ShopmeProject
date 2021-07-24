@@ -11,7 +11,7 @@
 
     <div class="row m-1">
         <div class="col-sm-6 mt-2">
-            <div class="card">
+            <div class="card" th:classappend="${usePrimaryAddressAsDefault ? 'bg-warning' : ''}">
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
@@ -27,7 +27,7 @@
 
         <th:block th:each="address, status: ${listAddresses}">
             <div class="col-sm-6 mt-2">
-                <div class="card">
+                <div class="card" th:classappend="${address.isDefaultForShipping() ? 'bg-warning' : ''}">
                     <div class="card-header">
                         <div class="row">
                             <div class="col">

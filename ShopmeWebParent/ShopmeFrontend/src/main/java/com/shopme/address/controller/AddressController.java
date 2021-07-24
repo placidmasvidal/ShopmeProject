@@ -16,32 +16,40 @@ import java.util.List;
 @Controller
 public class AddressController {
 
-    private AddressService addressService;
+  private AddressService addressService;
 
-    private CustomerService customerService;
+  private CustomerService customerService;
 
-    @Autowired
-    public AddressController(AddressService addressService, CustomerService customerService) {
-        this.addressService = addressService;
-        this.customerService = customerService;
+  @Autowired
+  public AddressController(AddressService addressService, CustomerService customerService) {
+    this.addressService = addressService;
+    this.customerService = customerService;
+  }
+
+  @GetMapping("/address_book")
+  public String showAddressBook(Model model, HttpServletRequest servletRequest) {
+    Customer customer = getAuthenticatedCustomer(servletRequest);
+    List<Address> listAddresses = addressService.listAddressBook(customer);
+
+    boolean usePrimaryAddressAsDefault = true;
+
+    for (Address address : listAddresses) {
+      if (address.isDefaultForShipping()) {
+        usePrimaryAddressAsDefault = false;
+        break;
+      }
     }
 
-    @GetMapping("/address_book")
-    public String showAddressBook(Model model, HttpServletRequest servletRequest){
-        Customer customer = getAuthenticatedCustomer(servletRequest);
-        List<Address> listAddresses = addressService.listAddressBook(customer);
+    model.addAttribute("usePrimaryAddressAsDefault", usePrimaryAddressAsDefault);
+    model.addAttribute("customer", customer);
+    model.addAttribute("listAddresses", listAddresses);
 
-        model.addAttribute("customer", customer);
-        model.addAttribute("listAddresses", listAddresses);
+    return "address_book/addresses";
+  }
 
-        return "address_book/addresses";
-    }
+  private Customer getAuthenticatedCustomer(HttpServletRequest servletRequest) {
+    String email = Utility.getEmailOfAuthenticatedCustomer(servletRequest);
 
-
-
-    private Customer getAuthenticatedCustomer(HttpServletRequest servletRequest) {
-        String email = Utility.getEmailOfAuthenticatedCustomer(servletRequest);
-
-        return customerService.getCustomerByEmail(email);
-    }
+    return customerService.getCustomerByEmail(email);
+  }
 }
