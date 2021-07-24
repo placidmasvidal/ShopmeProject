@@ -9,7 +9,22 @@
         <h2>Your Address Book</h2>
     </div>
 
-
+    <div class="row m-1">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <b>Your Primary Address</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    [[${customer.address}]]
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div th:replace="navigation :: footer_menu"></div>
 </div>
