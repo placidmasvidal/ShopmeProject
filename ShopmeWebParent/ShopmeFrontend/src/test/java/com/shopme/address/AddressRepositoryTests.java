@@ -26,19 +26,19 @@ public class AddressRepositoryTests {
     @Test
     public void testAddNew() {
         Integer customerId = 43;
-        Integer countryId = 69;
+        Integer countryId = 234;
 
         Address newAddress = new Address();
         newAddress.setCustomer(new Customer(customerId));
         newAddress.setCountry(new Country(countryId));
-        newAddress.setFirstName("Placid");
-        newAddress.setLastName("Masvidal");
-        newAddress.setPhoneNumber("677888666");
-        newAddress.setAddressLine1("Diamond Square 13");
-        newAddress.setAddressLine2("Sky Building");
-        newAddress.setCity("Calella");
-        newAddress.setState("Barcelona");
-        newAddress.setPostalCode("08370");
+        newAddress.setFirstName("Tobie");
+        newAddress.setLastName("Abel");
+        newAddress.setPhoneNumber("19094644165");
+        newAddress.setAddressLine1("4213 Gordon Street");
+        newAddress.setAddressLine2("Novak Building");
+        newAddress.setCity("Pasadena");
+        newAddress.setState("California");
+        newAddress.setPostalCode("91710");
 
         Address savedAddress = sut.save(newAddress);
 
@@ -88,5 +88,23 @@ public class AddressRepositoryTests {
 
         Address address = sut.findByIdAndCustomer(addressId, customerId);
         assertThat(address).isNull();
+    }
+
+    @Test
+    public void testSetDefaultShippingAddress(){
+        Integer addressId = 4;
+
+        sut.setDefaultAddress(addressId);
+
+        Address address = sut.findById(addressId).get();
+        assertThat(address.isDefaultForShipping()).isTrue();
+    }
+
+    @Test
+    public void testSetNonDefaultAddressess(){
+        Integer addressId = 4;
+        Integer customerId = 43;
+
+        sut.setNonDefaultForOthers(addressId, customerId);
     }
 }
