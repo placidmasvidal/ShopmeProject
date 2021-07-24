@@ -2,10 +2,9 @@ package com.shopme.address;
 
 import com.shopme.common.entity.Address;
 import com.shopme.common.entity.Customer;
-import com.shopme.customer.CustomerRepository;
-import com.shopme.setting.country.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,20 +13,29 @@ public class AddressServiceImpl implements AddressService{
 
     private AddressRepository addressRepository;
 
-    private CountryRepository countryRepository;
-
-    private CustomerRepository customerRepository;
-
     @Autowired
-    public AddressServiceImpl(AddressRepository addressRepository, CountryRepository countryRepository, CustomerRepository customerRepository) {
+    public AddressServiceImpl(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
-        this.countryRepository = countryRepository;
-        this.customerRepository = customerRepository;
     }
-
 
     @Override
     public List<Address> listAddressBook(Customer customer) {
         return addressRepository.findByCustomer(customer);
+    }
+
+    @Override
+    public void save(Address address) {
+        addressRepository.save(address);
+    }
+
+    @Override
+    public Address get(Integer addressId, Integer customerId) {
+        return addressRepository.findByIdAndCustomer(addressId, customerId);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Integer addressId, Integer customerId) {
+        addressRepository.deleteByIdAndCustomer(addressId, customerId);
     }
 }

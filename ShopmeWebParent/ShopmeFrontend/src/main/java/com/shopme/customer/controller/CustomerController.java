@@ -88,14 +88,23 @@ public class CustomerController {
     customerService.update(customer);
     redirectAttributes.addFlashAttribute("message", "Your Account Details have been updated.");
     updateNameForAuthenticatedCustomer(customer, servletRequest);
-    return "redirect:/account_details";
+
+    String redirectOption = servletRequest.getParameter("redirect");
+    String redirectURL = "redirect:/account_details";
+
+    if ("address_book".equals(redirectOption)) {
+      redirectURL = "redirect:/address_book";
+    }
+
+    return redirectURL;
   }
 
-  private void updateNameForAuthenticatedCustomer(Customer customer, HttpServletRequest servletRequest) {
+  private void updateNameForAuthenticatedCustomer(
+      Customer customer, HttpServletRequest servletRequest) {
     Principal principal = servletRequest.getUserPrincipal();
 
     if (principal instanceof UsernamePasswordAuthenticationToken
-            || principal instanceof RememberMeAuthenticationToken) {
+        || principal instanceof RememberMeAuthenticationToken) {
       CustomerUserDetails userDetails = getCustomerUserDetailsObject(principal);
       Customer authenticatedCustomer = userDetails.getCustomer();
       authenticatedCustomer.setFirstName(customer.getFirstName());
@@ -108,9 +117,9 @@ public class CustomerController {
     }
   }
 
-  private CustomerUserDetails getCustomerUserDetailsObject(Principal principal){
+  private CustomerUserDetails getCustomerUserDetailsObject(Principal principal) {
     CustomerUserDetails userDetails = null;
-    if (principal instanceof UsernamePasswordAuthenticationToken){
+    if (principal instanceof UsernamePasswordAuthenticationToken) {
       UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) principal;
       userDetails = (CustomerUserDetails) token.getPrincipal();
     } else {
@@ -147,5 +156,4 @@ public class CustomerController {
 
     mailSender.send(message);
   }
-
 }
