@@ -27,7 +27,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private DatabaseLoginSuccessHandler databaseLoginSuccessHandler;
 
   @Autowired
-  public WebSecurityConfig(CustomerOAuth2UserService oAuth2UserService, OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler, DatabaseLoginSuccessHandler databaseLoginSuccessHandler) {
+  public WebSecurityConfig(
+      CustomerOAuth2UserService oAuth2UserService,
+      OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler,
+      DatabaseLoginSuccessHandler databaseLoginSuccessHandler) {
     this.oAuth2UserService = oAuth2UserService;
     this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
     this.databaseLoginSuccessHandler = databaseLoginSuccessHandler;
@@ -36,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-        .antMatchers("/account_details", "/update_account_details", "/cart")
+        .antMatchers("/account_details", "/update_account_details", "/cart", "/address_book/**")
         .authenticated()
         .anyRequest()
         .permitAll()
@@ -66,5 +69,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public void configure(WebSecurity web) throws Exception {
     web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
   }
-
 }
