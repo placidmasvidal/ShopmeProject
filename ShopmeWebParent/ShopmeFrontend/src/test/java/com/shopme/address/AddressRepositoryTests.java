@@ -25,19 +25,20 @@ public class AddressRepositoryTests {
 
     @Test
     public void testAddNew() {
-        Integer customerId = 5;
-        Integer countryId = 234; // USA
+        Integer customerId = 43;
+        Integer countryId = 69;
 
         Address newAddress = new Address();
         newAddress.setCustomer(new Customer(customerId));
         newAddress.setCountry(new Country(countryId));
-        newAddress.setFirstName("Charles");
-        newAddress.setLastName("Brugger");
-        newAddress.setPhoneNumber("646-232-3902");
-        newAddress.setAddressLine1("204 Morningview Lane");
-        newAddress.setCity("New York");
-        newAddress.setState("New York");
-        newAddress.setPostalCode("10013");
+        newAddress.setFirstName("Placid");
+        newAddress.setLastName("Masvidal");
+        newAddress.setPhoneNumber("677888666");
+        newAddress.setAddressLine1("Diamond Square 13");
+        newAddress.setAddressLine2("Sky Building");
+        newAddress.setCity("Calella");
+        newAddress.setState("Barcelona");
+        newAddress.setPostalCode("08370");
 
         Address savedAddress = sut.save(newAddress);
 

@@ -1,168 +1,167 @@
 package com.shopme.common.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "addresses")
 public class Address {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @Column(name = "first_name", nullable = false, length = 45)
-    private String firstName;
+  @Column(name = "first_name", nullable = false, length = 45)
+  private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 45)
-    private String lastName;
+  @Column(name = "last_name", nullable = false, length = 45)
+  private String lastName;
 
-    @Column(name = "phone_number", nullable = false, length = 15)
-    private String phoneNumber;
+  @Column(name = "phone_number", nullable = false, length = 15)
+  private String phoneNumber;
 
-    @Column(name = "address_line_1", nullable = false, length = 64)
-    private String addressLine1;
+  @Column(name = "address_line_1", nullable = false, length = 64)
+  private String addressLine1;
 
-    @Column(name = "address_line_2", length = 64)
-    private String addressLine2;
+  @Column(name = "address_line_2", length = 64)
+  private String addressLine2;
 
-    @Column(nullable = false, length = 45)
-    private String city;
+  @Column(nullable = false, length = 45)
+  private String city;
 
-    @Column(nullable = false, length = 45)
-    private String state;
+  @Column(nullable = false, length = 45)
+  private String state;
 
-    @Column(name = "postal_code", nullable = false, length = 10)
-    private String postalCode;
+  @Column(name = "postal_code", nullable = false, length = 10)
+  private String postalCode;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    private Country country;
+  @ManyToOne
+  @JoinColumn(name = "country_id")
+  private Country country;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+  @ManyToOne
+  @JoinColumn(name = "customer_id")
+  private Customer customer;
 
-    @Column(name = "default_address")
-    private boolean defaultForShipping;
+  @Column(name = "default_address")
+  private boolean defaultForShipping;
 
-    public Integer getId() {
-        return id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
 
-    public String getAddressLine1() {
-        return addressLine1;
-    }
+  public String getAddressLine1() {
+    return addressLine1;
+  }
 
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
-    }
+  public void setAddressLine1(String addressLine1) {
+    this.addressLine1 = addressLine1;
+  }
 
-    public String getAddressLine2() {
-        return addressLine2;
-    }
+  public String getAddressLine2() {
+    return addressLine2;
+  }
 
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
-    }
+  public void setAddressLine2(String addressLine2) {
+    this.addressLine2 = addressLine2;
+  }
 
-    public String getCity() {
-        return city;
-    }
+  public String getCity() {
+    return city;
+  }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+  public void setCity(String city) {
+    this.city = city;
+  }
 
-    public String getState() {
-        return state;
-    }
+  public String getState() {
+    return state;
+  }
 
-    public void setState(String state) {
-        this.state = state;
-    }
+  public void setState(String state) {
+    this.state = state;
+  }
 
-    public String getPostalCode() {
-        return postalCode;
-    }
+  public String getPostalCode() {
+    return postalCode;
+  }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
+  public void setPostalCode(String postalCode) {
+    this.postalCode = postalCode;
+  }
 
-    public Country getCountry() {
-        return country;
-    }
+  public Country getCountry() {
+    return country;
+  }
 
-    public void setCountry(Country country) {
-        this.country = country;
-    }
+  public void setCountry(Country country) {
+    this.country = country;
+  }
 
-    public Customer getCustomer() {
-        return customer;
-    }
+  public Customer getCustomer() {
+    return customer;
+  }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
+  }
 
-    public boolean isDefaultForShipping() {
-        return defaultForShipping;
-    }
+  public boolean isDefaultForShipping() {
+    return defaultForShipping;
+  }
 
-    public void setDefaultForShipping(boolean defaultForShipping) {
-        this.defaultForShipping = defaultForShipping;
-    }
+  public void setDefaultForShipping(boolean defaultForShipping) {
+    this.defaultForShipping = defaultForShipping;
+  }
 
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", addressLine1='" + addressLine1 + '\'' +
-                ", addressLine2='" + addressLine2 + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", postalCode='" + postalCode + '\'' +
-                ", country=" + country +
-                ", customer=" + customer +
-                ", defaultForShipping=" + defaultForShipping +
-                '}';
-    }
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(firstName);
+
+    if (lastName != null && !lastName.isEmpty()) sb.append(" " + lastName);
+
+    if (!addressLine1.isEmpty()) sb.append(", " + addressLine1);
+
+    if (addressLine2 != null && !addressLine2.isEmpty()) sb.append(", " + addressLine2);
+
+    if (!city.isEmpty()) sb.append(", " + city);
+
+    if (state != null && !state.isEmpty()) sb.append(", " + state);
+
+    sb.append(", " + country.getName());
+
+    if (!postalCode.isEmpty()) sb.append(". Postal Code: " + postalCode);
+
+    if (!phoneNumber.isEmpty()) sb.append(". Phone Number: " + phoneNumber);
+
+    return sb.toString();
+  }
 }
