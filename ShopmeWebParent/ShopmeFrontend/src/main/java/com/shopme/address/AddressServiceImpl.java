@@ -38,4 +38,10 @@ public class AddressServiceImpl implements AddressService{
     public void delete(Integer addressId, Integer customerId) {
         addressRepository.deleteByIdAndCustomer(addressId, customerId);
     }
+
+    @Override
+    public void setDefaultAddress(Integer defaultAddressId, Integer customerId) {
+        addressRepository.setDefaultAddress(defaultAddressId);
+        addressRepository.setNonDefaultForOthers(defaultAddressId, customerId);
+    }
 }
