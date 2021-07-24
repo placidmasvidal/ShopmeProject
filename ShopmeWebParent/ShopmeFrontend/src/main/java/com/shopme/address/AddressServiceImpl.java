@@ -40,8 +40,11 @@ public class AddressServiceImpl implements AddressService{
     }
 
     @Override
+    @Transactional
     public void setDefaultAddress(Integer defaultAddressId, Integer customerId) {
-        addressRepository.setDefaultAddress(defaultAddressId);
+        if(defaultAddressId > 0){
+            addressRepository.setDefaultAddress(defaultAddressId);
+        }
         addressRepository.setNonDefaultForOthers(defaultAddressId, customerId);
     }
 }
