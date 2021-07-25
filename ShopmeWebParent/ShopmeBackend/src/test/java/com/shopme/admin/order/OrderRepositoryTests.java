@@ -60,9 +60,9 @@ public class OrderRepositoryTests {
 
     @Test
     public void testCreateNewOrderWithMultipleProducts() {
-        Customer customer = entityManager.find(Customer.class, 43);
-        Product product1 = entityManager.find(Product.class, 3);
-        Product product2 = entityManager.find(Product.class, 5);
+        Customer customer = entityManager.find(Customer.class, 18);
+        Product product1 = entityManager.find(Product.class, 20);
+        Product product2 = entityManager.find(Product.class, 40);
 
         Order mainOrder = new Order();
         mainOrder.setOrderTime(new Date());
@@ -73,9 +73,9 @@ public class OrderRepositoryTests {
         orderDetail1.setProduct(product1);
         orderDetail1.setOrder(mainOrder);
         orderDetail1.setProductCost(product1.getCost());
-        orderDetail1.setShippingCost(10);
-        orderDetail1.setQuantity(1);
-        orderDetail1.setSubtotal(product1.getPrice());
+        orderDetail1.setShippingCost(20);
+        orderDetail1.setQuantity(2);
+        orderDetail1.setSubtotal(product1.getPrice()*2);
         orderDetail1.setUnitPrice(product1.getPrice());
 
         OrderDetail orderDetail2 = new OrderDetail();
@@ -83,22 +83,22 @@ public class OrderRepositoryTests {
         orderDetail2.setOrder(mainOrder);
         orderDetail2.setProductCost(product2.getCost());
         orderDetail2.setShippingCost(20);
-        orderDetail2.setQuantity(2);
-        orderDetail2.setSubtotal(product2.getPrice() * 2);
+        orderDetail2.setQuantity(3);
+        orderDetail2.setSubtotal(product2.getPrice() * 3);
         orderDetail2.setUnitPrice(product2.getPrice());
 
         mainOrder.getOrderDetails().add(orderDetail1);
         mainOrder.getOrderDetails().add(orderDetail2);
 
-        mainOrder.setShippingCost(30);
+        mainOrder.setShippingCost(40);
         mainOrder.setProductCost(product1.getCost() + product2.getCost());
         mainOrder.setTax(0);
-        float subtotal = product1.getPrice() + product2.getPrice() * 2;
+        float subtotal = product1.getPrice() * 2 + product2.getPrice() * 3;
         mainOrder.setSubtotal(subtotal);
-        mainOrder.setTotal(subtotal + 30);
+        mainOrder.setTotal(subtotal + 40);
 
-        mainOrder.setPaymentMethod(PaymentMethod.COD);
-        mainOrder.setStatus(OrderStatus.PROCESSING);
+        mainOrder.setPaymentMethod(PaymentMethod.CREDIT_CARD);
+        mainOrder.setStatus(OrderStatus.PACKAGED);
         mainOrder.setDeliverDate(new Date());
         mainOrder.setDeliverDays(3);
 
@@ -141,7 +141,7 @@ public class OrderRepositoryTests {
 
     @Test
     public void testDeleteOrder() {
-        Integer orderId = 1;
+        Integer orderId = 3;
         sut.deleteById(orderId);
 
         Optional<Order> result = sut.findById(orderId);
