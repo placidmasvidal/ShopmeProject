@@ -2,12 +2,15 @@ package com.shopme.admin.order;
 
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.common.entity.Order;
+import com.shopme.common.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 import static com.shopme.admin.order.OrderConstants.ORDERS_PER_PAGE;
 
@@ -47,5 +50,14 @@ public class OrderServiceImpl implements OrderService{
         }
 
         pagingAndSortingHelper.updateModelAttributes(pageNum, page);
+    }
+
+    @Override
+    public Order get(Integer id) throws OrderNotFoundException {
+        try{
+            return orderRepository.findById(id).get();
+        } catch(NoSuchElementException e){
+            throw new OrderNotFoundException("Could not find any orders with ID " + id);
+        }
     }
 }
