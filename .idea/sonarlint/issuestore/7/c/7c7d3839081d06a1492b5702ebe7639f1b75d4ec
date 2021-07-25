@@ -1,16 +1,12 @@
 
-g
-java:S1128"LRemove this unused import 'org.springframework.data.repository.query.Param'.(©”šô8¾ßšÉª/
-B
-java:S1068"'Remove this unused "LOG" private field.(Ôçè8ı®›Éª/
-a	java:S116"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ôçè
-T
-java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(àÍ³õ
-©
-java:S4449"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(ëßøÿÿÿÿ
-a
-java:S1128"ARemove this unused import 'org.springframework.data.domain.Page'.(˜âüÿÿÿÿ8×­Éª/
-d
-java:S1192"PDefine a constant instead of duplicating this literal "redirect:/users" 3 times.(Ñ“é
-\
-java:S1192"HDefine a constant instead of duplicating this literal "message" 5 times.(şÑØ¿
+^
+java:S1192f"HDefine a constant instead of duplicating this literal "message" 5 times.(şÑØ¿
+D
+java:S1068"'Remove this unused "LOG" private field.(Ôçè8ı®›Éª/
+f
+java:S1192v"PDefine a constant instead of duplicating this literal "redirect:/users" 3 times.(Ñ“é
+«
+java:S4449Y"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(ëßøÿÿÿÿ
+c	java:S116"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ôçè
+V
+java:S4684S"@Replace this persistent entity with a simple POJO or DTO object.(àÍ³õ

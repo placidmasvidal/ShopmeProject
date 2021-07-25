@@ -1,13 +1,7 @@
 
-h
-java:S1128"HRemove this unused import 'com.shopme.admin.customer.CustomerConstants'.(ƒ«Ñ‹ÿÿÿÿÿ8ï”ÊÊª/
-`
-java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(®ãÅÆüÿÿÿÿ8Øê±·©/
-g
-java:S1128"LRemove this unused import 'org.springframework.data.repository.query.Param'.(©”šô8üšÃÊª/
-a
-java:S1128"ARemove this unused import 'org.springframework.data.domain.Page'.(˜âüÿÿÿÿ8ï”ÊÊª/
-c
-java:S1192"HDefine a constant instead of duplicating this literal "message" 6 times.(š·óå8Õá™·©/
-o
-java:S1192"TDefine a constant instead of duplicating this literal "redirect:/customers" 5 times.(­Â—Æ8Õá™·©/
+b
+java:S4684]"@Replace this persistent entity with a simple POJO or DTO object.(®ãÅÆüÿÿÿÿ8Øê±·©/
+q
+java:S11927"TDefine a constant instead of duplicating this literal "redirect:/customers" 5 times.(­Â—Æ8Õá™·©/
+e
+java:S11925"HDefine a constant instead of duplicating this literal "message" 6 times.(š·óå8Õá™·©/
