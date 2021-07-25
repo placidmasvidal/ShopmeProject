@@ -9,4 +9,6 @@ public interface OrderService {
     void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper);
 
     Order get(Integer id) throws OrderNotFoundException;
+
+    void delete(Integer id) throws OrderNotFoundException;
 }

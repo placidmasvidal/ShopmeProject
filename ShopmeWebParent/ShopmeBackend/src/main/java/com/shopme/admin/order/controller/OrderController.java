@@ -68,6 +68,20 @@ public class OrderController {
     }
   }
 
+  @GetMapping("/orders/delete/{id}")
+  public String deleteOrder(
+      @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+    try {
+      orderService.delete(id);
+      ;
+      redirectAttributes.addFlashAttribute("message", "The order ID " + id + " has been deleted.");
+    } catch (OrderNotFoundException ex) {
+      redirectAttributes.addFlashAttribute("message", ex.getMessage());
+    }
+
+    return defaultRedirectURL;
+  }
+
   private void loadCurrencySetting(HttpServletRequest servletRequest) {
     List<Setting> currencySettings = settingService.getCurrencySettings();
 
