@@ -1,5 +1,6 @@
 package com.shopme.common.entity.order;
 
+import com.shopme.common.entity.IdBasedEntity;
 import com.shopme.common.entity.product.Product;
 
 import javax.persistence.Entity;
@@ -12,11 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "order_details")
-public class OrderDetail {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class OrderDetail extends IdBasedEntity {
 	
 	private int quantity;
 
@@ -35,14 +32,6 @@ public class OrderDetail {
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Order order;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public int getQuantity() {
 		return quantity;

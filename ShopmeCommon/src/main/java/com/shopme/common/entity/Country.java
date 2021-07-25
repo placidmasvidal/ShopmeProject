@@ -6,11 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "countries")
-public class Country {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Country extends IdBasedEntity {
 
     @Column(nullable = false, length = 45)
     private String name;
@@ -36,14 +32,6 @@ public class Country {
 
     public Country(Integer countryId) {
         this.id = countryId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

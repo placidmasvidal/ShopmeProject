@@ -2,17 +2,14 @@ package com.shopme.common.entity.product;
 
 import com.shopme.common.entity.Brand;
 import com.shopme.common.entity.Category;
+import com.shopme.common.entity.IdBasedEntity;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "products")
-public class Product {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+public class Product extends IdBasedEntity {
 
   @Column(unique = true, length = 256, nullable = false)
   private String name;
@@ -69,12 +66,8 @@ public class Product {
   public Product() {
   }
 
-  public Product(Integer id) {
-    this.id = id;
-  }
+  public Product(Integer productId) {
 
-  public Integer getId() {
-    return id;
   }
 
   public void setId(Integer id) {

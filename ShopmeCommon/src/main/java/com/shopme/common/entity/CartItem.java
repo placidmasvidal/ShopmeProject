@@ -6,11 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "cart_items")
-public class CartItem {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+public class CartItem extends IdBasedEntity {
 
   @ManyToOne
   @JoinColumn(name = "customer_id")
@@ -23,14 +19,6 @@ public class CartItem {
   private int quantity;
 
   public CartItem() {}
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
 
   public Customer getCustomer() {
     return customer;
