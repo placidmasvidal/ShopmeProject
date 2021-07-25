@@ -276,7 +276,7 @@ public class Order {
 				", subtotal=" + subtotal +
 				", paymentMethod=" + paymentMethod +
 				", status=" + status +
-				", customer=" + customer +
+				", customer=" + customer.getFullName() +
 				'}';
 	}
 }
