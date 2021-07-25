@@ -1,4 +1,7 @@
-package com.shopme.common.entity;
+package com.shopme.common.entity.product;
+
+import com.shopme.common.entity.Brand;
+import com.shopme.common.entity.Category;
 
 import javax.persistence.*;
 import java.util.*;

@@ -1,4 +1,6 @@
-package com.shopme.common.entity;
+package com.shopme.common.entity.order;
+
+import com.shopme.common.entity.product.Product;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

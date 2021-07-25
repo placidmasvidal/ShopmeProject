@@ -1,4 +1,6 @@
-package com.shopme.common.entity;
+package com.shopme.common.entity.order;
+
+import com.shopme.common.entity.Customer;
 
 import java.util.Date;
 import java.util.HashSet;

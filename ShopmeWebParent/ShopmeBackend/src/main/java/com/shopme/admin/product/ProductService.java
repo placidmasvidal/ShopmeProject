@@ -2,8 +2,7 @@ package com.shopme.admin.product;
 
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.common.exception.ProductNotFoundException;
-import com.shopme.common.entity.Product;
-import org.springframework.data.domain.Page;
+import com.shopme.common.entity.product.Product;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
