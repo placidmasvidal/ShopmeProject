@@ -1,8 +1,12 @@
 package com.shopme.shoppingcart.controller;
 
+import com.shopme.address.AddressService;
+import com.shopme.common.entity.Address;
 import com.shopme.common.entity.CartItem;
 import com.shopme.common.entity.Customer;
+import com.shopme.common.entity.ShippingRate;
 import com.shopme.customer.CustomerService;
+import com.shopme.shipping.ShippingRateService;
 import com.shopme.shoppingcart.ShoppingCartService;
 import com.shopme.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +24,20 @@ public class ShoppingCartController {
 
   private CustomerService customerService;
 
+  private AddressService addressService;
+
+  private ShippingRateService shippingRateService;
+
   @Autowired
   public ShoppingCartController(
-      ShoppingCartService shoppingCartService, CustomerService customerService) {
+      ShoppingCartService shoppingCartService,
+      CustomerService customerService,
+      AddressService addressService,
+      ShippingRateService shippingRateService) {
     this.shoppingCartService = shoppingCartService;
     this.customerService = customerService;
+    this.addressService = addressService;
+    this.shippingRateService = shippingRateService;
   }
 
   @GetMapping("/cart")
@@ -39,6 +52,19 @@ public class ShoppingCartController {
                 .mapToDouble(item -> item.doubleValue())
                 .sum();
 
+    Address defaultAddress = addressService.getDefaultAddress(customer);
+    ShippingRate shippingRate = null;
+    boolean usePrimaryAddressAsDefault = false;
+
+    if(defaultAddress != null){
+      shippingRate = shippingRateService.getShippingRateForAddress(defaultAddress);
+    } else {
+      usePrimaryAddressAsDefault = true;
+      shippingRate = shippingRateService.getShippingRateForCustomer(customer);
+    }
+
+    model.addAttribute("shippingSupported", shippingRate != null);
+    model.addAttribute("usePrimaryAddressAsDefault", usePrimaryAddressAsDefault);
     model.addAttribute("cartItems", cartItems);
     model.addAttribute("estimatedTotal", estimatedTotal);
 
