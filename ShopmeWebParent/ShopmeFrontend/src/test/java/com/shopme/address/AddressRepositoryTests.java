@@ -107,4 +107,13 @@ public class AddressRepositoryTests {
 
         sut.setNonDefaultForOthers(addressId, customerId);
     }
+
+    @Test
+    public void testGetDefault(){
+        Integer customerId = 43;
+        Address address = sut.findDefaultByCustomer(43);
+
+        assertThat(address).isNotNull();
+        System.out.println("address = " + address);
+    }
 }
