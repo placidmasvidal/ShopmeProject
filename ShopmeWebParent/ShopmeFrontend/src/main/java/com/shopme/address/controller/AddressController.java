@@ -101,11 +101,18 @@ public class AddressController {
   }
 
   @GetMapping("/address_book/default/{id}")
-  public String setDefaultAddress(@PathVariable("id") Integer addressId, HttpServletRequest request){
-    Customer customer = getAuthenticatedCustomer(request);
+  public String setDefaultAddress(@PathVariable("id") Integer addressId, HttpServletRequest servletRequest){
+    Customer customer = getAuthenticatedCustomer(servletRequest);
     addressService.setDefaultAddress(addressId, customer.getId());
 
-    return "redirect:/address_book";
+    String redirectOption = servletRequest.getParameter("redirect");
+    String redirectURL = "redirect:/address_book";
+
+    if ("cart".equals(redirectOption)) {
+      redirectURL = "redirect:/cart";
+    }
+
+    return redirectURL;
   }
 
   private Customer getAuthenticatedCustomer(HttpServletRequest servletRequest) {

@@ -75,7 +75,7 @@
                         </div>
 
                         <div th:unless="${usePrimaryAddressAsDefault}">
-                            <a th:href="@{/address_book}" class="h6">Use another shipping address</a>
+                            <a th:href="@{/address_book(redirect=cart)}" class="h6">Use another shipping address</a>
                         </div>
                     </div>
                 </div>
