@@ -67,7 +67,7 @@ public class Product extends IdBasedEntity {
   }
 
   public Product(Integer productId) {
-
+    this.id = productId;
   }
 
   public void setId(Integer id) {

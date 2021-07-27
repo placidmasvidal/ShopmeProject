@@ -28,7 +28,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
   public Integer addProduct(Integer productId, Integer quantity, Customer customer)
       throws ShoppingCartException {
     Integer updatedQuantity = quantity;
-    Product product = productRepository.findById(productId).get();
+    Product product = new Product(productId);
 
     CartItem cartItem = cartItemRepository.findByCustomerAndProduct(customer, product);
 
