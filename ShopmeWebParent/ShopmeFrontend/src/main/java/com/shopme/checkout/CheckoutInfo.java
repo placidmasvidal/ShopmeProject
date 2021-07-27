@@ -66,10 +66,6 @@ public class CheckoutInfo {
         return calendar.getTime();
     }
 
-    public void setDeliverDate(Date deliverDate) {
-        this.deliverDate = deliverDate;
-    }
-
     public boolean isCodSupported() {
         return codSupported;
     }
