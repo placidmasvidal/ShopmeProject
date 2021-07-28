@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Shopping Cart', 'none')">
 <body>
+<div class="container-fluid">
+    <div th:replace="navigation :: header_menu"></div>
+    <div th:replace="navigation :: search_nav"></div>
+    <div class="text-center">
+        <h2>Checkout</h2>
+    </div>
 
+    <div class="row -m1">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header"><h5>Shipping Information</h5></div>
+                <div class="card-body">
+                    <p>
+                        <b>Ship to: </b> [[${shippingAddress}]]
+                        <a th:href="@{/address_book(redirect=checkout)}">[Ship to another address]</a>
+                    </p>
+                    <p>
+                        <b>Days to deliver: </b> [[${checkoutInfo.deliverDays}]] day(s).
+                    </p>
+                    <p>
+                        <b>Expected deliver date: </b> [[${#dates.format(checkoutInfo.deliverDate, 'E, dd MMM yyyy')}]]
+                    </p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h5>Payment Method</h5></div>
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header"><h5>Order Summary</h5></div>
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="navigation :: footer_menu"></div>
+</div>
 </body>
 </html>

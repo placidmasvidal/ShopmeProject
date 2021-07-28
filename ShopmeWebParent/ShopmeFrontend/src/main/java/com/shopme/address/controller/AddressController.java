@@ -110,6 +110,8 @@ public class AddressController {
 
     if ("cart".equals(redirectOption)) {
       redirectURL = "redirect:/cart";
+    } else if("checkout".equals(redirectOption)){
+      redirectURL = "redirect:/checkout";
     }
 
     return redirectURL;

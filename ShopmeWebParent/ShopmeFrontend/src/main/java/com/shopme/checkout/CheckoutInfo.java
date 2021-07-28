@@ -15,8 +15,6 @@ public class CheckoutInfo {
 
     private int deliverDays;
 
-    private Date deliverDate;
-
     private boolean codSupported;
 
     public float getProductCost() {

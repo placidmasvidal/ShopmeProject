@@ -18,6 +18,7 @@ public class CartItem extends IdBasedEntity {
 
   private int quantity;
 
+  @Transient
   private float shippingCost;
 
   public CartItem() {}
