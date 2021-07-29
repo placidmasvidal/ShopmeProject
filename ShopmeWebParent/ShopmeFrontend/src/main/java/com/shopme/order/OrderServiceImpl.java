@@ -9,6 +9,8 @@ import com.shopme.common.entity.order.OrderDetail;
 import com.shopme.common.entity.order.OrderStatus;
 import com.shopme.common.entity.order.PaymentMethod;
 import com.shopme.common.entity.product.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +22,15 @@ import java.util.stream.Collectors;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
+
   private OrderRepository orderRepository;
 
   @Autowired
   public OrderServiceImpl(OrderRepository orderRepository) {
     this.orderRepository = orderRepository;
   }
+
 
   @Override
   public Order createOrder(
@@ -71,6 +76,9 @@ public class OrderServiceImpl implements OrderService {
             .collect(Collectors.toSet());
 
     newOrder.setOrderDetails(orderDetails);
+
+    LOGGER.info("Processing new order: {}", newOrder);
+    newOrder.getOrderDetails().forEach(orderDetail -> LOGGER.info(orderDetail.toString()));
 
     return orderRepository.save(newOrder);
   }

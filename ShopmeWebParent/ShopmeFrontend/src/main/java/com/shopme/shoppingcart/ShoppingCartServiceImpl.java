@@ -79,6 +79,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
   }
 
   @Override
+  @Transactional
   public void deleteByCustomer(Customer customer) {
     cartItemRepository.deleteByCustomer(customer.getId());
   }
