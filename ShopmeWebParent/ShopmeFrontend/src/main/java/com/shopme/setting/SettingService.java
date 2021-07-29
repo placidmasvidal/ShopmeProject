@@ -10,4 +10,6 @@ public interface SettingService {
 
     EmailSettingBag getEmailSettings();
 
+    CurrencySettingBag getCurrencySettings();
+
 }
