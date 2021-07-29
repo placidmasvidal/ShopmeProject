@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class UtilityTests {
 
-    @Test
+/*    @Test
     void testFormatCurrency_whenMocked_thenReturnsMockSuccessfully() {
 
         try (MockedStatic<Utility> utilityMockedStatic = Mockito.mockStatic(Utility.class)) {
@@ -18,5 +18,5 @@ public class UtilityTests {
 
         assertThat(Utility.formatCurrency(1000.99f)).isEqualTo("€ 1.000,99");
     }
-
+*/
 }
