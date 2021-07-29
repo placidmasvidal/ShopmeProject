@@ -18,35 +18,40 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository orderRepository;
+  private OrderRepository orderRepository;
 
-    @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+  @Autowired
+  public OrderServiceImpl(OrderRepository orderRepository) {
+    this.orderRepository = orderRepository;
+  }
+
+  @Override
+  public Order createOrder(
+      Customer customer,
+      Address address,
+      List<CartItem> cartItems,
+      PaymentMethod paymentMethod,
+      CheckoutInfo checkoutInfo) {
+    Order newOrder = new Order();
+    newOrder.setOrderTime(new Date());
+    newOrder.setStatus(OrderStatus.NEW);
+    newOrder.setCustomer(customer);
+    newOrder.setProductCost(checkoutInfo.getProductCost());
+    newOrder.setSubtotal(checkoutInfo.getProductTotal());
+    newOrder.setShippingCost(checkoutInfo.getShippingCostTotal());
+    newOrder.setTax(0.0f);
+    newOrder.setTotal(checkoutInfo.getPaymentTotal());
+    newOrder.setPaymentMethod(paymentMethod);
+    newOrder.setDeliverDays(checkoutInfo.getDeliverDays());
+    newOrder.setDeliverDate(checkoutInfo.getDeliverDate());
+
+    if (address == null) { // means recipient's address is the same as customer's address
+      newOrder.copyAddressFromCustomer();
+    } else {
+      newOrder.copyShippingAddress(address);
     }
-
-    @Override
-    public Order createOrder(Customer customer, Address address, List<CartItem> cartItems, PaymentMethod paymentMethod, CheckoutInfo checkoutInfo) {
-        Order newOrder = new Order();
-        newOrder.setOrderTime(new Date());
-        newOrder.setStatus(OrderStatus.NEW);
-        newOrder.setCustomer(customer);
-        newOrder.setProductCost(checkoutInfo.getProductCost());
-        newOrder.setSubtotal(checkoutInfo.getProductTotal());
-        newOrder.setShippingCost(checkoutInfo.getShippingCostTotal());
-        newOrder.setTax(0.0f);
-        newOrder.setTotal(checkoutInfo.getPaymentTotal());
-        newOrder.setPaymentMethod(paymentMethod);
-        newOrder.setDeliverDays(checkoutInfo.getDeliverDays());
-        newOrder.setDeliverDate(checkoutInfo.getDeliverDate());
-
-        if(address == null){    //means recipient's address is the same as customer's address
-            newOrder.copyAddressFromCustomer();
-        } else {
-            newOrder.copyShippingAddress(address);
-        }
 
     Set<OrderDetail> orderDetails =
         cartItems.stream()
@@ -65,8 +70,8 @@ public class OrderServiceImpl implements OrderService{
                 })
             .collect(Collectors.toSet());
 
-        newOrder.setOrderDetails(orderDetails);
+    newOrder.setOrderDetails(orderDetails);
 
-        return orderRepository.save(newOrder);
-    }
+    return orderRepository.save(newOrder);
+  }
 }
