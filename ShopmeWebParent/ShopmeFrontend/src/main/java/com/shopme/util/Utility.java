@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Properties;
 
 public class Utility {
@@ -59,14 +60,18 @@ public class Utility {
     }
 
     public static String formatCurrency(float amount){
-        String pattern = "###,###.##";  //thousands separator, decimal separator, digits after point
-        DecimalFormat formatter = new DecimalFormat(pattern);
+        String pattern = "€ ###,###.###";  //thousands separator, decimal separator, digits after point
+
+        DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance();
+        decimalFormatSymbols.setDecimalSeparator(',');
+        decimalFormatSymbols.setGroupingSeparator('.');
+        DecimalFormat formatter = new DecimalFormat(pattern, decimalFormatSymbols);
 
         return formatter.format(amount);
     }
 
     public static void main(String[] args){
-        float amount = 678.99f;
+        float amount = 1000.99f;
         String formattedCurrency = formatCurrency(amount);
         System.out.println("formatCurrency = " + formattedCurrency);
     }

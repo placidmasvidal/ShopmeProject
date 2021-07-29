@@ -12,11 +12,11 @@ public class UtilityTests {
     void testFormatCurrency_whenMocked_thenReturnsMockSuccessfully() {
 
         try (MockedStatic<Utility> utilityMockedStatic = Mockito.mockStatic(Utility.class)) {
-            utilityMockedStatic.when(() -> Utility.formatCurrency(678.99f)).thenReturn("678.99");
-            assertThat(Utility.formatCurrency(678.99f)).isEqualTo("678.99");
+            utilityMockedStatic.when(() -> Utility.formatCurrency(1000.99f)).thenReturn("€ 1.000,99");
+            assertThat(Utility.formatCurrency(1000.99f)).isEqualTo("€ 1.000,99");
         }
 
-        assertThat(Utility.formatCurrency(678.99f)).isEqualTo("678.99");
+        assertThat(Utility.formatCurrency(1000.99f)).isEqualTo("€ 1.000,99");
     }
 
 }
