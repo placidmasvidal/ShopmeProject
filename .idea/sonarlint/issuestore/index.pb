@@ -311,3 +311,15 @@ WShopmeWebParent/ShopmeFrontend/src/main/java/com/shopme/address/AddressServiceI
 aShopmeWebParent/ShopmeFrontend/src/test/java/com/shopme/shoppingcart/CartItemRepositoryTests.java,9/e/9e634489871332723b2eb7d937914a1930fb4d4d
 ”
 dShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/shippingrate/ShippingRateConstants.java,e/1/e1c8b323270e8b835140d18d25165981576ad770
+t
+DShopmeCommon/src/main/java/com/shopme/common/entity/order/Order.java,0/9/0935b43d28fb631d382ed26d1d11e95bcad03ba5
+{
+KShopmeCommon/src/main/java/com/shopme/common/entity/setting/SettingBag.java,2/4/24d23b605fa2e7a9b522d5f504443eed3654c4f6
+‡
+WShopmeWebParent/ShopmeFrontend/src/main/java/com/shopme/setting/CurrencyRepository.java,e/c/ec4f443e7f0e07d99ea317cf90c3d4c5525dc076
+“
+cShopmeWebParent/ShopmeFrontend/src/main/java/com/shopme/checkout/controller/CheckoutController.java,f/1/f19798a8646180ae6e907e9080c620f4b19bdee4
+†
+VShopmeWebParent/ShopmeFrontend/src/main/java/com/shopme/setting/PaymentSettingBag.java,c/0/c02474179a729e667e059a0bad4980ed882e7c9f
+‚
+RShopmeWebParent/ShopmeFrontend/src/main/java/com/shopme/checkout/CheckoutInfo.java,1/f/1f70aefd4fac9ffbde1b5acb6a84c6572bf4daaa
