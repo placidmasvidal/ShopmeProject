@@ -1,5 +1,6 @@
 package com.shopme.setting;
 
+import com.shopme.common.entity.Currency;
 import com.shopme.common.entity.setting.Setting;
 import com.shopme.common.entity.setting.SettingCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,12 @@ import java.util.List;
 public class SettingServiceImpl implements SettingService {
 
   private SettingRepository settingRepository;
-;
+  private CurrencyRepository currencyRepository;
+
   @Autowired
-  public SettingServiceImpl(SettingRepository settingRepository) {
+  public SettingServiceImpl(SettingRepository settingRepository, CurrencyRepository currencyRepository) {
     this.settingRepository = settingRepository;
+    this.currencyRepository = currencyRepository;
   }
 
   @Override
@@ -41,4 +44,11 @@ public class SettingServiceImpl implements SettingService {
       List<Setting> settings = settingRepository.findByCategory(SettingCategory.PAYMENT);
         return new PaymentSettingBag(settings);
     }
+
+  @Override
+  public String getCurrencyCode() {
+    Setting setting = settingRepository.findByKey("CURRENCY_ID");
+    Currency currency = currencyRepository.findById(Integer.valueOf(setting.getValue())).get();
+    return currency.getCode();
+  }
 }

@@ -14,4 +14,6 @@ public interface SettingService {
 
     PaymentSettingBag getPaymentSettings();
 
+    String getCurrencyCode();
+
 }
