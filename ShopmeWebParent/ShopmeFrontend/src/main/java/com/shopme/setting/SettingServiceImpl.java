@@ -35,4 +35,10 @@ public class SettingServiceImpl implements SettingService {
       List<Setting> settings = settingRepository.findByCategory(SettingCategory.CURRENCY);
       return new CurrencySettingBag(settings);
     }
+
+    @Override
+    public PaymentSettingBag getPaymentSettings() {
+      List<Setting> settings = settingRepository.findByCategory(SettingCategory.PAYMENT);
+        return new PaymentSettingBag(settings);
+    }
 }
