@@ -33,10 +33,12 @@ public class PayPalApiTests {
     HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
     RestTemplate restTemplate = new RestTemplate();
 
-    ResponseEntity<String> responseEntity =
-        restTemplate.exchange(requestURL, HttpMethod.GET, request, String.class);
+    ResponseEntity<PayPalOrderResponse> responseEntity =
+        restTemplate.exchange(requestURL, HttpMethod.GET, request, PayPalOrderResponse.class);
 
-    System.out.println("responseEntity = " + responseEntity);
+    PayPalOrderResponse orderResponse = responseEntity.getBody();
 
+    System.out.println("Order ID: = " + orderResponse.getId());
+    System.out.println("Validated: " + orderResponse.validate(orderId));
   }
 }
