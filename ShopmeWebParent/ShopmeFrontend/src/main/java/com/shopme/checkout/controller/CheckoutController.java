@@ -3,6 +3,8 @@ package com.shopme.checkout.controller;
 import com.shopme.address.AddressService;
 import com.shopme.checkout.CheckoutInfo;
 import com.shopme.checkout.CheckoutService;
+import com.shopme.checkout.paypal.PayPalApiException;
+import com.shopme.checkout.paypal.PayPalService;
 import com.shopme.common.entity.Address;
 import com.shopme.common.entity.CartItem;
 import com.shopme.common.entity.Customer;
@@ -43,6 +45,7 @@ public class CheckoutController {
   private ShoppingCartService shoppingCartService;
   private OrderService orderService;
   private SettingService settingService;
+  private PayPalService payPalService;
 
   @Autowired
   public CheckoutController(
@@ -52,7 +55,8 @@ public class CheckoutController {
       ShippingRateService shippingRateService,
       ShoppingCartService shoppingCartService,
       OrderService orderService,
-      SettingService settingService) {
+      SettingService settingService,
+      PayPalService payPalService) {
     this.checkoutService = checkoutService;
     this.customerService = customerService;
     this.addressService = addressService;
@@ -60,6 +64,7 @@ public class CheckoutController {
     this.shoppingCartService = shoppingCartService;
     this.orderService = orderService;
     this.settingService = settingService;
+    this.payPalService = payPalService;
   }
 
   @GetMapping("/checkout")
@@ -104,7 +109,8 @@ public class CheckoutController {
   }
 
   @PostMapping("/place_order")
-  public String placeOrder(HttpServletRequest servletRequest) throws UnsupportedEncodingException, MessagingException {
+  public String placeOrder(HttpServletRequest servletRequest)
+      throws UnsupportedEncodingException, MessagingException {
     String paymentType = servletRequest.getParameter("paymentMethod");
     PaymentMethod paymentMethod = PaymentMethod.valueOf(paymentType);
 
@@ -122,7 +128,8 @@ public class CheckoutController {
     List<CartItem> cartItems = shoppingCartService.listCartItems(customer);
     CheckoutInfo checkoutInfo = checkoutService.prepareCheckout(cartItems, shippingRate);
 
-    Order createdOrder = orderService.createOrder(customer, defaultAddress, cartItems, paymentMethod, checkoutInfo);
+    Order createdOrder =
+        orderService.createOrder(customer, defaultAddress, cartItems, paymentMethod, checkoutInfo);
     shoppingCartService.deleteByCustomer(customer);
     sendOrderConfirmationEmail(servletRequest, createdOrder);
 
@@ -130,7 +137,7 @@ public class CheckoutController {
   }
 
   private void sendOrderConfirmationEmail(HttpServletRequest servletRequest, Order order)
-          throws UnsupportedEncodingException, MessagingException {
+      throws UnsupportedEncodingException, MessagingException {
     EmailSettingBag emailSettings = settingService.getEmailSettings();
     JavaMailSenderImpl mailSender = Utility.prepareMailSender(emailSettings);
     mailSender.setDefaultEncoding("utf-8");
@@ -151,7 +158,8 @@ public class CheckoutController {
     DateFormat dateFormatter = new SimpleDateFormat("HH:mm:ss E, dd MMM yyyy");
     String orderTime = dateFormatter.format(order.getOrderTime());
 
-    String totalAmount = Utility.formatCurrency(order.getTotal(), settingService.getCurrencySettings());
+    String totalAmount =
+        Utility.formatCurrency(order.getTotal(), settingService.getCurrencySettings());
 
     content = content.replace("[[name]]", order.getCustomer().getFullName());
     content = content.replace("[[orderId]]", String.valueOf(order.getId()));
@@ -162,5 +170,22 @@ public class CheckoutController {
 
     helper.setText(content, true);
     mailSender.send(message);
+  }
+
+  @PostMapping("/process_paypal_order")
+  public String processPayPalOrder(HttpServletRequest servletRequest, Model model)
+      throws UnsupportedEncodingException, MessagingException {
+    String orderId = servletRequest.getParameter("orderId");
+
+    try {
+      payPalService.validateOrder(orderId);
+      return placeOrder(servletRequest);
+    } catch (PayPalApiException e) {
+      model.addAttribute("title", "Checkout Failure");
+      model.addAttribute(
+          "message",
+          "ERROR: Transaction could not be completed because order information is invalid");
+      return e.getMessage();
+    }
   }
 }

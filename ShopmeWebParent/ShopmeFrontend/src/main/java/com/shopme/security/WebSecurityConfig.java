@@ -45,7 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/cart",
             "/address_book/**",
             "/checkout",
-            "/place_order")
+            "/place_order",
+            "/process_paypal_order")
         .authenticated()
         .anyRequest()
         .permitAll()
