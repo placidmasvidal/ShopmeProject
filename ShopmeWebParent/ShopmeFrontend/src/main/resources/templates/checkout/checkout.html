@@ -40,6 +40,12 @@
                         </form>
                     </div>
                     <div id="paypal-button-container"></div>
+
+                    <form th:action="@{/process_paypal_order}" method="post" id="paypalForm">
+                        <input type="hidden" name="orderId" id="orderId">
+                        <input type="hidden" name="paymentMethod" value="PAYPAL">
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -107,6 +113,11 @@
        });
     });
 
+    function validateOrder(orderId){
+        $("#orderId").val(orderId);
+        $("#paypalForm").submit();
+    }
+
     // https://developer.paypal.com/home
     // https://developer.paypal.com/docs/checkout/
 /*    paypal.Buttons({
@@ -161,7 +172,7 @@
                 console.log(details);
                 orderId = details.id;
                 totalAmount = details.purchase_units[0].amount.value;
-
+                    validateOrder(orderId);
                 alert("Transaction completed. Order ID: " + orderId + ". Amount paid: " + totalAmount);
             });
         },
