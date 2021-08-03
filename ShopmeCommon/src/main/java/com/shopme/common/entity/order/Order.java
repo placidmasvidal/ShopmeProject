@@ -5,6 +5,8 @@ import com.shopme.common.entity.Address;
 import com.shopme.common.entity.Customer;
 import com.shopme.common.entity.IdBasedEntity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -230,5 +232,11 @@ public class Order extends AbstractAddress {
               }
             });
     return stringBuilder.toString();
+  }
+
+  @Transient
+  public String getDeliverDateOnForm() {
+    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    return dateFormatter.format(this.deliverDate);
   }
 }

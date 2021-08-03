@@ -4,6 +4,7 @@ import com.shopme.admin.brand.BrandService;
 import com.shopme.admin.category.CategoryService;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.paging.PagingAndSortingParam;
+import com.shopme.admin.product.ProductConstants;
 import com.shopme.admin.product.ProductService;
 import com.shopme.admin.security.ShopmeUserDetails;
 import com.shopme.admin.util.FileUploadUtil;
@@ -44,9 +45,8 @@ public class ProductController {
   }
 
   @GetMapping("/products")
-  public String listFirstPage(Model model) {
-    // return defaultRedirectURL;
-    return "redirect:/products/page/1?sortField=name&sortDir=asc";
+  public String listFirstPage() {
+    return ProductConstants.defaultRedirectURL;
   }
 
   @GetMapping("/products/page/{pageNum}")
@@ -101,7 +101,7 @@ public class ProductController {
       if (loggedUser.hasRole("Salesperson")) {
         productService.saveProductPrice(product);
         redirectAttributes.addFlashAttribute("message", "The product has been saved successfully.");
-        return "redirect:/products";
+        return ProductConstants.defaultRedirectURL;
       }
     }
 
@@ -118,7 +118,7 @@ public class ProductController {
 
     redirectAttributes.addFlashAttribute("message", "The product has been saved successfully.");
 
-    return "redirect:/products";
+    return ProductConstants.defaultRedirectURL;
   }
 
   @GetMapping("/products/{id}/enabled/{status}")
@@ -132,7 +132,7 @@ public class ProductController {
 
     redirectAttributes.addFlashAttribute("message", message);
 
-    return "redirect:/products";
+    return ProductConstants.defaultRedirectURL;
   }
 
   @GetMapping("/products/delete/{id}")
@@ -152,7 +152,7 @@ public class ProductController {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
     }
 
-    return "redirect:/products";
+    return ProductConstants.defaultRedirectURL;
   }
 
   @GetMapping("/products/edit/{id}")
@@ -184,7 +184,7 @@ public class ProductController {
       return "products/product_form";
     } catch (ProductNotFoundException ex) {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
-      return "redirect:/products";
+      return ProductConstants.defaultRedirectURL;
     }
   }
 
@@ -199,7 +199,7 @@ public class ProductController {
       return "products/product_detail_modal";
     } catch (ProductNotFoundException ex) {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
-      return "redirect:/products";
+      return ProductConstants.defaultRedirectURL;
     }
   }
 }

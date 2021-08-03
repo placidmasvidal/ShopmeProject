@@ -1,9 +1,11 @@
 package com.shopme.admin.order.controller;
 
+import com.shopme.admin.order.OrderConstants;
 import com.shopme.admin.order.OrderService;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.paging.PagingAndSortingParam;
 import com.shopme.admin.setting.SettingService;
+import com.shopme.common.entity.Country;
 import com.shopme.common.entity.order.Order;
 import com.shopme.common.entity.setting.Setting;
 import com.shopme.common.exception.OrderNotFoundException;
@@ -34,7 +36,7 @@ public class OrderController {
 
   @GetMapping("/orders")
   public String listFirstPage() {
-    return defaultRedirectURL;
+    return OrderConstants.defaultRedirectURL;
   }
 
   @GetMapping("/orders/page/{pageNum}")
@@ -64,7 +66,7 @@ public class OrderController {
       return "orders/order_details_modal";
     } catch (OrderNotFoundException ex) {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
-      return defaultRedirectURL;
+      return OrderConstants.defaultRedirectURL;
     }
   }
 
@@ -79,7 +81,7 @@ public class OrderController {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
     }
 
-    return defaultRedirectURL;
+    return OrderConstants.defaultRedirectURL;
   }
 
   private void loadCurrencySetting(HttpServletRequest servletRequest) {
@@ -87,5 +89,28 @@ public class OrderController {
 
     currencySettings.forEach(
         setting -> servletRequest.setAttribute(setting.getKey(), setting.getValue()));
+  }
+
+  @GetMapping("/orders/edit/{id}")
+  public String editOrder(
+      @PathVariable("id") Integer id,
+      Model model,
+      RedirectAttributes redirectAttributes,
+      HttpServletRequest servletRequest) {
+    try {
+      Order order = orderService.get(id);
+
+      List<Country> listCountries = orderService.listAllCountries();
+
+      model.addAttribute("pageTitle", "Edit Order (ID: " + id + ")");
+      model.addAttribute("order", order);
+      model.addAttribute("listCountries", listCountries);
+
+      return "orders/order_form";
+
+    } catch (OrderNotFoundException ex) {
+      redirectAttributes.addFlashAttribute("message", ex.getMessage());
+      return OrderConstants.defaultRedirectURL;
+    }
   }
 }

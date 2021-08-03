@@ -1,5 +1,6 @@
 package com.shopme.admin.customer.controller;
 
+import com.shopme.admin.customer.CustomerConstants;
 import com.shopme.common.exception.CustomerNotFoundException;
 import com.shopme.admin.customer.CustomerService;
 import com.shopme.admin.paging.PagingAndSortingHelper;
@@ -28,7 +29,7 @@ public class CustomerController {
 
   @GetMapping("/customers")
   public String listFirstPage(Model model) {
-    return "redirect:/customers/page/1?sortField=firstName&sortDir=asc";
+    return CustomerConstants.defaultRedirectURL;
   }
 
   @GetMapping("/customers/page/{pageNum}")
@@ -52,7 +53,7 @@ public class CustomerController {
     String message = "The Customer ID " + id + " has been " + status;
     redirectAttributes.addFlashAttribute("message", message);
 
-    return "redirect:/customers";
+    return CustomerConstants.defaultRedirectURL;
   }
 
   @GetMapping("/customers/detail/{id}")
@@ -65,7 +66,7 @@ public class CustomerController {
       return "customers/customer_detail_modal";
     } catch (CustomerNotFoundException ex) {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
-      return "redirect:/customers";
+      return CustomerConstants.defaultRedirectURL;
     }
   }
 
@@ -84,7 +85,7 @@ public class CustomerController {
 
     } catch (CustomerNotFoundException ex) {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
-      return "redirect:/customers";
+      return CustomerConstants.defaultRedirectURL;
     }
   }
 
@@ -94,7 +95,7 @@ public class CustomerController {
     customerService.save(customer);
     redirectAttributes.addFlashAttribute(
         "message", "The customer ID " + customer.getId() + " has been updated successfully.");
-    return "redirect:/customers";
+    return CustomerConstants.defaultRedirectURL;
   }
 
   @GetMapping("/customers/delete/{id}")
@@ -108,6 +109,6 @@ public class CustomerController {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
     }
 
-    return "redirect:/customers";
+    return CustomerConstants.defaultRedirectURL;
   }
 }

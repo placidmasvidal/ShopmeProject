@@ -3,7 +3,6 @@ package com.shopme.admin.brand.controller;
 import com.shopme.admin.brand.BrandConstants;
 import com.shopme.admin.brand.BrandNotFoundException;
 import com.shopme.admin.brand.BrandService;
-import com.shopme.admin.brand.BrandServiceImpl;
 import com.shopme.admin.category.CategoryService;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.paging.PagingAndSortingParam;
@@ -13,8 +12,6 @@ import com.shopme.common.entity.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -45,7 +42,7 @@ public class BrandController {
 
   @GetMapping("/brands")
   public String listFirstPage() {
-    return "redirect:/brands/page/1?sortField=name&sortDir=asc";
+    return BrandConstants.defaultRedirectURL;
   }
 
   @GetMapping("/brands/page/{pageNum}")
@@ -83,7 +80,7 @@ public class BrandController {
       return "brands/brand_form";
     } catch (BrandNotFoundException ex) {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
-      return "redirect:/brands";
+      return BrandConstants.defaultRedirectURL;
     }
   }
 
@@ -108,7 +105,7 @@ public class BrandController {
     }
 
     redirectAttributes.addFlashAttribute("message", "The brand has been saved succesfully.");
-    return "redirect:/brands";
+    return BrandConstants.defaultRedirectURL;
   }
 
   @GetMapping("/brands/delete/{id}")
@@ -125,6 +122,6 @@ public class BrandController {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
     }
 
-    return "redirect:/brands";
+    return BrandConstants.defaultRedirectURL;
   }
 }

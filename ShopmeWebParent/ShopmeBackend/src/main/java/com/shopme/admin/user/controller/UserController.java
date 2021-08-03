@@ -54,7 +54,7 @@ public class UserController {
 
   @GetMapping("/users")
   public String listFirstPage() {
-    return "redirect:/users/page/1?sortField=firstName&sortDir=asc";
+    return UserConstants.defaultRedirectURL;
   }
 
   @GetMapping("/users/page/{pageNum}")
@@ -115,7 +115,7 @@ public class UserController {
       return "users/user_form";
     } catch (UserNotFoundException ex) {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
-      return "redirect:/users";
+      return UserConstants.defaultRedirectURL;
     }
   }
 
@@ -129,7 +129,7 @@ public class UserController {
     } catch (UserNotFoundException ex) {
       redirectAttributes.addFlashAttribute("message", ex.getMessage());
     }
-    return "redirect:/users";
+    return UserConstants.defaultRedirectURL;
   }
 
   @GetMapping("/users/{id}/enabled/{status}")
@@ -143,7 +143,7 @@ public class UserController {
 
     redirectAttributes.addFlashAttribute("message", message);
 
-    return "redirect:/users";
+    return UserConstants.defaultRedirectURL;
   }
 
   @GetMapping("/users/export/csv")
