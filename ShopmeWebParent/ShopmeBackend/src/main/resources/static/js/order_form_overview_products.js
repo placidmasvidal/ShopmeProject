@@ -13,8 +13,27 @@ $(document).ready(function (){
     fieldTotal = $("#total");
 
     formatOrderAmounts();
+    formatProductAmounts();
 
 });
+
+function formatProductAmounts(){
+    $(".cost-input").each(function (e) {
+        formatNumberForField($(this));
+    });
+
+    $(".price-input").each(function (e) {
+        formatNumberForField($(this));
+    });
+
+    $(".subtotal-output").each(function (e) {
+        formatNumberForField($(this));
+    });
+
+    $(".ship-input").each(function (e) {
+        formatNumberForField($(this));
+    });
+}
 
 function formatOrderAmounts(){
     formatNumberForField(fieldProductCost);
