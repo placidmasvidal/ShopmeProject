@@ -17,12 +17,63 @@ $(document).ready(function (){
 
     $("#productList").on("change", ".quantity-input", function (e){
         updateSubtotalWhenQuantityChanged($(this));
+        updateOrderAmounts();
     });
 
     $("#productList").on("change", ".price-input", function (e){
         updateSubtotalWhenPriceChanged($(this));
+        updateOrderAmounts();
+    });
+
+    $("#productList").on("change", ".cost-input", function (e){
+        updateSubtotalWhenPriceChanged($(this));
+        updateOrderAmounts();
+    });
+
+    $("#productList").on("change", ".ship-input", function (e){
+        updateSubtotalWhenPriceChanged($(this));
+        updateOrderAmounts();
     });
 });
+
+function updateOrderAmounts() {
+    let totalCost = 0.0;
+
+    $(".cost-input").each(function (e){
+        let costInputField = $(this);
+        let rowNumber = costInputField.attr("rowNumber");
+        let quantityValue = $("#quantity" + rowNumber).val();
+
+        let productCost = getNumberValueRemovedThousandSeparator(costInputField);
+        totalCost += productCost * parseInt(quantityValue);
+    });
+
+    setAndFormatNumberForField("productCost", totalCost);
+
+    let orderSubtotal = 0.0;
+
+    $(".subtotal-output").each(function (e){
+        let productSubtotal = getNumberValueRemovedThousandSeparator($(this));
+        orderSubtotal += productSubtotal;
+    });
+
+    setAndFormatNumberForField("subtotal", orderSubtotal);
+
+    let shippingCost = 0.0;
+
+    $(".ship-input").each(function (e){
+        let productShip = getNumberValueRemovedThousandSeparator($(this));
+        shippingCost += productShip;
+    });
+
+    setAndFormatNumberForField("shippingCost", shippingCost);
+
+    let tax = getNumberValueRemovedThousandSeparator(fieldTax);
+
+    let orderTotal = orderSubtotal + tax + shippingCost;
+
+    setAndFormatNumberForField("total", orderTotal);
+}
 
 function setAndFormatNumberForField(fieldId, fieldValue){
     let formattedValue = $.number(fieldValue, 2);
