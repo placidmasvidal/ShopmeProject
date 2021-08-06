@@ -24,26 +24,33 @@ $(document).ready(function (){
     });
 });
 
+function setAndFormatNumberForField(fieldId, fieldValue){
+    let formattedValue = $.number(fieldValue, 2);
+    $("#" + fieldId).val(formattedValue);
+}
+
+function getNumberValueRemovedThousandSeparator(fieldRef){
+    let fieldValue = fieldRef.val().replace(",", "");
+    return parseFloat(fieldValue);
+}
+
 function updateSubtotalWhenPriceChanged(input) {
-    let priceValue = input.val().replace(",", "");
+    let priceValue = getNumberValueRemovedThousandSeparator(input);
     let rowNumber = input.attr("rowNumber");
     let quantityField = $("#quantity" + rowNumber);
     let quantityValue = quantityField.val();
-    let newSubtotal = parseFloat(quantityValue) * parseFloat(priceValue);
+    let newSubtotal = parseFloat(quantityValue) * priceValue;
 
-    let subtotalField = $("#subtotal" + rowNumber);
-    subtotalField.val($.number(newSubtotal, 2));
+    setAndFormatNumberForField("subtotal" + rowNumber, newSubtotal);
 }
 
 function updateSubtotalWhenQuantityChanged(input) {
     let quantityValue = input.val();
     let rowNumber = input.attr("rowNumber");
-    let priceField = $("#price" + rowNumber);
-    let priceValue = parseFloat(priceField.val().replace(",", ""));
+    let priceValue = getNumberValueRemovedThousandSeparator($("#price" + rowNumber));
     let newSubtotal = parseFloat(quantityValue) * priceValue;
 
-    let subtotalField = $("#subtotal" + rowNumber);
-    subtotalField.val($.number(newSubtotal, 2));
+    setAndFormatNumberForField("subtotal" + rowNumber, newSubtotal);
 }
 
 function formatProductAmounts(){
