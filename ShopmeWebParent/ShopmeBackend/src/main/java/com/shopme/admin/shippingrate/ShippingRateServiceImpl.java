@@ -1,9 +1,11 @@
 package com.shopme.admin.shippingrate;
 
 import com.shopme.admin.paging.PagingAndSortingHelper;
+import com.shopme.admin.product.ProductRepository;
 import com.shopme.admin.setting.country.CountryRepository;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.ShippingRate;
+import com.shopme.common.entity.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +20,16 @@ public class ShippingRateServiceImpl implements ShippingRateService {
 
   private CountryRepository countryRepository;
 
+  private ProductRepository productRepository;
+
   @Autowired
   public ShippingRateServiceImpl(
-      ShippingRateRepository shippingRateRepository, CountryRepository countryRepository) {
+      ShippingRateRepository shippingRateRepository,
+      CountryRepository countryRepository,
+      ProductRepository productRepository) {
     this.shippingRateRepository = shippingRateRepository;
     this.countryRepository = countryRepository;
+    this.productRepository = productRepository;
   }
 
   @Override
@@ -67,7 +74,8 @@ public class ShippingRateServiceImpl implements ShippingRateService {
 
   @Override
   @Transactional
-  public void updateCODSupport(Integer id, boolean codSupported) throws ShippingRateNotFoundException {
+  public void updateCODSupport(Integer id, boolean codSupported)
+      throws ShippingRateNotFoundException {
     Long count = shippingRateRepository.countById(id);
     if (count == null || count == 0) {
       throw new ShippingRateNotFoundException("Could not find shipping rate with ID " + id);
@@ -82,8 +90,28 @@ public class ShippingRateServiceImpl implements ShippingRateService {
     Long count = shippingRateRepository.countById(id);
     if (count == null || count == 0) {
       throw new ShippingRateNotFoundException("Could not find shipping rate with ID " + id);
-
     }
     shippingRateRepository.deleteById(id);
+  }
+
+  @Override
+  public float calculateShippingCost(Integer productId, Integer countryId, String state)
+      throws ShippingRateNotFoundException {
+    ShippingRate shippingRate = shippingRateRepository.findByCountryAndState(countryId, state);
+
+    if (shippingRate == null) {
+      throw new ShippingRateNotFoundException(
+          "No shipping rate found for the given destination."
+              + " You have to enter shipping cost manually.");
+    }
+
+    Product product = productRepository.findById(productId).get();
+
+    float dimWeight =
+        (product.getLength() * product.getWidth() * product.getHeight())
+            / ShippingRateConstants.DIM_DIVISOR;
+    float finalWeight = product.getWeight() > dimWeight ? product.getWeight() : dimWeight;
+
+    return finalWeight * shippingRate.getRate();
   }
 }

@@ -19,4 +19,6 @@ public interface ShippingRateService {
     void updateCODSupport(Integer id, boolean codSupported) throws ShippingRateNotFoundException;
 
     void delete(Integer id) throws ShippingRateNotFoundException;
+
+    float calculateShippingCost(Integer productId, Integer countryId, String state) throws ShippingRateNotFoundException;
 }
