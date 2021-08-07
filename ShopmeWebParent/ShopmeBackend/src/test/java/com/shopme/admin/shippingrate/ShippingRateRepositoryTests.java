@@ -66,4 +66,6 @@ public class ShippingRateRepositoryTests {
         assertThat(rate).isNull();
     }
 
+
+
 }
