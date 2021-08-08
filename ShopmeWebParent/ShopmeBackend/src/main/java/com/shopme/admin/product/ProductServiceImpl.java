@@ -17,68 +17,81 @@ import java.util.NoSuchElementException;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
+  private ProductRepository productRepository;
 
-    @Autowired
-    public ProductServiceImpl(ProductRepository productRepository){
-        this.productRepository = productRepository;
+  @Autowired
+  public ProductServiceImpl(ProductRepository productRepository) {
+    this.productRepository = productRepository;
+  }
+
+  public List<Product> listAll() {
+    return (List<Product>) productRepository.findAll();
+  }
+
+  public void listByPage(
+      int pageNum, PagingAndSortingHelper pagingAndSortingHelper, Integer categoryId) {
+    Pageable pageable =
+        pagingAndSortingHelper.createPageable(ProductConstants.PRODUCTS_PER_PAGE, pageNum);
+    String keyword = pagingAndSortingHelper.getKeyword();
+    Page<Product> page = null;
+
+    if (keyword != null && !keyword.isEmpty()) {
+      if (categoryId != null && categoryId > 0) {
+        String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+        page = productRepository.searchInCategory(categoryId, categoryIdMatch, keyword, pageable);
+      } else {
+        page = productRepository.findAll(keyword, pageable);
+      }
+    } else {
+      if (categoryId != null && categoryId > 0) {
+        String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+        page = productRepository.findAllInCategory(categoryId, categoryIdMatch, pageable);
+      } else {
+        page = productRepository.findAll(pageable);
+      }
     }
 
-    public List<Product> listAll() {
-        return (List<Product>) productRepository.findAll();
+    pagingAndSortingHelper.updateModelAttributes(pageNum, page);
+  }
+
+  @Override
+  public void searchProducts(int pageNum, PagingAndSortingHelper pagingAndSortingHelper) {
+    Pageable pageable =
+            pagingAndSortingHelper.createPageable(ProductConstants.PRODUCTS_PER_PAGE, pageNum);
+    String keyword = pagingAndSortingHelper.getKeyword();
+
+    Page<Product> page = productRepository.searchProductsByName(keyword, pageable);
+
+    pagingAndSortingHelper.updateModelAttributes(pageNum, page);
+  }
+
+  @Override
+  public Product save(Product product) {
+    if (product.getId() == null) {
+      product.setCreatedTime(new Date());
     }
 
-    public void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper, Integer categoryId) {
-        Pageable pageable = pagingAndSortingHelper.createPageable(ProductConstants.PRODUCTS_PER_PAGE, pageNum);
-        String keyword = pagingAndSortingHelper.getKeyword();
-        Page<Product> page = null;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            if (categoryId != null && categoryId > 0) {
-                String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
-                page = productRepository.searchInCategory(categoryId, categoryIdMatch, keyword, pageable);
-            } else {
-                page = productRepository.findAll(keyword, pageable);
-            }
-        } else {
-            if (categoryId != null && categoryId > 0) {
-                String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
-                page = productRepository.findAllInCategory(categoryId, categoryIdMatch, pageable);
-            } else {
-                page = productRepository.findAll(pageable);
-            }
-        }
-
-        pagingAndSortingHelper.updateModelAttributes(pageNum, page);
+    if (product.getAlias() == null || product.getAlias().isEmpty()) {
+      String defaultAlias = product.getName().replaceAll(" ", "-");
+      product.setAlias(defaultAlias);
+    } else {
+      product.setAlias(product.getAlias().replaceAll(" ", "-"));
     }
 
-    @Override
-    public Product save(Product product) {
-        if(product.getId() == null){
-            product.setCreatedTime(new Date());
-        }
+    product.setUpdatedTime(new Date());
 
-        if(product.getAlias() == null || product.getAlias().isEmpty()){
-            String defaultAlias = product.getName().replaceAll(" ", "-");
-            product.setAlias(defaultAlias);
-        } else{
-            product.setAlias(product.getAlias().replaceAll(" ", "-"));
-        }
+    return productRepository.save(product);
+  }
 
-        product.setUpdatedTime(new Date());
+  @Override
+  public void saveProductPrice(Product productInForm) {
+    Product productInDB = productRepository.findById(productInForm.getId()).get();
+    productInDB.setCost(productInForm.getCost());
+    productInDB.setPrice(productInForm.getPrice());
+    productInDB.setDiscountPercent(productInForm.getDiscountPercent());
 
-        return productRepository.save(product);
-    }
-
-    @Override
-    public void saveProductPrice(Product productInForm) {
-        Product productInDB = productRepository.findById(productInForm.getId()).get();
-        productInDB.setCost(productInForm.getCost());
-        productInDB.setPrice(productInForm.getPrice());
-        productInDB.setDiscountPercent(productInForm.getDiscountPercent());
-
-        productRepository.save(productInDB);
-    }
+    productRepository.save(productInDB);
+  }
 
   @Override
   public String checkUnique(Integer id, String name) {
@@ -100,28 +113,27 @@ public class ProductServiceImpl implements ProductService {
     return "OK";
   }
 
-    @Override
-    public void updateProductEnabledStatus(Integer id, boolean enabled) {
-        productRepository.updateEnabledStatus(id, enabled);
+  @Override
+  public void updateProductEnabledStatus(Integer id, boolean enabled) {
+    productRepository.updateEnabledStatus(id, enabled);
+  }
+
+  @Override
+  public void delete(Integer id) throws ProductNotFoundException {
+    Long countById = productRepository.countById(id);
+    if (countById == null || countById == 0) {
+      throw new ProductNotFoundException("Couldn't find any product with ID: " + id);
     }
 
-    @Override
-    public void delete(Integer id) throws ProductNotFoundException {
-        Long countById = productRepository.countById(id);
-        if(countById == null || countById == 0){
-            throw new ProductNotFoundException("Couldn't find any product with ID: " + id);
-        }
+    productRepository.deleteById(id);
+  }
 
-        productRepository.deleteById(id);
+  @Override
+  public Product get(Integer id) throws ProductNotFoundException {
+    try {
+      return productRepository.findById(id).get();
+    } catch (NoSuchElementException ex) {
+      throw new ProductNotFoundException("Could not find any product with ID " + id);
     }
-
-    @Override
-    public Product get(Integer id) throws ProductNotFoundException {
-        try{
-            return productRepository.findById(id).get();
-        } catch (NoSuchElementException ex){
-            throw new ProductNotFoundException("Could not find any product with ID " + id);
-        }
-    }
-
+  }
 }

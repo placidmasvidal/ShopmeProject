@@ -25,4 +25,6 @@ public interface ProductService {
     void listByPage(int pageNum, PagingAndSortingHelper pagingAndSortingHelper, Integer categoryId);
 
     void saveProductPrice(Product productInForm);
+
+    void searchProducts(int pageNum, PagingAndSortingHelper pagingAndSortingHelper);
 }
