@@ -11,3 +11,24 @@ $(document).ready(function (){
         $("#addProductModal").modal();
     });
 });
+
+function addProduct(productId, productName){
+    $("#addProductModal").modal("hide");
+    showWarningModal("Product is not added.");
+}
+
+function isProductAlreadyAdded(productId) {
+    let productExists = false;
+
+    $(".hiddenProductId").each(function (e) {
+        let aProductId = $(this).val();
+
+        if(aProductId == productId){
+            productExists = true;
+            return;
+        }
+
+    });
+
+    return productExists;
+}
