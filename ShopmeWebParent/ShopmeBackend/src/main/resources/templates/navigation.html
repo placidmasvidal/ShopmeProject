@@ -61,7 +61,7 @@
                     <a class="nav-link" th:href="@{/customers}">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/shipping_rates}">Shipping</a>
+                    <a class="nav-link" th:href="@{/shipping_rates}">Shipping Rates</a>
                 </li>
                 </th:block>
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson', 'Shipper')">
@@ -71,7 +71,7 @@
                 </th:block>
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/reports}">Reports</a>
+                    <a class="nav-link" th:href="@{/reports}">Sales Report</a>
                 </li>
                 </th:block>
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
