@@ -1,14 +1,11 @@
 
 R
 java:S1066­"/Merge this if statement with the enclosing one.(¶ãüžÿÿÿÿÿ8¦½Ãœ¬/
-u
-java:S1192h"SDefine a constant instead of duplicating this literal "redirect:/products" 6 times.(ªß¾Šþÿÿÿÿ8¦½Ãœ¬/
-e
-java:S1192O"HDefine a constant instead of duplicating this literal "product" 3 times.(³Ù×Ã8¦½Ãœ¬/
 b
 java:S4684X"@Replace this persistent entity with a simple POJO or DTO object.(øÕÎ÷ÿÿÿÿÿ8¦½Ãœ¬/
-X	java:S1250"<This block of commented-out lines of code should be removed.(¤ÌÚÜ8»ÏÅ˜­/
-j
-java:S1192g"HDefine a constant instead of duplicating this literal "message" 7 times.(°Å€¡üÿÿÿÿ8¦½Ãœ¬/
 Q
 java:S1066e"/Merge this if statement with the enclosing one.(¶ãüžÿÿÿÿÿ8¦½Ãœ¬/
+j
+java:S1192g"HDefine a constant instead of duplicating this literal "message" 7 times.(°Å€¡üÿÿÿÿ8¦½Ãœ¬/
+e
+java:S1192O"HDefine a constant instead of duplicating this literal "product" 3 times.(³Ù×Ã8¦½Ãœ¬/

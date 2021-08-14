@@ -64,15 +64,17 @@ function getProductInfo(productId, shippingCost){
 }
 
 function generateProductCode(productId, productName, mainImagePath, productCost, productPrice, shippingCost){
-    let nextCount = $(".hiddenProductIdh").length + 1;
+    let nextCount = $(".hiddenProductId").length + 1;
+    let rowId = "row" + nextCount;
     let quantityId = "quantity" + nextCount;
     let priceId = "price" + nextCount;
     let subtotalId = "subtotal" + nextCount;
-    htmlCode = `<div class="border rounded p-1">
+    let htmlCode = `<div class="border rounded p-1" id="${rowId}">
                 <input type="hidden" name="productId" value="${productId}" class="hiddenProductId"/>
                 <div class="row">
                     <div class="col-1">
-                        <div>${nextCount}</div>
+                        <div class="divCount">${nextCount}</div>
+                        <div><a class="fas fa-trash icon-dark linkRemove" href="" rowNumber="${nextCount}"></a></div>
                     </div>
                     <div class="col-3">
                         <img src="${mainImagePath}" class="img-fluid"/>
