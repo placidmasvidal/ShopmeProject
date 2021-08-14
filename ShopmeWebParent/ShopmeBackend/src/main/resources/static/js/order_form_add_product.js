@@ -58,6 +58,9 @@ function getProductInfo(productId, shippingCost){
 
         htmlCode = generateProductCode(productId, productName, mainImagePath, productCost, productPrice, shippingCost);
         $("#productList").append(htmlCode);
+
+        updateOrderAmounts();
+
     }).fail(function(err){
         showWarningModal(err.responseJSON.message);
     });
@@ -69,6 +72,7 @@ function generateProductCode(productId, productName, mainImagePath, productCost,
     let quantityId = "quantity" + nextCount;
     let priceId = "price" + nextCount;
     let subtotalId = "subtotal" + nextCount;
+    let blankLineId = "blankLine" + nextCount;
     let htmlCode = `<div class="border rounded p-1" id="${rowId}">
                 <input type="hidden" name="productId" value="${productId}" class="hiddenProductId"/>
                 <div class="row">
@@ -132,7 +136,7 @@ function generateProductCode(productId, productName, mainImagePath, productCost,
                 </div>
 
             </div>
-            <div class="row">&nbsp;</div>`;
+            <div id="${blankLineId}" class="row">&nbsp;</div>`;
 
     return htmlCode;
 }
