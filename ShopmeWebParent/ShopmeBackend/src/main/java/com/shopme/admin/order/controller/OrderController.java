@@ -117,6 +117,8 @@ public class OrderController {
 
   @PostMapping("/order/save")
   public String saveOrder(Order order, HttpServletRequest servletRequest, RedirectAttributes redirectAttributes){
+    String countryName = servletRequest.getParameter("countryName");
+    order.setCountry(countryName);
     System.out.println("Country: " + order.getCountry());
 
     orderService.save(order);

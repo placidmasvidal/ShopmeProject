@@ -135,6 +135,9 @@ function formatNumberForField(fieldRef){
 }
 
 function processFormBeforeSubmit(){
+
+    setCountryName();
+
     removeThousandSeparatorForField(fieldProductCost);
     removeThousandSeparatorForField(fieldSubtotal);
     removeThousandSeparatorForField(fieldShippingCost);
@@ -161,4 +164,10 @@ function processFormBeforeSubmit(){
 
 function removeThousandSeparatorForField(fieldRef){
     fieldRef.val(fieldRef.val().replace(",", ""));
+}
+
+function setCountryName(){
+    let selectedCountry = $("#country option:selected");
+    let countryName = selectedCountry.text();
+    $("#countryName").val(countryName);
 }
