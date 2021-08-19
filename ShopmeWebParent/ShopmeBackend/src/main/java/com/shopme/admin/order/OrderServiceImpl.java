@@ -79,4 +79,9 @@ public class OrderServiceImpl implements OrderService{
     public List<Country> listAllCountries() {
         return countryRepository.findAllByOrderByNameAsc();
     }
+
+    @Override
+    public void save(Order order) {
+
+    }
 }

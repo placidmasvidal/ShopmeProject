@@ -16,4 +16,6 @@ public interface OrderService {
     void delete(Integer id) throws OrderNotFoundException;
 
     List<Country> listAllCountries();
+
+    void save(Order order);
 }
