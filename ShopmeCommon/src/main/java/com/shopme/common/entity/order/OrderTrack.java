@@ -3,6 +3,9 @@ package com.shopme.common.entity.order;
 import com.shopme.common.entity.IdBasedEntity;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -53,4 +56,21 @@ public class OrderTrack extends IdBasedEntity {
     public void setOrder(Order order) {
         this.order = order;
     }
+
+    @Transient
+    public String getUpdatedTimeOnForm() {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        return dateFormatter.format(this.updatedTime);
+    }
+
+    public void setUpdatedTimeOnForm(String dateString) {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+
+        try {
+            this.updatedTime = dateFormatter.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
