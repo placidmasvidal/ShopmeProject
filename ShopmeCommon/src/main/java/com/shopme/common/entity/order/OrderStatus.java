@@ -67,7 +67,7 @@ public enum OrderStatus {
   REFUNDED {
     @Override
     public String defaultDescription() {
-      return "Customer has been refund	ed";
+      return "Customer has been refunded";
     }
   };
 
