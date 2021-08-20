@@ -173,7 +173,7 @@ public class OrderController {
   private void updateProductDetails(Order order, HttpServletRequest servletRequest) {
     String[] detailIds = servletRequest.getParameterValues("detailId");
     String[] productIds = servletRequest.getParameterValues("productId");
-    String[] productCosts = servletRequest.getParameterValues("productCost");
+    String[] productDetailCosts = servletRequest.getParameterValues("productDetailCost");
     String[] quantities = servletRequest.getParameterValues("quantity");
     String[] productPrices = servletRequest.getParameterValues("productPrice");
     String[] productSubtotals = servletRequest.getParameterValues("productSubtotal");
@@ -183,7 +183,7 @@ public class OrderController {
     for (int i = 0; i < detailIds.length; i++) {
       System.out.println("Detail ID: " + detailIds[i]);
       System.out.println("\t Prodouct ID: " + productIds[i]);
-      System.out.println("\t Cost: " + productCosts[i]);
+      System.out.println("\t Cost: " + productDetailCosts[i]);
       System.out.println("\t Quantity: " + quantities[i]);
       System.out.println("\t Subtotal: " + productSubtotals[i]);
       System.out.println("\t Ship cost: " + productShipCosts[i]);
@@ -196,7 +196,7 @@ public class OrderController {
 
       orderDetail.setOrder(order);
       orderDetail.setProduct(new Product(Integer.parseInt(productIds[i])));
-      orderDetail.setProductCost(Float.parseFloat(productCosts[i]));
+      orderDetail.setProductCost(Float.parseFloat(productDetailCosts[i]));
       orderDetail.setSubtotal(Float.parseFloat(productSubtotals[i]));
       orderDetail.setShippingCost(Float.parseFloat(productShipCosts[i]));
       orderDetail.setQuantity(Integer.parseInt(quantities[i]));

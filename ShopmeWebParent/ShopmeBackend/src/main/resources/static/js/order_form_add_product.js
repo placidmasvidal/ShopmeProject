@@ -96,7 +96,7 @@ function generateProductCode(productId, productName, mainImagePath, productCost,
                             <td>Product Cost:</td>
                             <td>
                                 <input type="text" required class="form-control m-1 cost-input"
-                                       name="productCost"
+                                       name="productDetailCost"
                                        rowNumber="${nextCount}"
                                 value="${productCost}" style="max-width: 140px"/>
                             </td>

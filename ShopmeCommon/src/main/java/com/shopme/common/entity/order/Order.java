@@ -44,10 +44,10 @@ public class Order extends AbstractAddress {
   @JoinColumn(name = "customer_id")
   private Customer customer;
 
-  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<OrderDetail> orderDetails = new HashSet<>();
 
-  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
   @OrderBy("updatedTime ASC")
   private List<OrderTrack> orderTracks = new ArrayList<>();
 
