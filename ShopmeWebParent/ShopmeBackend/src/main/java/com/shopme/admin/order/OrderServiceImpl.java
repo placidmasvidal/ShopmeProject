@@ -81,7 +81,12 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void save(Order order) {
+    public void save(Order orderInForm) {
+        Order orderInDB = orderRepository.findById(orderInForm.getId()).get();
 
+        orderInForm.setOrderTime(orderInDB.getOrderTime());
+        orderInForm.setCustomer(orderInDB.getCustomer());
+
+        orderRepository.save(orderInForm);
     }
 }

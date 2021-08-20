@@ -8,6 +8,8 @@ import com.shopme.admin.setting.SettingService;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.order.Order;
 import com.shopme.common.entity.order.OrderDetail;
+import com.shopme.common.entity.order.OrderStatus;
+import com.shopme.common.entity.order.OrderTrack;
 import com.shopme.common.entity.product.Product;
 import com.shopme.common.entity.setting.Setting;
 import com.shopme.common.exception.OrderNotFoundException;
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -124,12 +129,43 @@ public class OrderController {
     order.setCountry(countryName);
 
     updateProductDetails(order, servletRequest);
+    updateOrderTracks(order, servletRequest);
 
     orderService.save(order);
 
     redirectAttributes.addFlashAttribute("message", "The order ID " + order.getId() + " has been updated successfully.");
 
     return defaultRedirectURL;
+  }
+
+  private void updateOrderTracks(Order order, HttpServletRequest servletRequest) {
+    String[] trackIds = servletRequest.getParameterValues("trackId");
+    String[] trackDates = servletRequest.getParameterValues("trackDate");
+    String[] trackStatuses = servletRequest.getParameterValues("trackStatus");
+    String[] trackNotes = servletRequest.getParameterValues("trackNotes");
+
+    List<OrderTrack> orderTracks = order.getOrderTracks();
+    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+
+    for (int i = 0; i < trackIds.length; i++) {
+      OrderTrack trackRecord = new OrderTrack();
+      Integer trackId = Integer.parseInt(trackIds[i]);
+      if(trackId > 0){
+        trackRecord.setId(trackId);
+      }
+
+      trackRecord.setOrder(order);
+      trackRecord.setStatus(OrderStatus.valueOf(trackStatuses[i]));
+      trackRecord.setNotes(trackNotes[i]);
+
+      try {
+        trackRecord.setUpdatedTime(dateFormatter.parse(trackDates[i]));
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+
+      orderTracks.add(trackRecord);
+    }
   }
 
   private void updateProductDetails(Order order, HttpServletRequest servletRequest) {
