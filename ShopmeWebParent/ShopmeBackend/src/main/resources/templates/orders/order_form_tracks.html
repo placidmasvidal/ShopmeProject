@@ -27,7 +27,6 @@
 <!-- Input type datetime-local not allowed in Firefox: https://stackoverflow.com/a/54754406/9492800 -->
 
                             <input type="datetime-local" name="trackDate" th:value="${track.updatedTimeOnForm}"
-                                   name="trackDate"
                                    class="form-control"
                                    th:readonly="${isTrackWithStatusNew}"
                                    th:required="${!isTrackWithStatusNew}"
