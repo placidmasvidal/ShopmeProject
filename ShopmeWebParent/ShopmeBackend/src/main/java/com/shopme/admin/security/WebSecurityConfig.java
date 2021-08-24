@@ -42,6 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
+        .antMatchers("/states/list_by_country/**")
+        .hasAnyAuthority("Admin", "Salesperson")
         .antMatchers("/users/**", "/settings/**", "/countries/**", "/states/**")
         .hasAuthority("Admin")
         .antMatchers("/categories/**", "/brands/**")
@@ -54,9 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAnyAuthority("Admin", "Editor", "Salesperson", "Shipper")
         .antMatchers("/products/**")
         .hasAnyAuthority("Admin", "Editor")
-        .antMatchers("/orders/**")
+        .antMatchers("/orders", "/orders/", "/orders/page/**", "/orders/detail/**")
         .hasAnyAuthority("Admin", "Salesperson", "Shipper")
-        .antMatchers("/customers/**", "/get_shipping_cost")
+        .antMatchers("/customers/**", "/orders/**", "/get_shipping_cost")
         .hasAnyAuthority("Admin", "Salesperson")
         .anyRequest()
         .authenticated()
@@ -72,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .rememberMe()
         .key("AbcDefgHijKlmnOpqrs_1234567890")
         .tokenValiditySeconds(7 * 24 * 60 * 60);
-        http.headers().frameOptions().sameOrigin();
+    http.headers().frameOptions().sameOrigin();
   }
 
   @Override
