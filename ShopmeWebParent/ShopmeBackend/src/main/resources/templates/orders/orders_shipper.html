@@ -108,6 +108,7 @@
     moduleURL = "[[@{/orders}]]";
 
     $(document).ready(function() {
+        $("[name='keyword']").attr("placeholder", "Type #number to search by Order ID");
         handleLinkViewOrderDetails();
     });
 
