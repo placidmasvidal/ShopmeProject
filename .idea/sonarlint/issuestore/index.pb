@@ -331,3 +331,9 @@ jShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/order/controller/P
 tShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/shippingrate/controller/ShippingRateRestController.java,7/9/7916911929e4491a14a951d49996b1ef9bd7e1b5
 è
 _ShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/product/controller/ProductDTO.java,5/6/56f305dbf50c1c8ac40f7a434d0aa169fd7b083f
+z
+JShopmeCommon/src/main/java/com/shopme/common/entity/order/OrderStatus.java,e/0/e0d75e1f2deb0b3bcf430887be983c7fbac7b9fa
+í
+bShopmeWebParent/ShopmeBackend/src/main/java/com/shopme/admin/order/controller/OrderController.java,0/d/0d35f4fe24605883e6f830f7682d684794849641
+â
+YShopmeWebParent/ShopmeFrontend/src/main/java/com/shopme/checkout/CheckoutServiceImpl.java,5/d/5d108c96d5d6bd75847a679c53855d9817552663

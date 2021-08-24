@@ -1,0 +1,13 @@
+
+O	java:S106»"9Replace this use of System.out or System.err by a logger.(æ©…ƒ
+T	java:S106¸"9Replace this use of System.out or System.err by a logger.(©­Ë²ùÿÿÿÿ
+T	java:S106¹"9Replace this use of System.out or System.err by a logger.(›÷Ááþÿÿÿÿ
+T	java:S106º"9Replace this use of System.out or System.err by a logger.(¢úÛ‰þÿÿÿÿ
+V
+java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(‡¦Ýõ
+7
+java:S1116W"Remove this empty statement.(Åñ­õþÿÿÿÿ
+O	java:S106¼"9Replace this use of System.out or System.err by a logger.(Œõ—‚
+T	java:S106½"9Replace this use of System.out or System.err by a logger.(ü³¿Ðøÿÿÿÿ
+^
+java:S1192M"HDefine a constant instead of duplicating this literal "message" 5 times.(øƒÄ“
