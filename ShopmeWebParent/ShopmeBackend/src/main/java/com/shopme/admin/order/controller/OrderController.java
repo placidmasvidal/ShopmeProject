@@ -75,10 +75,16 @@ public class OrderController {
       @PathVariable("id") Integer id,
       Model model,
       RedirectAttributes redirectAttributes,
-      HttpServletRequest servletRequest) {
+      HttpServletRequest servletRequest,
+      @AuthenticationPrincipal ShopmeUserDetails loggedUser) {
     try {
       Order order = orderService.get(id);
       loadCurrencySetting(servletRequest);
+
+      boolean isVisibleForAdminOrSalesperson =
+          (loggedUser.hasRole("Admin") || loggedUser.hasRole("Salesperson")) ? true : false;
+
+      model.addAttribute("isVisibleForAdminOrSalesperson", isVisibleForAdminOrSalesperson);
       model.addAttribute("order", order);
 
       return "orders/order_details_modal";
