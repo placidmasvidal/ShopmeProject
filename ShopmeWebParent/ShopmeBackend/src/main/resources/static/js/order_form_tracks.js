@@ -1,4 +1,7 @@
+var trackRecordCount;
+
 $(document).ready(function() {
+    trackRecordCount = $(".hiddenTrackId").length;
     let trackList = $("#trackList");
 
     trackList.on("click", ".linkRemoveTrack", function(e) {
@@ -40,7 +43,8 @@ function addNewTrackRecord() {
 }
 
 function generateTrackCode() {
-    let nextCount = $(".hiddenTrackId").length + 1;
+    let nextCount = trackRecordCount + 1;
+    trackRecordCount++;
     let rowId = "rowTrack" + nextCount;
     let emptyLineId = "emptyLine" + nextCount;
     let trackNoteId = "trackNote" + nextCount;
