@@ -247,4 +247,30 @@ public class Order extends AbstractAddress {
       e.printStackTrace();
     }
   }
+
+  @Transient
+  public String getRecipientName() {
+    String name = (lastName != null && !lastName.isEmpty()) ? firstName + " " + lastName : firstName;
+    return name;
+  }
+
+  @Transient
+  public String getRecipientAddress() {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(addressLine1);
+    List.of(addressLine2, city, state, country, postalCode)
+            .forEach(
+                    field -> {
+                      if (!field.isEmpty() && field != null) {
+                          stringBuilder.append(", " + field);
+                      }
+                    });
+    return stringBuilder.toString();
+  }
+
+  @Transient
+  public boolean isCOD(){
+    return paymentMethod.equals(PaymentMethod.COD);
+  }
+
 }

@@ -30,7 +30,21 @@
                         </div>
                     </div>
                     <div class="card-body">
-
+                        <div>
+                            <i class="fas fa-user"></i>
+                            <b>[[${order.recipientName}]]</b>
+                        </div>
+                        <div>
+                            <i class="fas fa-home"></i>
+                            [[${order.recipientAddress}]]
+                        </div>
+                        <div>
+                            <i class="fas fa-phone-alt"></i>
+                            [[${order.phoneNumber}]]
+                        </div>
+                        <div th:if="${order.COD}">
+                            <span>COD: <b><div th:replace="fragments :: format_currency(${order.total})"></div></b></span>
+                        </div>
                     </div>
                 </div>
             </div>
