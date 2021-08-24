@@ -273,4 +273,31 @@ public class Order extends AbstractAddress {
     return paymentMethod.equals(PaymentMethod.COD);
   }
 
+  @Transient
+  public boolean isPicked() {
+    return hasStatus(OrderStatus.PICKED);
+  }
+
+  @Transient
+  public boolean isShipping() {
+    return hasStatus(OrderStatus.SHIPPING);
+  }
+
+  @Transient
+  public boolean isDelivered() {
+    return hasStatus(OrderStatus.DELIVERED);
+  }
+
+  @Transient
+  public boolean isReturned() {
+    return hasStatus(OrderStatus.RETURNED);
+  }
+
+  public boolean hasStatus(OrderStatus status){
+    return orderTracks.stream()
+            .anyMatch(orderTrack ->
+              orderTrack.getStatus().equals(status)
+            );
+  }
+
 }

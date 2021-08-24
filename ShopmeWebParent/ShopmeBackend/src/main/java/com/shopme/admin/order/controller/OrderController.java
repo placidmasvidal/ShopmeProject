@@ -158,26 +158,24 @@ public class OrderController {
     List<OrderTrack> orderTracks = order.getOrderTracks();
     DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
 
-    if (trackIds != null) {
-      for (int i = 0; i < trackIds.length; i++) {
-        OrderTrack trackRecord = new OrderTrack();
-        Integer trackId = Integer.parseInt(trackIds[i]);
-        if (trackId > 0) {
-          trackRecord.setId(trackId);
-        }
-
-        trackRecord.setOrder(order);
-        trackRecord.setStatus(OrderStatus.valueOf(trackStatuses[i]));
-        trackRecord.setNotes(trackNotes[i]);
-
-        try {
-          trackRecord.setUpdatedTime(dateFormatter.parse(trackDates[i]));
-        } catch (ParseException e) {
-          e.printStackTrace();
-        }
-
-        orderTracks.add(trackRecord);
+    for (int i = 0; i < trackIds.length; i++) {
+      OrderTrack trackRecord = new OrderTrack();
+      Integer trackId = Integer.parseInt(trackIds[i]);
+      if (trackId > 0) {
+        trackRecord.setId(trackId);
       }
+
+      trackRecord.setOrder(order);
+      trackRecord.setStatus(OrderStatus.valueOf(trackStatuses[i]));
+      trackRecord.setNotes(trackNotes[i]);
+
+      try {
+        trackRecord.setUpdatedTime(dateFormatter.parse(trackDates[i]));
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+
+      orderTracks.add(trackRecord);
     }
   }
 
