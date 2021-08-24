@@ -4,6 +4,7 @@ import com.shopme.admin.order.OrderConstants;
 import com.shopme.admin.order.OrderService;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.paging.PagingAndSortingParam;
+import com.shopme.admin.security.ShopmeUserDetails;
 import com.shopme.admin.setting.SettingService;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.order.Order;
@@ -14,6 +15,7 @@ import com.shopme.common.entity.product.Product;
 import com.shopme.common.entity.setting.Setting;
 import com.shopme.common.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,10 +55,17 @@ public class OrderController {
       @PagingAndSortingParam(listName = "listOrders", moduleURL = "/orders")
           PagingAndSortingHelper helper,
       @PathVariable(name = "pageNum") int pageNum,
-      HttpServletRequest servletRequest) {
+      HttpServletRequest servletRequest,
+      @AuthenticationPrincipal ShopmeUserDetails loggedUser) {
 
     orderService.listByPage(pageNum, helper);
     loadCurrencySetting(servletRequest);
+
+    if (!loggedUser.hasRole("Admin")
+        && !loggedUser.hasRole("Salesperson")
+        && loggedUser.hasRole("Shipper")) {
+      return "orders/orders_shipper";
+    }
 
     return "orders/orders";
   }
@@ -124,7 +133,8 @@ public class OrderController {
   }
 
   @PostMapping("/order/save")
-  public String saveOrder(Order order, HttpServletRequest servletRequest, RedirectAttributes redirectAttributes){
+  public String saveOrder(
+      Order order, HttpServletRequest servletRequest, RedirectAttributes redirectAttributes) {
     String countryName = servletRequest.getParameter("countryName");
     order.setCountry(countryName);
 
@@ -133,7 +143,8 @@ public class OrderController {
 
     orderService.save(order);
 
-    redirectAttributes.addFlashAttribute("message", "The order ID " + order.getId() + " has been updated successfully.");
+    redirectAttributes.addFlashAttribute(
+        "message", "The order ID " + order.getId() + " has been updated successfully.");
 
     return defaultRedirectURL;
   }
@@ -204,6 +215,5 @@ public class OrderController {
 
       orderDetails.add(orderDetail);
     }
-
   }
 }
