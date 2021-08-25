@@ -18,4 +18,6 @@ public interface OrderService {
     List<Country> listAllCountries();
 
     void save(Order order);
+
+    void updateStatus(Integer orderId, String status);
 }
