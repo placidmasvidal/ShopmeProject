@@ -54,6 +54,7 @@
                                 </th:block>
                                 <th:block th:unless="${order.picked}">
                                     <a class="fas fa-people-carry fa-2x icon-dark linkUpdateStatus"
+                                       th:id="'linkPICKED' + ${order.id}"
                                        th:orderId="${order.id}"
                                        status="PICKED"
                                     th:href="@{'/orders_shipper/update/' + ${order.id} + '/PICKED'}"></a>
@@ -66,6 +67,7 @@
                                 </th:block>
                                 <th:block th:unless="${order.shipping}">
                                     <a class="fas fa-shipping-fast fa-2x icon-dark linkUpdateStatus"
+                                       th:id="'linkSHIPPING' + ${order.id}"
                                        th:orderId="${order.id}"
                                        status="SHIPPING"
                                        th:href="@{'/orders_shipper/update/' + ${order.id} + '/SHIPPING'}"></a>
@@ -78,6 +80,7 @@
                                 </th:block>
                                 <th:block th:unless="${order.delivered}">
                                     <a class="fas fa-box-open fa-2x icon-dark linkUpdateStatus"
+                                       th:id="'linkDELIVERED' + ${order.id}"
                                        th:orderId="${order.id}"
                                        status="DELIVERED"
                                        th:href="@{'/orders_shipper/update/' + ${order.id} + '/DELIVERED'}"></a>
@@ -90,6 +93,7 @@
                                 </th:block>
                                 <th:block th:unless="${order.returned}">
                                     <a class="fas fa-undo fa-2x icon-dark linkUpdateStatus"
+                                       th:id="'linkRETURNED' + ${order.id}"
                                        th:orderId="${order.id}"
                                        status="RETURNED"
                                        th:href="@{'/orders_shipper/update/' + ${order.id} + '/RETURNED'}"></a>
