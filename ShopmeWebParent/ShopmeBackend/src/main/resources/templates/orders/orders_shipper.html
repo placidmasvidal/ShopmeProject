@@ -54,6 +54,8 @@
                                 </th:block>
                                 <th:block th:unless="${order.picked}">
                                     <a class="fas fa-people-carry fa-2x icon-dark linkUpdateStatus"
+                                       th:orderId="${order.id}"
+                                       status="PICKED"
                                     th:href="@{'/orders_shipper/update/' + ${order.id} + '/PICKED'}"></a>
                                 </th:block>
                             </div>
@@ -64,6 +66,8 @@
                                 </th:block>
                                 <th:block th:unless="${order.shipping}">
                                     <a class="fas fa-shipping-fast fa-2x icon-dark linkUpdateStatus"
+                                       th:orderId="${order.id}"
+                                       status="SHIPPING"
                                        th:href="@{'/orders_shipper/update/' + ${order.id} + '/SHIPPING'}"></a>
                                 </th:block>
                             </div>
@@ -74,6 +78,8 @@
                                 </th:block>
                                 <th:block th:unless="${order.delivered}">
                                     <a class="fas fa-box-open fa-2x icon-dark linkUpdateStatus"
+                                       th:orderId="${order.id}"
+                                       status="DELIVERED"
                                        th:href="@{'/orders_shipper/update/' + ${order.id} + '/DELIVERED'}"></a>
                                 </th:block>
                             </div>
@@ -84,6 +90,8 @@
                                 </th:block>
                                 <th:block th:unless="${order.returned}">
                                     <a class="fas fa-undo fa-2x icon-dark linkUpdateStatus"
+                                       th:orderId="${order.id}"
+                                       status="RETURNED"
                                        th:href="@{'/orders_shipper/update/' + ${order.id} + '/RETURNED'}"></a>
                                 </th:block>
                             </div>
@@ -96,6 +104,26 @@
     </div>
 
     <div th:replace="fragments :: pagination('orders')"></div>
+
+    <div th:fragment="confirm_modal" class="modal fade text-center" id="confirmModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <span id="confirmText"></span>
+                </div>
+
+                <div class="modal-footer">
+                    <a class="btn btn-success" href="" id="yesButton">Yes</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="orderDetailModal">
         <div class="modal-dialog modal-xl">
