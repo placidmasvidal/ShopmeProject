@@ -138,6 +138,8 @@
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
     moduleURL = "[[@{/orders}]]";
+    var csrfHeaderName = "[[${_csrf.headerName}]]";
+    var csrfValue = "[[${_csrf.token}]]";
 
     $(document).ready(function() {
         $("[name='keyword']").attr("placeholder", "Type #number to search by Order ID");
