@@ -53,7 +53,7 @@
                        th:href="@{'/orders/detail/' + ${order.id}}"
                        title="View details of this order"></a>
 
-                    <th:block th:unless="${order.returnRequested}">
+                    <th:block th:if="${order.returnRequested == false && order.delivered == true && order.returned == false}">
                         &nbsp;&nbsp;&nbsp;
                         <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""
                            th:orderId="${order.id}"
@@ -79,7 +79,7 @@
                                     <a class="fas fa-file-alt fa-2x icon-green linkDetail"
                                        th:href="@{'/orders/detail/' + ${order.id}}"></a>
 
-                                    <th:block th:unless="${order.returnRequested}">
+                                    <th:block th:if="${order.returnRequested == false && order.delivered == true && order.returned == false}">
                                         &nbsp;
                                         <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""
                                            th:orderId="${order.id}"
