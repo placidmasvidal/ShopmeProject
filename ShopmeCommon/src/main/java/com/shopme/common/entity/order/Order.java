@@ -299,6 +299,11 @@ public class Order extends AbstractAddress {
     return hasStatus(OrderStatus.RETURN_REQUESTED);
   }
 
+  @Transient
+  public boolean isProcessing() {
+    return hasStatus(OrderStatus.PROCESSING);
+  }
+
   public boolean hasStatus(OrderStatus status) {
     return orderTracks.stream().anyMatch(orderTrack -> orderTrack.getStatus().equals(status));
   }

@@ -20,4 +20,6 @@ public interface OrderService {
       CheckoutInfo checkoutInfo);
 
   Page<Order> listForCustomerByPage(Customer customer, int pageNum, String sortField, String sortDir, String keyword);
+
+  Order getOrder(Integer id, Customer customer);
 }

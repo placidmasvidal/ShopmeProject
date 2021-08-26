@@ -106,4 +106,9 @@ public class OrderServiceImpl implements OrderService {
 
         return orderRepository.findAll(customer.getId(), pageable);
     }
+
+    @Override
+    public Order getOrder(Integer id, Customer customer) {
+        return orderRepository.findByIdAndCustomer(id, customer);
+    }
 }
