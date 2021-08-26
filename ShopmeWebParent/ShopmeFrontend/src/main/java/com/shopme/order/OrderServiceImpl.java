@@ -12,6 +12,10 @@ import com.shopme.common.entity.product.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -88,4 +92,18 @@ public class OrderServiceImpl implements OrderService {
 
     return orderRepository.save(newOrder);
   }
+
+    @Override
+    public Page<Order> listForCustomerByPage(Customer customer, int pageNum, String sortField, String sortDir, String keyword) {
+        Sort sort = Sort.by(sortField);
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNum - 1, OrderConstants.ORDERS_PER_PAGE, sort);
+
+        if (keyword != null) {
+            return orderRepository.findAll(keyword, customer.getId(), pageable);
+        }
+
+        return orderRepository.findAll(customer.getId(), pageable);
+    }
 }

@@ -250,7 +250,8 @@ public class Order extends AbstractAddress {
 
   @Transient
   public String getRecipientName() {
-    String name = (lastName != null && !lastName.isEmpty()) ? firstName + " " + lastName : firstName;
+    String name =
+        (lastName != null && !lastName.isEmpty()) ? firstName + " " + lastName : firstName;
     return name;
   }
 
@@ -259,17 +260,17 @@ public class Order extends AbstractAddress {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(addressLine1);
     List.of(addressLine2, city, state, country, postalCode)
-            .forEach(
-                    field -> {
-                      if (!field.isEmpty() && field != null) {
-                          stringBuilder.append(", " + field);
-                      }
-                    });
+        .forEach(
+            field -> {
+              if (!field.isEmpty() && field != null) {
+                stringBuilder.append(", " + field);
+              }
+            });
     return stringBuilder.toString();
   }
 
   @Transient
-  public boolean isCOD(){
+  public boolean isCOD() {
     return paymentMethod.equals(PaymentMethod.COD);
   }
 
@@ -293,11 +294,24 @@ public class Order extends AbstractAddress {
     return hasStatus(OrderStatus.RETURNED);
   }
 
-  public boolean hasStatus(OrderStatus status){
-    return orderTracks.stream()
-            .anyMatch(orderTrack ->
-              orderTrack.getStatus().equals(status)
-            );
+  @Transient
+  public boolean isReturnRequested() {
+    return hasStatus(OrderStatus.RETURN_REQUESTED);
   }
 
+  public boolean hasStatus(OrderStatus status) {
+    return orderTracks.stream().anyMatch(orderTrack -> orderTrack.getStatus().equals(status));
+  }
+
+  @Transient
+  public String getProductNames() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<ul>");
+
+    orderDetails.forEach(
+        orderDetail -> sb.append("<li>" + orderDetail.getProduct().getShortName() + "</li>"));
+    sb.append("</ul>");
+
+    return sb.toString();
+  }
 }

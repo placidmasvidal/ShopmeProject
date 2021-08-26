@@ -6,6 +6,7 @@ import com.shopme.common.entity.CartItem;
 import com.shopme.common.entity.Customer;
 import com.shopme.common.entity.order.Order;
 import com.shopme.common.entity.order.PaymentMethod;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface OrderService {
       List<CartItem> cartItems,
       PaymentMethod paymentMethod,
       CheckoutInfo checkoutInfo);
+
+  Page<Order> listForCustomerByPage(Customer customer, int pageNum, String sortField, String sortDir, String keyword);
 }

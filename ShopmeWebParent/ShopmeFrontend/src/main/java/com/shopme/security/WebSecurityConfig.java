@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(
             "/account_details",
             "/update_account_details",
+            "/orders/**",
             "/cart",
             "/address_book/**",
             "/checkout",
