@@ -1,14 +1,15 @@
-var returnModal;
+const returnModal = $("#returnOrderModal");
+const modalTitle = $("#returnOrderModalTitle");
 
 $(document).ready(function (){
-    returnModal = $("#returnOrderModal");
-
     $(".linkReturnOrder").on("click", function (e){
        e.preventDefault();
-       handleReturnOrderLink();
+       handleReturnOrderLink($(this));
     });
 });
 
-function handleReturnOrderLink() {
+function handleReturnOrderLink(link) {
+    let orderId = link.attr("orderId");
     returnModal.modal("show");
+    modalTitle.text("Return Order ID #" + orderId);
 }

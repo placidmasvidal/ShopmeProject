@@ -55,7 +55,9 @@
 
                     <th:block th:unless="${order.returnRequested}">
                         &nbsp;&nbsp;&nbsp;
-                        <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href="" title="Return this order"></a>
+                        <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""
+                           th:orderId="${order.id}"
+                           title="Return this order"></a>
                     </th:block>
                 </td>
             </tr>
@@ -79,7 +81,9 @@
 
                                     <th:block th:unless="${order.returnRequested}">
                                         &nbsp;
-                                        <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href="" title="Return this order"></a>
+                                        <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""
+                                           th:orderId="${order.id}"
+                                           title="Return this order"></a>
                                     </th:block>
                                 </div>
                             </div>
