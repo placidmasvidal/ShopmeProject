@@ -1,19 +1,42 @@
 const returnModal = $("#returnOrderModal");
 const modalTitle = $("#returnOrderModalTitle");
 const fieldNote = $("#returnNote");
+const firstButton = $("#firstButton");
+const secondButton = $("#secondButton");
+const divReason = $("#divReason");
+const divMessage = $("#divMessage");
 var orderId;
 
 $(document).ready(function (){
-    $(".linkReturnOrder").on("click", function (e){
-       e.preventDefault();
-       handleReturnOrderLink($(this));
-    });
+    handleReturnOrderLink();
 });
 
-function handleReturnOrderLink(link) {
+function showReturnModalDialog(link){
+    divMessage.hide();
+    divReason.show();
+    firstButton.show();
+    secondButton.text("Cancel");
+    fieldNote.val("");
+
     orderId = link.attr("orderId");
-    returnModal.modal("show");
     modalTitle.text("Return Order ID #" + orderId);
+    returnModal.modal("show");
+}
+
+function showMessageModal(message){
+    divReason.hide();
+    firstButton.hide();
+    secondButton.text("Close");
+    divMessage.text(message);
+
+    divMessage.show();
+}
+
+function handleReturnOrderLink() {
+    $(".linkReturnOrder").on("click", function(e) {
+        e.preventDefault();
+        showReturnModalDialog($(this));
+    });
 }
 
 function submitReturnOrderForm(){
@@ -40,8 +63,10 @@ function sendReturnOrderRequest(reason, note) {
 
     }).done(function(returnResponse) {
         console.log(returnResponse);
+        showMessageModal("Return request has been sent");
     }).fail(function(err) {
         console.log(err);
+        showMessageModal(err.responseText);
     });
 
 }

@@ -11,7 +11,7 @@
 
             <form onsubmit="return submitReturnOrderForm();">
             <div class="modal-body">
-                <div>
+                <div id="divReason">
                     <div>Reason:</div>
                     <div><input type="radio" name="returnReason" value="I bought the wrong items" required/>
                         I bought the wrong items
@@ -30,6 +30,7 @@
                                   placeholder="Additional information"></textarea>
                     </div>
                 </div>
+                <div id="divMessage" class="text-center"></div>
             </div>
 
             <div class="modal-footer">
