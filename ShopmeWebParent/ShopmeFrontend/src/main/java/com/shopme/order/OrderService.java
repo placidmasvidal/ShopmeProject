@@ -6,6 +6,7 @@ import com.shopme.common.entity.CartItem;
 import com.shopme.common.entity.Customer;
 import com.shopme.common.entity.order.Order;
 import com.shopme.common.entity.order.PaymentMethod;
+import com.shopme.common.exception.OrderNotFoundException;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface OrderService {
   Page<Order> listForCustomerByPage(Customer customer, int pageNum, String sortField, String sortDir, String keyword);
 
   Order getOrder(Integer id, Customer customer);
+
+  void setOrderReturnRequested(OrderReturnRequest request, Customer customer) throws OrderNotFoundException;
 }
