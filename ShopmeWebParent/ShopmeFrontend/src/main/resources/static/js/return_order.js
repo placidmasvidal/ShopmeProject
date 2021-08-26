@@ -1,6 +1,7 @@
 const returnModal = $("#returnOrderModal");
 const modalTitle = $("#returnOrderModalTitle");
 const fieldNote = $("#returnNote");
+var orderId;
 
 $(document).ready(function (){
     $(".linkReturnOrder").on("click", function (e){
@@ -10,7 +11,7 @@ $(document).ready(function (){
 });
 
 function handleReturnOrderLink(link) {
-    let orderId = link.attr("orderId");
+    orderId = link.attr("orderId");
     returnModal.modal("show");
     modalTitle.text("Return Order ID #" + orderId);
 }
@@ -18,5 +19,29 @@ function handleReturnOrderLink(link) {
 function submitReturnOrderForm(){
     let reason = $("input[name='returnReason']:checked").val();
     let note = fieldNote.val();
-    alert(reason + " - " + note);
+
+    sendReturnOrderRequest(reason, note);
+
+    return false;
+}
+
+function sendReturnOrderRequest(reason, note) {
+    let requestURL = contextPath + "orders/return";
+    let requestBody = {orderId: orderId, reason: reason, note: note};
+
+    $.ajax({
+        type: "POST",
+        url: requestURL,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfValue);
+        },
+        data: JSON.stringify(requestBody),
+        contentType: 'application/json'
+
+    }).done(function(returnResponse) {
+        console.log(returnResponse);
+    }).fail(function(err) {
+        console.log(err);
+    });
+
 }
