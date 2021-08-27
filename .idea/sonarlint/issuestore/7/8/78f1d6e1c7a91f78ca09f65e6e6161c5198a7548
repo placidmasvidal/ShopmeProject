@@ -1,16 +1,0 @@
-
-e
-java:S1192q"HDefine a constant instead of duplicating this literal "message" 5 times.(ïó³Ì8ªü£äœ/
-D
-java:S1068"'Remove this unused "LOG" private field.(ğ«Éğ8–ÍÇ™­/
-j	java:S116"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ«Éğ8–ÍÇ™­/
-q
-java:S1192L"ODefine a constant instead of duplicating this literal "listCategories" 3 times.(Áğ£¨ıÿÿÿÿ8ış™åœ/
-r
-java:S1192r"UDefine a constant instead of duplicating this literal "redirect:/categories" 4 times.(ßÅú8ªü£äœ/
-b
-java:S2184;"@Cast one of the operands of this addition operation to a "long".(¢Ö™úÿÿÿÿ8Ö˜Íª¢/
-]
-java:S4684_"@Replace this persistent entity with a simple POJO or DTO object.(Ñí³û8ªü£äœ/
-²
-java:S4449e"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(ëßøÿÿÿÿ8ªü£äœ/
