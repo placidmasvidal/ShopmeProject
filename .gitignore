@@ -1,0 +1,43 @@
+\f0\fs24 \cf0 \\.classpath\
+\\.project\
+\\.settings/#\
+\\.settings/\
+\\target/\
+build
+
+ShopmeWebParent/ShopmeBackend/src/main/resources/application.properties
+
+Sample\+Users\+Photos/Sample Users Photos/
+
+Shopme\+Sample\+Users\+Data/Shopme Sample Users Data/
+
+Shopme\+Sample\+Categories\+Data/Test\+Category\+Images/More Category Images/
+
+Shopme\+Sample\+Categories\+Data/Test\+Category\+Images/New Category Images/
+
+Shopme\+Sample\+Categories\+Data/Shopme Sample Categories Data/
+
+Shopme\+Sample\+Categories\+Data/Test\+Category\+Images/Test Category Images/
+
+
+*.png
+*.jpeg
+*.jpg
+
+DataFiles/Sample\+Users\+Photos/Sample Users Photos/
+
+DataFiles/Shopme Sample Brands Data/
+
+DataFiles/Shopme\+Sample\+Categories\+Data/Shopme Sample Categories Data/
+
+DataFiles/Shopme\+Sample\+Users\+Data/Shopme Sample Users Data/
+
+DataFiles/Shopme Sample Products Data/
+
+DataFiles/Shopme Sample Countries and States Data/
+
+DataFiles/Shopme Sample Customers Data/
+
+DataFiles/Shopme Sample Shipping Rates Data/
+
+DataFiles/Shopme Sample Address Book Data/

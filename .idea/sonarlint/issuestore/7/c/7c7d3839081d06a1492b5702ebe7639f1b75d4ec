@@ -1,0 +1,12 @@
+
+^
+java:S1192f"HDefine a constant instead of duplicating this literal "message" 5 times.(şÑØ¿
+D
+java:S1068"'Remove this unused "LOG" private field.(Ôçè8ı®›Éª/
+f
+java:S1192v"PDefine a constant instead of duplicating this literal "redirect:/users" 3 times.(Ñ“é
+«
+java:S4449Y"Annotate the parameter with @javax.annotation.Nullable in method 'cleanPath' declaration, or make sure that null can not be passed as argument.(ëßøÿÿÿÿ
+c	java:S116"NRename this field "LOG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ôçè
+V
+java:S4684S"@Replace this persistent entity with a simple POJO or DTO object.(àÍ³õ
