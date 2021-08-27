@@ -1,15 +1,0 @@
-
-[	java:S106É"9Replace this use of System.out or System.err by a logger.(¢úÛ‰şÿÿÿÿ8¶ÛÙÁ·/
-[	java:S106Ì"9Replace this use of System.out or System.err by a logger.(ü³¿Ğøÿÿÿÿ8¿‰¥É·/
-c
-java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(ŞÀõüÿÿÿÿ8¿‰¥É·/
-V	java:S106Ê"9Replace this use of System.out or System.err by a logger.(æ©…ƒ8¶ÛÙÁ·/
-[	java:S106È"9Replace this use of System.out or System.err by a logger.(›÷Ááşÿÿÿÿ8¶ÛÙÁ·/
-E
-java:S1125U"(Remove the literal "true" boolean value.(Êıñ 8Õï®É·/
->
-java:S1116f"Remove this empty statement.(Åñ­õşÿÿÿÿ8¿‰¥É·/
-V	java:S106Ë"9Replace this use of System.out or System.err by a logger.(Œõ—‚8¶ÛÙÁ·/
-e
-java:S1192\"HDefine a constant instead of duplicating this literal "message" 5 times.(øƒÄ“8¿‰¥É·/
-[	java:S106Ç"9Replace this use of System.out or System.err by a logger.(©­Ë²ùÿÿÿÿ8¶ÛÙÁ·/

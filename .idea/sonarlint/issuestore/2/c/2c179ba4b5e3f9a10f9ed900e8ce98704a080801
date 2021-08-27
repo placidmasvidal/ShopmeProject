@@ -1,7 +1,0 @@
-
-‚
-java:S1488H"`Immediately return this expression instead of assigning it to the temporary variable "subtotal".(é¶…ûÿÿÿÿ8¥ÂÉĞ¬/
-Q
-java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëİüÿÿÿÿ8÷àÇĞ¬/
-S
-java:S3655G"7Call "Optional#isPresent()" before accessing the value.(Ò™à#8Ê‰ÇĞ¬/

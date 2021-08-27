@@ -1,9 +1,0 @@
-
-g
-java:S1192A"JDefine a constant instead of duplicating this literal "pageTitle" 3 times.(³ñ¸ï8š®þ™­/
-]
-java:S2184e"@Cast one of the operands of this addition operation to a "long".(«ÀÒŸ8‡ºø‘¥/
-]
-java:S21843"@Cast one of the operands of this addition operation to a "long".(»¥àÞ8š®þ™­/
-i
-java:S1128"LRemove this unused import 'org.springframework.data.repository.query.Param'.(©”šô8ÓÃ€š­/
