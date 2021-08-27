@@ -1,8 +1,8 @@
+const trackList = $("#trackList");
 var trackRecordCount;
 
 $(document).ready(function() {
     trackRecordCount = $(".hiddenTrackId").length;
-    let trackList = $("#trackList");
 
     trackList.on("click", ".linkRemoveTrack", function(e) {
         e.preventDefault();
@@ -39,7 +39,7 @@ function updateTrackCountNumbers() {
 
 function addNewTrackRecord() {
     let htmlCode = generateTrackCode();
-    $("#trackList").append(htmlCode);
+    trackList.append(htmlCode);
 }
 
 function generateTrackCode() {
