@@ -88,6 +88,14 @@ public class OrderServiceImpl implements OrderService {
     LOGGER.info("Processing new order: {}", newOrder);
     newOrder.getOrderDetails().forEach(orderDetail -> LOGGER.info(orderDetail.toString()));
 
+    OrderTrack track = new OrderTrack();
+    track.setOrder(newOrder);
+    track.setStatus(OrderStatus.NEW);
+    track.setNotes(OrderStatus.NEW.defaultDescription());
+    track.setUpdatedTime(new Date());
+
+    newOrder.getOrderTracks().add(track);
+
     return orderRepository.save(newOrder);
   }
 

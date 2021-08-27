@@ -64,9 +64,20 @@ function sendReturnOrderRequest(reason, note) {
     }).done(function(returnResponse) {
         console.log(returnResponse);
         showMessageModal("Return request has been sent");
+        updateStatusTextAndHideReturnButton(orderId);
     }).fail(function(err) {
         console.log(err);
         showMessageModal(err.responseText);
     });
 
+}
+
+function updateStatusTextAndHideReturnButton(orderId) {
+    $(".textOrderStatus" + orderId).each(function (index){
+        $(this).text("RETURN_REQUESTED");
+    });
+
+    $(".linkReturn" + orderId).each(function (index){
+        $(this).hide();
+    });
 }

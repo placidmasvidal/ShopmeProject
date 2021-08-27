@@ -47,7 +47,7 @@
                 <td>
                     <div th:replace="fragments :: format_currency(${order.total})">Total</div>
                 </td>
-                <td><span>[[${order.status}]]</span></td>
+                <td><span th:class="'textOrderStatus' + ${order.id}">[[${order.status}]]</span></td>
                 <td>
                     <a class="fas fa-file-alt fa-2x icon-green linkDetail"
                        th:href="@{'/orders/detail/' + ${order.id}}"
@@ -56,6 +56,7 @@
                     <th:block th:if="${order.returnRequested == false && order.delivered == true && order.returned == false}">
                         &nbsp;&nbsp;&nbsp;
                         <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""
+                           th:classappend="'linkReturn' + ${order.id}"
                            th:orderId="${order.id}"
                            title="Return this order"></a>
                     </th:block>
@@ -82,6 +83,7 @@
                                     <th:block th:if="${order.returnRequested == false && order.delivered == true && order.returned == false}">
                                         &nbsp;
                                         <a class="fas fa-undo fa-2x icon-dark linkReturnOrder" href=""
+                                           th:classappend="'linkReturn' + ${order.id}"
                                            th:orderId="${order.id}"
                                            title="Return this order"></a>
                                     </th:block>
@@ -98,7 +100,7 @@
                                 <div th:replace="fragments :: format_currency(${order.total})">Total</div>
                             </div>
                             <div class="col">
-                                <span>[[${order.status}]]</span>
+                                <span th:class="'textOrderStatus' + ${order.id}">[[${order.status}]]</span>
                             </div>
                         </div>
                         <div><small><div th:replace="fragments :: format_time(${order.orderTime})"></div></small></div>
