@@ -6,9 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="shopmebackend" />
         <module name="shopmecommon" />
+        <module name="shopmefrontend" />
         <module name="ShopmeFrontend" />
+        <module name="shopmebackend" />
       </profile>
     </annotationProcessing>
   </component>
@@ -17,6 +18,7 @@
       <module name="ShopmeFrontend" options="-parameters" />
       <module name="shopmebackend" options="-parameters" />
       <module name="shopmecommon" options="-parameters" />
+      <module name="shopmefrontend" options="-parameters" />
       <module name="shopmewebparent" options="-parameters" />
     </option>
   </component>
